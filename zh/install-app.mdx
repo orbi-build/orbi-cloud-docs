@@ -1,0 +1,62 @@
+---
+title: "安装 GitHub App"
+sidebarTitle: "安装 GitHub App"
+description: "我怎么安装 Orbi GitHub App，它申请的这些权限是干什么的?"
+---
+
+
+Orbi 是通过安装 Orbi GitHub App 拿到仓库权限的，而覆盖哪些仓库完全由你决定。
+
+登录只告诉 Orbi 你是谁。App 的安装是另一件事：一次可撤销的授权，让它能读你的 Issue 并提交拉取请求。你在 GitHub 上批准它，在 GitHub 上限定范围，也在 GitHub 上把它移除。
+
+## 安装
+
+在状态页上点 **连接仓库** (Connect repository)。如果 App 还没装，你会被送到 GitHub 的安装页。
+
+在那个页面上：
+
+1. 选中拥有目标仓库的**账号或组织**。
+2. 选 **Only select repositories**。
+3. 挑出那个仓库。
+
+批准安装。GitHub 会把你送回 Orbi Cloud 的[连接仓库](/zh/connect-repository)页。
+
+<Note>
+装在组织上会为这个组织创建一个独立的 Orbi 租户，有自己的订阅和用量。装在你的个人账号上则创建一个个人租户。两者不共享。
+</Note>
+
+## 这些权限各是干什么的
+
+批准之前 GitHub 会把完整的权限清单摊给你看。每一项的用途如下：
+
+| 权限 | 访问级别 | Orbi 为什么需要它 |
+|---|---|---|
+| Issues | 读写 | 读你打了标签的 Issue，加上 `ai-*` 标签，发进度和失败的评论。在 GitHub 上，标签、评论和 milestone 都归在这一个权限下面 |
+| Pull requests | 读写 | 提交拉取请求，在上面评论，并在评审结论干净之后合并它 |
+| Contents | 读写 | 拉取你的仓库，推送交付工作所在的分支 |
+| Checks | 只读 | 在发版门禁和合并门禁上读某个 commit 的 CI 结果 |
+| Workflows | 读写 | 让改动了 `.github/workflows/` 下面文件的交付不被 GitHub 默默拒掉 |
+| Variables | 读写 | 同步分诊 workflow 要读的那个仓库变量 |
+| Administration | 读写 | 只在为一个全新环境注册 deploy key 时用；环境有 key 之后就跳过 |
+
+这些权限就是让一个 agent 干你要它干的活所需要的：在分支上写代码、提交拉取请求、评审之后合并。如果你的组织策略不允许授予拉取请求和仓库内容的写权限，Orbi Cloud 就没法往那个仓库里交付。
+
+## 修改覆盖哪些仓库
+
+Orbi **同一时间只在一个绑定的仓库里**工作，但 App 的安装可以授权给多个仓库。如果连接页上没有出现你的目标仓库，说明安装 App 时没把它包进来。
+
+要修这个问题，打开 GitHub 的 App 设置 —— 连接页上的 **没找到你的仓库？** (Cannot find your repository?) 一节有直达链接 —— 把仓库加进安装范围。然后回到 Orbi Cloud 刷新连接页。
+
+## 撤销
+
+你随时可以在 GitHub 上卸载 Orbi GitHub App：**Settings → Applications → Installed GitHub Apps → Orbi → Configure → Uninstall**（组织的话，在组织设置下走同样的路径）。
+
+卸载会立即收回 Orbi 对你代码的访问权限。状态页会检测到这件事，告诉你 **GitHub App 已被卸载**，并提供重新安装。
+
+<Note>
+卸载 App 不会取消订阅。订阅要单独在[账单](/zh/billing)里取消。
+</Note>
+
+## 如果你重新安装
+
+在同一个账号上重新安装 App，会把它接回你原来的租户 —— 你的交付历史和设置都还在。之后你可能需要重新连接一次仓库；需要的时候状态页会告诉你。

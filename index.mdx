@@ -1,14 +1,44 @@
 ---
+title: "Orbi Cloud"
 sidebarTitle: "Overview"
 description: "What is Orbi Cloud and what do I get from it?"
 ---
-# Orbi Cloud
+
 
 Orbi Cloud is a hosted runner that turns a labelled GitHub Issue into a tested, independently reviewed, merged pull request — on infrastructure Orbi operates.
 
 You keep working in GitHub. You file an Issue in your own repository and add the `ai-ready` label; Orbi Cloud claims it, writes the code in an isolated workspace, runs your test suite, opens a pull request, reviews that pull request in a separate session, repairs what the review finds, and merges the exact reviewed commit. The Issues, the pull requests and the release evidence all stay in your repository. There is no second workspace to adopt and no new password.
 
 Orbi Cloud runs the same delivery engine as self-hosted [Orbi](https://orbi.build/?ref=cloud-docs-index), which is open source. The difference is who operates the runner: with Cloud, Orbi does.
+
+## The whole path, end to end
+
+Everything below the dashed line is automatic. Your part is the four steps of setup, then one label per piece of work — and the decision to cut a release.
+
+```mermaid
+flowchart TD
+  subgraph setup["Setup — once"]
+    direction LR
+    s1["1 Sign in<br/>with GitHub"] --> s2["2 Install the<br/>GitHub App"] --> s3["3 Connect one<br/>repository"] --> s4["4 Provisioning<br/>~1–2 min"]
+  end
+
+  subgraph work["Per piece of work — you label, Orbi delivers"]
+    direction LR
+    w1["5 You label an<br/>Issue ai-ready"] -.-> w2["Orbi codes<br/>ai-in-progress"] --> w3["PR opened<br/>ai-pr-opened"] --> w4{"Independent<br/>review"}
+    w4 -->|clean| w5["Merged<br/>ai-merged"]
+    w4 -->|finding| w6["Repair<br/>ai-fix-needed"] --> w3
+    w4 -->|unsafe to fix| w7["Stops for you<br/>ai-blocked"]
+  end
+
+  subgraph rel["Release — only when you say so"]
+    direction LR
+    r1["6 You type a<br/>version"] -.-> r2["Gates, CI wait,<br/>bump, tag"] --> r3["GitHub Release<br/>milestone closed"]
+  end
+
+  setup --> work --> rel
+```
+
+The two dotted arrows are the only two switches you throw: the `ai-ready` label, and the version number. Orbi never throws either one for you.
 
 ## What you actually do
 
@@ -63,3 +93,19 @@ Orbi Cloud is in Private Beta. One repository can be connected at a time, and th
 ## Where to go next
 
 If you want the shortest path to a merged pull request, start with the [quickstart](/quickstart). If something is already wrong, go to [troubleshooting](/troubleshooting).
+
+## The engine's own documentation
+
+These pages cover Orbi Cloud — the hosted product. The delivery engine underneath is open source and documented separately at **[docs.orbi.build](https://docs.orbi.build)**. Go there when you want the mechanism rather than the product:
+
+<CardGroup>
+  <Card title="The delivery workflow in depth" href="https://docs.orbi.build/workflow">
+    The full label state machine, the review and repair loop, steering, and the release state machine — the engine's own reference for everything Cloud runs on your behalf.
+  </Card>
+  <Card title="The engine's security boundaries" href="https://docs.orbi.build/security">
+    What the engine will and will not do: what it never pushes to, what it never merges, and why.
+  </Card>
+  <Card title="Run it yourself instead" href="https://docs.orbi.build/quickstart">
+    Self-hosting is free and stays free. Same engine, you operate the runner.
+  </Card>
+</CardGroup>

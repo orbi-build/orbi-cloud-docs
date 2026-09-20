@@ -52,6 +52,51 @@
             ]
           }
         ]
+      },
+      {
+        "language": "zh",
+        "groups": [
+          {
+            "group": "从这里开始",
+            "icon": "rocket",
+            "pages": [
+              "zh/index",
+              "zh/quickstart"
+            ]
+          },
+          {
+            "group": "开通",
+            "icon": "sliders",
+            "pages": [
+              "zh/sign-in",
+              "zh/install-app",
+              "zh/connect-repository",
+              "zh/provisioning",
+              "zh/model-configuration",
+              "zh/billing"
+            ]
+          },
+          {
+            "group": "交付",
+            "icon": "compass",
+            "pages": [
+              "zh/first-issue",
+              "zh/delivery-lifecycle",
+              "zh/status-page",
+              "zh/releases"
+            ]
+          },
+          {
+            "group": "参考",
+            "icon": "book",
+            "pages": [
+              "zh/limits-and-quotas",
+              "zh/troubleshooting",
+              "zh/security",
+              "zh/faq"
+            ]
+          }
+        ]
       }
     ]
   }

@@ -1,0 +1,90 @@
+---
+title: "快速开始：五步拿到第一次交付"
+sidebarTitle: "快速开始"
+description: "怎么让 Orbi Cloud 把我的第一张 GitHub Issue 交付成一个已合并的拉取请求?"
+---
+
+
+登录，安装 GitHub App，连接一个仓库，给一张 Issue 打上 `ai-ready`，然后评审 Orbi 提交的拉取请求。
+
+这是最短的完整路径。每一步结尾都有一条**成功判据**，你据此判断该继续往下走，还是停下来先修点什么。整条路径都在浏览器和 GitHub 里完成 —— 你不会拿到 runner 上的 shell，也不用在本地装任何东西。
+
+**开始之前**你需要一个 GitHub 账号，和一个你能在上面安装 GitHub App 的仓库（你得是它的所有者，或者组织的 owner/admin）。这个仓库必须**开启了 Issues** —— Orbi 靠读 Issue 和给 Issue 打标签工作，关掉了 Issues 的仓库连不上。
+
+## 1. 用 GitHub 登录
+
+打开 **[orbi.build/api/](https://orbi.build/api/)**，点 **使用 GitHub 登录** (Sign in with GitHub)。
+
+![Orbi Cloud 登录页，带「使用 GitHub 登录」按钮](/images/signin.png)
+
+GitHub 会让你授权 Orbi Cloud 的 OAuth app。这一步只确认你是谁，此时还没有把任何仓库的权限给 Orbi。
+
+<Note>
+如果你的浏览器首选语言是中文，页面会以中文打开。用右上角的 🇬🇧 旗标切到英文 —— 这个选择会存在 cookie 里，记一年。
+</Note>
+
+**成功判据：**你落到状态页，标题是 **Orbi Cloud 状态** (Orbi Cloud Status)，**账户** (Account) 卡片用你的 GitHub 登录名跟你打招呼。
+
+## 2. 安装 Orbi GitHub App
+
+在状态页上，顶部的提示写着**先连接一个 GitHub 仓库**。点 **连接仓库** (Connect repository)。
+
+如果你还没装 Orbi GitHub App，你会被送到 GitHub 的安装页。选中拥有你那个仓库的账号或组织，选 **Only select repositories**，然后挑出你想让 Orbi 在里面干活的那一个仓库。
+
+这个 App 需要 Issues、拉取请求和仓库内容的写权限才能干活 —— 它要给 Issue 打标签、提交拉取请求、推送自己工作的那个分支。批准之前你可以在 GitHub 的安装页上逐条看完权限清单，而且随时可以在 GitHub 上撤销整个安装。
+
+**成功判据：**GitHub 把你送回 Orbi Cloud，你现在在**连接仓库**页上。
+
+## 3. 连接仓库
+
+在 **Repository** 下拉里选你的仓库，然后选 **Base branch** —— Orbi 提交拉取请求的目标分支，通常是 `main`。
+
+![连接仓库页，有一个仓库下拉和一个基础分支下拉](/images/connect.png)
+
+选中一个仓库之后，页面会载入这个仓库真实的分支列表，并预选它的默认分支，所以多数情况下你只需要确认一下。然后点 **连接仓库**。
+
+<Note>
+如果下拉里没有你的仓库，说明 Orbi 看不到它 —— 安装 App 时没把它包进来。在那个页面上展开 **没找到你的仓库？** (Cannot find your repository?)，里面有指向 GitHub App 设置的链接，你可以在那里把仓库加进安装范围。同一时间只有一个仓库处于生效状态；连接另一个会替换掉当前这个。
+</Note>
+
+**成功判据：**你回到状态页，**绑定的仓库** (Connected repository) 卡片列出了你的仓库，带一个绿色的 **生效中** (Active) 标记。
+
+## 4. 等待开通
+
+连接仓库会触发开通：Orbi 为你的仓库搭一个隔离的运行环境，并把交付用的标签装进去。**通常需要一到两分钟。**这段时间你什么都不用做。
+
+盯着**绑定的仓库**卡片里的**开通状态** (Provisioning status) 那一列。刷新页面可以更新它。
+
+**成功判据：开通状态**那一列显示绿色的 **开通成功** (Provisioned) 标记。
+
+如果它显示的是**开通失败** (Provisioning failed)，卡片会告诉你原因和下一步。多数失败在平台一侧，会自行恢复 —— 见[开通](/zh/provisioning)。
+
+## 5. 建一张 Issue，打上 `ai-ready`
+
+在 GitHub 上你绑定的那个仓库里，建一张普通的 Issue，描述你想要的一个改动。就按你写给一位能力不错但没读过你代码库的同事那样写：说清楚要改成什么样，以及你怎么判断它做对了。
+
+然后给这张 Issue 加上 **`ai-ready`** 标签。这个标签已经存在了 —— 开通过程创建了它。
+
+这个标签就是执行开关。Orbi 按定时器检查新打标的 Issue，所以认领**最多需要五分钟**。
+
+<Note>
+手工打标这一步可以省掉。如果你已经有打开着的 Issue，状态页会把它们列在**挑一张让 Orbi 试试**下面，每一张都带一个 **让 Orbi 试这张** (Let Orbi try this one) 按钮，替你把标签打上。
+</Note>
+
+![状态页列出未打标的 Issue，每一张都带「让 Orbi 试这张」按钮](/images/status-ready-issues.png)
+
+**成功判据：**大约五分钟内，`ai-in-progress` 标签出现在这张 Issue 上，状态页的**正在发生**卡片把它列在**进行中**下面。
+
+![状态页显示正在进行的工作、用量、绑定的仓库和发版表单](/images/status-active.png)
+
+从这里开始，Orbi 写代码、提交拉取请求、在另一个会话里评审它、修掉评审发现的问题。走到 `ai-pr-opened` 时你会拿到一个待评审的拉取请求；评审过的那个 commit 合并之后，Issue 走到 `ai-merged`。
+
+## 接下来做什么
+
+盯 Issue 的标签，或者盯状态页。**正在发生**卡片上的三个页签 —— **进行中**、**等你评审**、**已完成** —— 是最快看清进度的地方。
+
+当你准备把合并了的东西发出去时，**绑定的仓库**卡片里的**发个版本** (Cut a release) 表单会替你建好 release Issue：填一个像 `v1.2.3` 这样的版本号，Orbi 就会改版本号、打 tag、发布 GitHub Release。它需要一个标题完全相同的 milestone —— 见[发版](/zh/releases)。
+
+- 想搞清楚每个标签的含义、以及什么会让 Issue 在它们之间移动，读[交付生命周期](/zh/delivery-lifecycle)。
+- 想用自己的模型 key 而不是自带额度，读[模型配置](/zh/model-configuration)。
+- 如果 Issue 走到了 `ai-blocked`，读[问题排查](/zh/troubleshooting) —— 这个状态在等你的决定。

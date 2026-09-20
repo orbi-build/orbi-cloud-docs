@@ -1,8 +1,9 @@
 ---
+title: "The delivery lifecycle"
 sidebarTitle: "Delivery lifecycle"
 description: "What do the ai-* labels mean and what moves an Issue between them?"
 ---
-# The delivery lifecycle
+
 
 An Issue moves through the `ai-*` labels from `ai-ready` to `ai-merged`, and the labels themselves are the delivery record.
 
@@ -86,3 +87,7 @@ See [troubleshooting](/troubleshooting#ai-blocked) for how to read a blocked com
 | Content | `ai-ready` + `ai-content-only` | Text in, text out, delivered as an Issue comment — no execution and no git. The Issue is closed after delivery |
 
 One more label affects ordering rather than behaviour: `p0` marks an Issue urgent, and Orbi picks up `p0`-labelled Issues before bug-labelled ones, which come before plain ones.
+
+<Note>
+This page describes the lifecycle as you experience it on Cloud. The engine's own reference — every transition, the exact resume semantics, and the full config surface — is at [docs.orbi.build/workflow](https://docs.orbi.build/workflow).
+</Note>

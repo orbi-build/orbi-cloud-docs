@@ -1,5 +1,7 @@
 # Orbi Cloud documentation
 
+中文版见 [/zh](https://github.com/orbi-build/orbi-cloud-docs/tree/main/zh)。
+
 User documentation for [Orbi Cloud](https://orbi.build/cloud/?ref=cloud-docs-readme) — the hosted runner that turns a labelled GitHub Issue into a tested, independently reviewed, merged pull request.
 
 These pages cover the whole path a user walks: signing in, installing the GitHub App, connecting a repository, provisioning, dispatching an Issue, reading the status page, cutting a release, and recovering when something goes wrong.

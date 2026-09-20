@@ -1,8 +1,9 @@
 ---
+title: "Releases"
 sidebarTitle: "Releases"
 description: "How do I cut a release, and what does Orbi check before it tags one?"
 ---
-# Releases
+
 
 You cut a release by typing a version into **Cut a release** on the status page, and Orbi runs the release deterministically from there.
 
@@ -94,3 +95,7 @@ The version bump may already be on your base branch at that point, which is an a
 ## Why releases stay manual
 
 The release label is the one switch Orbi never flips itself. Everything else in the loop is automatic because a mistake is recoverable — a bad pull request is closed, a blocked Issue re-dispatched. A published tag and a GitHub Release are public and much harder to take back, so that decision stays with a person.
+
+<Note>
+The release state machine is the engine's, not Cloud's. Its full reference — every gate, the resume behaviour and the evidence it writes — is at [docs.orbi.build/workflow](https://docs.orbi.build/workflow).
+</Note>
