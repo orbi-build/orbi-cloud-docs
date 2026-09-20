@@ -1,0 +1,113 @@
+---
+sidebarTitle: "Troubleshooting"
+description: "My delivery is not working — how do I find out why and fix it?"
+---
+# Troubleshooting
+
+Start at the status page: the **① Needs you** banner names the problem and gives you the button that fixes it.
+
+Almost every failure state in Orbi Cloud is self-describing. This page covers what each one means and what to do, in roughly the order people hit them.
+
+## Nothing happens after I label an Issue `ai-ready`
+
+Work check, in order:
+
+1. **Is it the connected repository?** Orbi only reads Issues in the one repository you connected. Check the **Connected repository** card.
+2. **Has provisioning finished?** The **Provisioning status** must say **Provisioned**. Until then there is nothing to run the delivery.
+3. **Has five minutes passed?** Pickup is on a timer, not instant.
+4. **Did the label come back off?** If the `ai-ready` label was removed and a comment appeared, a quota guard stripped it — see [limits and quotas](/limits-and-quotas). Subscribe or wait for the next month, then re-apply the label.
+5. **Does the Issue already carry another `ai-*` label?** An Issue that is already `ai-in-progress` or `ai-merged` is not re-dispatched by adding `ai-ready` again.
+
+If the status page's **Doing** tab is empty and says the environment is not ready, the answer is in the **Connected repository** card.
+
+## `ai-blocked`
+
+`ai-blocked` is a deliberate stop, not a crash. It means automatic recovery was not safe, and a person has to decide the next step.
+
+**Read the comment Orbi left on the Issue.** It states why it could not proceed. The common causes:
+
+- The repair loop ran its rounds without reaching a clean review verdict.
+- An external precondition is missing — something the delivery cannot safely judge or fix on its own.
+- The Issue asks for something the environment cannot do (see below).
+
+**How to recover:** fix the underlying cause first, then re-apply `ai-ready`. Fixing the cause often means editing the Issue — sharpening the acceptance criteria, removing an impossible requirement, or splitting it into smaller Issues.
+
+<Note>
+Removing the `ai-blocked` label on its own does not restart anything, and neither does commenting. Repair the cause, then re-apply `ai-ready` — that is what puts the Issue back in the queue.
+</Note>
+
+The pull request, branch and workspace are all preserved when an Issue blocks, so nothing you have is lost.
+
+### Acceptance criteria the environment cannot satisfy
+
+A frequent cause of a blocked Issue is asking for evidence that cannot exist inside the delivery environment. That environment has your repository and your tests — it does not have your production credentials, your third-party accounts, a real browser against your live site, or your deployment pipeline.
+
+An Issue whose acceptance requires "deploy to production and confirm", "log in to the live dashboard and screenshot it", or "reproduce against the real expired token" will spin and then block. Rewrite the criterion as something checkable in the repository — assert the rendered text in a test, assert the error classification, assert the thing that must not appear — and gather the production evidence yourself.
+
+## The pull request looks wrong
+
+Comment on the Issue with the correction, or edit the Issue body. The next run picks it up and restarts with your correction — you do not need to close anything or cancel.
+
+If the work is simply not wanted, close the Issue. If it was an unsubscribed delivery, closing it without a merge refunds the free-allowance slot.
+
+## Provisioning failed
+
+The **Connected repository** card gives the reason, the time, a request ID, and the next step. There are four classes, covered in full on the [provisioning](/provisioning#when-provisioning-fails) page:
+
+| Reason | What to do |
+|---|---|
+| GitHub App installation or authorization is no longer valid | Reinstall or re-authorize the App, then retry |
+| The model credential was not accepted | Correct your key in [model configuration](/model-configuration); saving retries automatically |
+| The model service could not be reached | Check the base URL and key; saving retries automatically |
+| Platform-side failure | Nothing — it recovers automatically. Check back in a minute or two |
+
+Quote the **request ID** if you contact support.
+
+## I cannot connect my repository
+
+| What the page says | Fix |
+|---|---|
+| Not authorized for the Orbi GitHub App | Add the repository to the App installation in GitHub's App settings, then reload |
+| Issues are disabled | Enable Issues under the repository's **Settings → Features**, then retry |
+| A delivery is still in progress | Wait for it to reach `ai-merged` or `ai-blocked`, then rebind |
+| The repository list was temporarily unavailable | Retry; use **Enter manually** if it persists |
+| Repository format is invalid | Enter it as `owner/repository` |
+
+## The GitHub App was uninstalled
+
+The status page detects this and says so, offering **Reinstall the Orbi GitHub App**. Reinstalling on the same account reconnects to your existing tenant — your history and settings are intact. You may need to reconnect the repository afterwards.
+
+## Issues got disabled on my repository
+
+If the Issues feature is turned off after connecting, the status page says so and links to your repository's settings. Re-enable **Settings → Features → Issues** — Orbi's entire input channel is Issues, so nothing can run without it.
+
+## My quota is draining faster than expected
+
+Check the **Monthly cache hit rate** on the status page. Cache-miss tokens cost about **50 times** more than cache hits, so a rate below 90% burns quota dramatically faster. The page flags this when it applies, and the per-work-item usage details let you see which deliveries were expensive.
+
+Large, vague Issues cost far more than small, specific ones — both in tokens and in repair rounds.
+
+## Usage shows `—`
+
+That work item never reported usage statistics. It is a gap in measurement, not a sign the delivery failed. If measurement is unhealthy across the board, the quota guard fails closed and pauses new dispatch rather than spending against numbers it cannot trust — that state clears by itself.
+
+## My session expired
+
+Sign in again. Nothing is lost: your repository connection, model configuration and delivery history belong to your tenant, not to the browser session.
+
+## The page is in the wrong language
+
+Use the 🇬🇧 / 🇨🇳 flags in the top right. The choice is stored for a year on that browser.
+
+## Getting help
+
+The **Technical support** card at the bottom of the status page links to the Telegram group, with a QR code for your phone. That is the support channel.
+
+When you report a problem, include:
+
+- What you did and what you expected.
+- The Issue or pull request URL.
+- The **request ID** if a provisioning failure is involved.
+- What the status page says — the exact wording of the banner.
+
+Never paste an API key, a token, or any credential into a support message, an Issue or a pull request.

@@ -1,0 +1,61 @@
+---
+sidebarTitle: "Install the GitHub App"
+description: "How do I install the Orbi GitHub App and what permissions is it asking for?"
+---
+# Install the GitHub App
+
+Installing the Orbi GitHub App is how Orbi gets access to a repository, and you choose exactly which repositories it covers.
+
+Signing in tells Orbi who you are. The App installation is the separate, revocable grant that lets it read your Issues and open pull requests. You approve it on GitHub, you scope it on GitHub, and you can remove it on GitHub.
+
+## Install it
+
+From the status page, click **Connect repository**. If the App is not installed yet, you are taken to GitHub's installation screen.
+
+On that screen:
+
+1. Choose the **account or organization** that owns the repository you want Orbi to work in.
+2. Select **Only select repositories**.
+3. Pick the repository.
+
+Approve the installation. GitHub returns you to Orbi Cloud, on the [Connect repository](/connect-repository) page.
+
+<Note>
+Installing on an organization creates a separate Orbi tenant for that organization, with its own subscription and usage. Installing on your personal account creates a personal one. They are not shared.
+</Note>
+
+## What the permissions are for
+
+GitHub shows you the full permission list before you approve. Here is what each one is used for:
+
+| Permission | Access | Why Orbi needs it |
+|---|---|---|
+| Issues | Read and write | To read the Issue you labelled, add the `ai-*` labels, and post progress and failure comments. On GitHub, labels, comments and milestones all fall under this one permission |
+| Pull requests | Read and write | To open the pull request, comment on it, and merge it once the review is clean |
+| Contents | Read and write | To fetch your repository and push the branch the delivery works on |
+| Checks | Read-only | To read the CI result on a commit at the release and merge gates |
+| Workflows | Read and write | So a delivery that changes a file under `.github/workflows/` is not silently rejected by GitHub |
+| Variables | Read and write | To sync the repository variable the triage workflow reads |
+| Administration | Read and write | Used only when registering a deploy key for a brand-new environment; skipped once the environment is keyed |
+
+These are the permissions that let an agent do the job you are asking it to do: write code on a branch, open a pull request, and merge it after review. If your organization's policy does not permit granting write access to pull requests and contents, Orbi Cloud cannot deliver into that repository.
+
+## Changing which repositories are covered
+
+Orbi works in **one connected repository at a time**, but the App installation can be authorized for more than one. If your target repository is not offered on the connect page, the App was installed without it.
+
+To fix that, open GitHub's App settings — the **Cannot find your repository?** section on the connect page links straight there — and add the repository to the installation. Then return to Orbi Cloud and reload the connect page.
+
+## Revoking
+
+Uninstall the Orbi GitHub App from GitHub at any time: **Settings → Applications → Installed GitHub Apps → Orbi → Configure → Uninstall** (for an organization, the same path under the organization's settings).
+
+Uninstalling immediately removes Orbi's access to your code. The status page detects it and tells you **The GitHub App was uninstalled**, offering to reinstall.
+
+<Note>
+Uninstalling the App does not cancel a subscription. Cancel that separately through [billing](/billing).
+</Note>
+
+## If you reinstall
+
+Reinstalling the App on the same account reconnects it to your existing tenant — your delivery history and settings are still there. You may need to reconnect your repository afterwards; the status page tells you when that is the case.

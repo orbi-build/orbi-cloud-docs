@@ -1,0 +1,70 @@
+---
+sidebarTitle: "Limits and quotas"
+description: "What are the free allowance and the monthly token quota, and what happens when I reach them?"
+---
+# Limits and quotas
+
+Two limits apply: a free allowance of 3 merged deliveries before you subscribe, and 300,000,000 tokens of model usage per month once you do.
+
+Both work the same way when they are reached: newly dispatched work is paused with an explanation on the Issue, and **a delivery that is already running is never interrupted**.
+
+## The free allowance
+
+Your first **3 merged deliveries are free**. No card, no subscription.
+
+A slot is taken when you label an Issue `ai-ready`, and it is **refunded** if that delivery does not end in a merge — an Issue that ends `ai-blocked`, or that you close without merging, gives its slot back. That is why the allowance is described as three *merged* deliveries rather than three attempts.
+
+Counting is per Issue and idempotent: re-labelling the same Issue does not consume another slot. Re-delivering the same Issue after a refund uses the slot it gave back.
+
+### When the allowance runs out
+
+The next Issue you label `ai-ready` has that label removed and gets a comment saying the free allowance is used up, with a link to subscribe.
+
+![The status page for a tenant whose free allowance is used up](/images/status-free-exhausted.png)
+
+**To resume:** subscribe, then **re-apply the `ai-ready` label** to the Issue. The label is not restored automatically. Deliveries already in flight when the allowance ran out finish normally.
+
+## The monthly token quota
+
+A subscription includes **300,000,000 tokens per calendar month (UTC)**. There is no per-token overage billing — when the allowance is used up, new deliveries pause until the next month starts.
+
+Usage counts input tokens, output tokens and cache-read tokens. Re-delivering the same Issue accumulates: each delivery is a separate run.
+
+As a rough guide, 300M tokens covers somewhere between **85 and 400 merged deliveries** depending on how large the tasks are. That range assumes your provider supports prompt caching.
+
+### Watching your usage
+
+The **Monthly usage** card on the status page shows tokens used against the limit, how many remain, and a percentage bar.
+
+Beside it, **Monthly cache hit rate** matters more than it looks. Cache-miss tokens cost roughly **50 times** more than cache hits, so a rate below 90% burns the quota noticeably faster. If yours is low, it is worth understanding why before assuming the quota is too small.
+
+Each work item also has its own usage detail — input, output and cache tokens, runtime, model requests and how many times the run resumed. Work that never reported usage shows `—`.
+
+### When the quota runs out
+
+The behaviour matches the free allowance: the `ai-ready` label is removed from newly dispatched Issues and a comment explains why, naming your actual usage and the cap. In-flight deliveries are untouched.
+
+**To resume:** wait for the next calendar month, or [configure your own model key](/model-configuration) — BYOK usage is measured but never paused. Either way you must **re-apply `ai-ready`** yourself.
+
+<Note>
+If Orbi's usage measurement is unhealthy, the quota check fails closed rather than guessing — new dispatch pauses with a comment saying usage collection is temporarily abnormal. This is deliberate: it will not spend against a number it cannot trust. It clears on its own.
+</Note>
+
+## What is never interrupted
+
+Neither limit ever stops work in progress. Both guards only act on an Issue that has just been labelled `ai-ready` and carries no other `ai-*` label — so a delivery that is `ai-in-progress`, `ai-pr-opened` or `ai-fix-needed` runs to completion regardless.
+
+Platform upgrades and deployments have the same property: they never restart a delivery that is already executing.
+
+## The one-repository limit
+
+Orbi Cloud works in **one active repository at a time**. You can change which one at any time — see [connect a repository](/connect-repository#changing-the-connected-repository) — but not while a delivery is in flight.
+
+## Summary
+
+| Limit | Value | At the limit | To resume |
+|---|---|---|---|
+| Free allowance | 3 merged deliveries | `ai-ready` removed, comment with subscribe link | Subscribe, re-apply `ai-ready` |
+| Monthly tokens | 300,000,000 per calendar month (UTC) | `ai-ready` removed, comment naming usage and cap | Next month, or BYOK; re-apply `ai-ready` |
+| Active repositories | 1 | Connecting another replaces it | — |
+| Pickup interval | Up to 5 minutes | — | — |

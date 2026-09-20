@@ -1,0 +1,96 @@
+---
+sidebarTitle: "Releases"
+description: "How do I cut a release, and what does Orbi check before it tags one?"
+---
+# Releases
+
+You cut a release by typing a version into **Cut a release** on the status page, and Orbi runs the release deterministically from there.
+
+Releases are never automatic. Orbi does not decide that your work is ready to ship, and it never increments a version for you — the next version is a product decision. What Orbi does, once you have named the version, is run the release the same way every time: check the gates, verify the scope item by item, bump the version, wait for CI, tag, publish, and close the milestone.
+
+A release is not a development task. There is no model session and no pull request; it runs a fixed state machine.
+
+## Cut a release
+
+In the **Connected repository** card on the status page, find **Cut a release (version)**.
+
+![The Cut a release form on the status page, with a version field and the base branch and version file shown](/images/status-active.png)
+
+1. Type the version, in the form `v1.2.3` — a leading `v` followed by dot-separated numbers. Anything else is rejected before an Issue is created.
+2. Click **Cut a release**.
+
+Orbi creates a Release Issue in your connected repository, labelled `ai-ready` and `ai-release`, and takes you straight to it. From there the engine picks it up like any other dispatched work.
+
+Below the form, the card shows you what the release will use: the **base branch**, and the **version file** it detected in your repository.
+
+### The milestone requirement
+
+The release scope comes from **the milestone whose title is exactly the version you typed** — so `v1.2.3` needs a milestone called `v1.2.3`.
+
+Orbi does not create that milestone for you. Without it, the release stops at scope derivation and explains why. Create the milestone and put the Issues and pull requests it covers into it before cutting the release.
+
+### If the form reports an error
+
+| What it says | Cause | Fix |
+|---|---|---|
+| Invalid version | The version is not `vN.N…` | Retype it, for example `v1.2.3` |
+| No repository | No active repository is connected | [Connect one](/connect-repository) |
+| Version file could not be probed | Orbi could not determine how your project declares its version | See below |
+| GitHub error | GitHub could not be reached, or the App lacks permission | Retry; if it persists, reinstall the App |
+
+### The version file
+
+Orbi detects how your project declares its version, checking in this order:
+
+`pyproject.toml`, `package.json`, `pom.xml`, `build.gradle`, `build.gradle.kts`, `gradle.properties`, `Cargo.toml`, `composer.json`, `pubspec.yaml`
+
+If none is present, the release is **tag-only** — no version bump, just the tag and the GitHub Release. Orbi refuses to guess: rather than defaulting to `pyproject.toml` and bumping the wrong file, it reports that the probe failed.
+
+## Writing the Release Issue yourself
+
+The form is a convenience. You can create the Release Issue by hand instead — label it `ai-ready` and `ai-release`, and give it a `## Release` section:
+
+```text
+## Release
+
+- version: v1.2.3
+- base_branch: main
+- version_file: package.json
+- scope_from_milestone: v1.2.3
+```
+
+The section is parsed strictly: a missing, duplicated or unknown field fails immediately. Instead of `scope_from_milestone` you may list the scope explicitly as `#N` references.
+
+## What Orbi checks before it tags
+
+The gates run in order, and a gate that cannot be checked counts as failed.
+
+**The base is frozen first.** The release commit is exactly the tip of your base branch at claim time; everything after this is evaluated against that one commit.
+
+**No unfinished work in the release's milestone.** If any Issue in it is still `ai-in-progress`, `ai-pr-opened` or `ai-fix-needed`, the release stops. Open pull requests are deliberately *not* a gate — an open pull request is queue state, not a statement about the release.
+
+**CI must be green on the release commit.** This is the test acceptance, and it is the part worth understanding properly:
+
+> **Your CI decides what Orbi guarantees.** The gate reads your repository's GitHub Actions check runs on the release commit. Put unit tests there and the release guarantees your code logic. Put a business-flow end-to-end test there and it guarantees the loop closes. Run no CI at all and the gate passes with explicit "no check runs" evidence — the release still ships, without its only test acceptance.
+
+A pending check is not a failure: the gate waits for the final conclusion, up to 30 minutes by default, reporting progress while it waits. A timeout is reported as a timeout, never disguised as a CI failure.
+
+**Every scope item is verified live.** Each item must be a merged pull request, or an Issue closed as completed. Checkbox state in the Issue body is ignored entirely — the check goes to the GitHub API. An Issue closed as "not planned" is recorded as excluded and left out of the changelog.
+
+## What it produces
+
+- An **annotated tag** at the release commit, pushed normally — never with `--force`. If the tag already exists it must point at exactly that commit, or the release fails rather than moving it.
+- A **GitHub Release** whose notes carry the full evidence: version, tag, release commit, per-item scope evidence, gate evidence and test evidence.
+- The **milestone closed**.
+
+Every step is idempotent, so a release that failed on a gate can be retried after you fix the cause — it resumes rather than starting over.
+
+## When a release fails
+
+A red or timed-out CI takes the normal failure path and the Issue is marked `ai-blocked` with the reason.
+
+The version bump may already be on your base branch at that point, which is an acceptable state: the bump is idempotent, so repairing CI and re-running prepares the same version again safely.
+
+## Why releases stay manual
+
+The release label is the one switch Orbi never flips itself. Everything else in the loop is automatic because a mistake is recoverable — a bad pull request is closed, a blocked Issue re-dispatched. A published tag and a GitHub Release are public and much harder to take back, so that decision stays with a person.

@@ -1,0 +1,58 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "name": "Orbi Cloud",
+  "theme": "mint",
+  "colors": {
+    "primary": "#1d76db"
+  },
+  "navigation": {
+    "languages": [
+      {
+        "language": "en",
+        "default": true,
+        "groups": [
+          {
+            "group": "Start here",
+            "icon": "rocket",
+            "pages": [
+              "index",
+              "quickstart"
+            ]
+          },
+          {
+            "group": "Set up",
+            "icon": "sliders",
+            "pages": [
+              "sign-in",
+              "install-app",
+              "connect-repository",
+              "provisioning",
+              "model-configuration",
+              "billing"
+            ]
+          },
+          {
+            "group": "Deliver",
+            "icon": "compass",
+            "pages": [
+              "first-issue",
+              "delivery-lifecycle",
+              "status-page",
+              "releases"
+            ]
+          },
+          {
+            "group": "Reference",
+            "icon": "book",
+            "pages": [
+              "limits-and-quotas",
+              "troubleshooting",
+              "security",
+              "faq"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

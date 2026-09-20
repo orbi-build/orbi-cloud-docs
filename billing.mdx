@@ -1,0 +1,64 @@
+---
+sidebarTitle: "Billing"
+description: "How do I subscribe, manage my payment method, or cancel?"
+---
+# Billing
+
+Subscribing and cancelling both happen through Stripe, reached from the **Account** card on the status page.
+
+Orbi Cloud does not hold your card details. Payment, invoices and cancellation are handled by Stripe's own hosted pages.
+
+## The plan
+
+| | |
+|---|---|
+| Free allowance | **3 merged deliveries**, no card required |
+| Price after that | **US$79 per month** |
+| Included model usage | **300,000,000 tokens per calendar month** |
+| Overage billing | None — deliveries pause at the cap instead |
+
+Failed deliveries do not consume the free allowance. See [limits and quotas](/limits-and-quotas) for exactly how both allowances are counted.
+
+Self-hosting the open-source [Orbi](https://orbi.build/?ref=cloud-docs-billing) engine is free, and stays free.
+
+## Subscribe
+
+On the status page, in the **Account** card, click **Subscribe with Stripe**. You are taken to Stripe Checkout; completing payment returns you to Orbi Cloud.
+
+Your subscription activates as soon as Stripe confirms the payment — you do not need to do anything else, and you do not need to reconnect your repository or reconfigure anything.
+
+<Note>
+You do not have to subscribe before trying Orbi Cloud. Sign-in, App installation, connecting a repository, provisioning and your first three merged deliveries are all free.
+</Note>
+
+## Manage your subscription
+
+Once subscribed, the same place in the **Account** card becomes **Manage subscription**. It opens the Stripe billing portal, where you can update your payment method, download invoices, and cancel.
+
+## Subscription states
+
+The **Subscription status** line in the **Account** card shows where you stand:
+
+| What it says | What it means |
+|---|---|
+| **Founding Pilot** | An active paid subscription |
+| **Subscription active** | Your subscription is in good standing |
+| **Past due (payment failed)** | Stripe could not charge your payment method |
+
+If you are **past due**, fix the payment method in the same billing portal — the portal is reachable in that state precisely so you can repair it. While past due, your tenant is treated as unsubscribed for dispatch purposes, so new Issues are subject to the free allowance rules.
+
+## Cancelling
+
+Cancel through the Stripe billing portal. Cancelling stops future charges; it does not delete your repository connection, your delivery history or your model configuration.
+
+After cancelling you keep whatever remains of your free allowance behaviour — that is, new dispatch follows the unsubscribed rules described in [limits and quotas](/limits-and-quotas).
+
+To remove Orbi's access to your code entirely, [uninstall the GitHub App](/install-app#revoking). Cancelling a subscription and uninstalling the App are separate actions.
+
+## Founding Partner
+
+The first ten subscribers are Founding Partners: the subscription is free, with the 300M monthly tokens covered, in exchange for one accepted Issue per month steering the product. The coupons are limited in number; once they run out, subscriptions are at the regular US$79.
+
+## Invoices and receipts
+
+All invoices live in the Stripe billing portal under **Manage subscription**. Orbi Cloud does not email them separately.
