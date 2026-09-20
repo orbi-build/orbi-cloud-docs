@@ -1,7 +1,7 @@
 ---
-title: "Cut a Release with Orbi Cloud"
+title: "Cut a Release in Orbi Cloud: Gates, Tag, GitHub Release"
 sidebarTitle: "Releases"
-description: "Type a version in the Cut a release form on the status page. Orbi runs a deterministic release state machine: gates, version bump, CI, tag, and GitHub Release."
+description: "Type a version in the Cut a release form, and Orbi runs the same deterministic gates every time: base frozen, scope clean, CI green, then tag."
 ---
 
 Releases in Orbi are never automatic. You name the version, you decide when to cut it, and Orbi runs the same deterministic process every time — the same gates, in the same order, producing the same evidence. Nothing is published until every gate passes.

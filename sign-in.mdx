@@ -1,7 +1,7 @@
 ---
-title: "Sign In to Orbi Cloud with GitHub OAuth"
+title: "Sign In to Orbi Cloud with GitHub OAuth Authentication"
 sidebarTitle: "Sign In"
-description: "Orbi Cloud uses GitHub OAuth to identify you. Signing in requests only your email — no repository access is granted at this stage."
+description: "Orbi Cloud uses GitHub OAuth with the user:email scope to identify you. No repository access is granted until you separately install the GitHub App."
 ---
 
 Signing in to Orbi Cloud is a single GitHub OAuth click. The process requests only your identity and email address — Orbi cannot read, write, or interact with any of your repositories until you separately install the GitHub App.
@@ -28,9 +28,9 @@ Signing in with GitHub OAuth establishes your identity inside Orbi Cloud. It doe
   <img src="/images/signin.png" alt="The Orbi Cloud sign-in page" />
 </Frame>
 
-<Info>
+<Tip>
   If you ever want to review what OAuth scopes Orbi holds, go to **GitHub → Settings → Applications → Authorized OAuth Apps**.
-</Info>
+</Tip>
 
 ## Personal and Organization Accounts
 
@@ -51,7 +51,7 @@ Orbi Cloud supports **English** and **Chinese**. Toggle between them using the �
 
 A session lasts **7 days** from the moment you sign in. Sessions are **not** extended by activity — browsing the status page or triggering deliveries does not reset the clock.
 
-When your session expires, the status page displays:
+When your session expires, the status page displays the message **"GitHub sign-in has expired"** along with a **Sign in again** link.
 
 <Frame caption="The signed-out confirmation page">
   <img src="/images/signed-out.png" alt="The signed-out confirmation page" />

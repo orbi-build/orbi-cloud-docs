@@ -1,5 +1,5 @@
 ---
-title: "Repository Provisioning: What Happens and What to Do If It Fails"
+title: "Orbi Cloud Provisioning: What Happens After You Connect"
 sidebarTitle: "Provisioning"
 description: "Provisioning builds the isolated environment your deliveries run in. It starts automatically when you connect a repository and takes one to two minutes."
 ---
@@ -16,7 +16,7 @@ Inside that environment, Orbi:
 2. Installs the delivery engine.
 3. Runs the engine's setup step.
 
-The setup step is declarative. It inspects your repository's labels and creates any `ai-*` labels that are missing — `ai-ready`, `ai-in-progress`, `ai-pr-opened`, `ai-fix-needed`, `ai-merged`, `ai-blocked`, and others used internally. If a label exists but has drifted from the expected colour or description, setup corrects it. Setup never deletes labels. Your own labels — `bug`, `enhancement`, and anything else you have created — are never touched.
+The setup step is declarative. It inspects your repository's labels and creates any `ai-*` labels that are missing — `ai-ready`, `ai-in-progress`, `ai-pr-opened`, `ai-fix-needed`, `ai-merged`, and `ai-blocked`. If a label exists but has drifted from the expected colour or description, setup corrects it. Setup never deletes labels. Your own labels — `bug`, `enhancement`, and anything else you have created — are never touched.
 
 ## Watching Provisioning
 
@@ -36,6 +36,8 @@ When provisioning stops, the card always names a specific reason and tells you t
 <Frame caption="The status page showing a failed provisioning with reason, time, request ID and next step">
   <img src="/images/status-provision-failed.png" alt="The status page showing a failed provisioning with reason, time, request ID and next step" />
 </Frame>
+
+### GitHub App Not Valid
 
 **Cause:** The Orbi GitHub App was uninstalled after you connected your repository, or access to the specific repository was removed.
 

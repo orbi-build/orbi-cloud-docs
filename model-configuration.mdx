@@ -1,7 +1,7 @@
 ---
-title: "Configure Your AI Model or Use the Included Quota"
+title: "Configure Your AI Model or Use Your Included Quota"
 sidebarTitle: "Model Config"
-description: "Orbi Cloud includes 300M tokens/month with no setup required. Optionally bring your own API key to use a specific provider, model, or avoid the monthly cap."
+description: "Orbi Cloud includes 300M tokens/month — no setup required. Bring your own API key to use a specific provider, model, or bypass the monthly token cap."
 ---
 
 Orbi Cloud works out of the box — your subscription includes a shared model channel, and every delivery draws from your 300M token monthly quota with no configuration required. Bringing your own key (BYOK) is entirely optional. When you do configure a key, it replaces the platform channel for your tenant only; your own provider account is billed directly for token usage, and the monthly quota pause no longer applies to you.
@@ -30,21 +30,30 @@ From the status page, in the **Model configuration** card, click **Optional: con
 
 Click **Save model configuration**.
 
-Saving takes effect for deliveries that start afterwards. If provisioning had failed because of a bad credential, saving a corrected configuration retries it automatically.
+<Note>
+  Saving takes effect for deliveries that start afterwards — any delivery already in progress continues with whatever configuration it launched with. If provisioning previously failed because of a bad key, saving a corrected key retries provisioning automatically.
+</Note>
 
-## How your key is stored
+## How Your Key Is Stored
 
-Your API key is **encrypted at rest** and is only ever displayed back to you masked — the page shows something like `••••1234`, never the key itself. It is never written to logs, never included in support evidence bundles, and never shown in any interface that could be shared.
+Your API key is handled with the following protections from the moment you submit it:
+
+- **Encrypted at rest** using AES-256-GCM — the plaintext key is never persisted to disk.
+- **Shown back to you masked only** (for example, `••••1234`) — the full key is never displayed after entry.
+- **Never written to logs** or included in support bundles exported from the platform.
+- **Never shown in any interface** that could be screen-shared, copied, or forwarded.
 
 <Frame caption="The model configuration page showing a saved configuration with the key masked">
   <img src="/images/model-config-set.png" alt="The model configuration page showing a saved configuration with the key masked" />
 </Frame>
 
-Do not send your key over email or paste it into a GitHub Issue, pull request or comment. Enter it on this page — that is the only channel you need.
+<Warning>
+  Do not paste your API key into a GitHub Issue, pull request, or comment. Enter it only on the model configuration page. Keys accidentally exposed in GitHub should be rotated immediately with your provider.
+</Warning>
 
-## Supported providers
+## Supported Providers
 
-Selecting one of these fills in its base URL automatically. Their names appear in the dropdown as shown in the **In the dropdown** column.
+Selecting a provider from the dropdown fills in its base URL automatically. Their names appear in the dropdown as shown in the **In the dropdown** column.
 
 | Provider | In the dropdown | Base URL |
 |---|---|---|
@@ -68,52 +77,6 @@ Selecting one of these fills in its base URL automatically. Their names appear i
 | Volcengine Ark | 火山方舟 | `https://ark.cn-beijing.volces.com/api/v3` |
 | Anthropic (compatibility layer) | Anthropic（兼容层） | `https://api.anthropic.com/v1` |
 | Google Gemini (compatibility layer) | Google Gemini（兼容层） | `https://generativelanguage.googleapis.com/v1beta/openai` |
-
-Each provider offers a list of known model IDs in the **model_id** dropdown. That list is a convenience, not a limit — **Enter another model** accepts any model ID the provider serves.
-
-<Note>
-  Saving takes effect for deliveries that start afterwards — any delivery already in progress continues with whatever configuration it launched with. If provisioning previously failed because of a bad key, saving a corrected key retries provisioning automatically.
-</Note>
-
-## How Your Key Is Stored
-
-Your API key is handled with the following protections from the moment you submit it:
-
-- **Encrypted at rest** using AES-256-GCM — the plaintext key is never persisted to disk.
-- **Shown back to you masked only** (for example, `••••1234`) — the full key is never displayed after entry.
-- **Never written to logs** or included in support bundles exported from the platform.
-- **Never shown in any interface** that could be screen-shared, copied, or forwarded.
-
-<Warning>
-  Do not paste your API key into a GitHub Issue, pull request, or comment. Enter it only on the model configuration page. Keys accidentally exposed in GitHub should be rotated immediately with your provider.
-</Warning>
-
-## Supported Providers
-
-Selecting a provider from the dropdown fills in its base URL automatically. The full list of built-in providers is below.
-
-| Provider | Base URL |
-|----------|----------|
-| OpenAI | `https://api.openai.com/v1` |
-| DeepSeek | `https://api.deepseek.com/v1` |
-| Z.ai (GLM) | `https://api.z.ai/api/paas/v4` |
-| Z.ai Coding Plan | `https://api.z.ai/api/coding/paas/v4` |
-| Zhipu BigModel | `https://open.bigmodel.cn/api/paas/v4` |
-| Moonshot Kimi (China) | `https://api.moonshot.cn/v1` |
-| Moonshot Kimi (International) | `https://api.moonshot.ai/v1` |
-| OpenRouter | `https://openrouter.ai/api/v1` |
-| Groq | `https://api.groq.com/openai/v1` |
-| Alibaba DashScope (Qwen) | `https://dashscope.aliyuncs.com/compatible-mode/v1` |
-| xAI | `https://api.x.ai/v1` |
-| Mistral | `https://api.mistral.ai/v1` |
-| MiniMax (China) | `https://api.minimax.chat/v1` |
-| MiniMax (International) | `https://api.minimaxi.com/v1` |
-| SiliconFlow | `https://api.siliconflow.cn/v1` |
-| Together | `https://api.together.xyz/v1` |
-| Cerebras | `https://api.cerebras.ai/v1` |
-| Volcengine Ark | `https://ark.cn-beijing.volces.com/api/v3` |
-| Anthropic (compatibility layer) | `https://api.anthropic.com/v1` |
-| Google Gemini (compatibility layer) | `https://generativelanguage.googleapis.com/v1beta/openai` |
 
 <Note>
   A provider appearing in this list is not a guarantee that your account has quota, access, or sufficient rate limits for any specific model. If a model is unavailable to your key, the delivery fails and the provider's error message is surfaced in the delivery status.

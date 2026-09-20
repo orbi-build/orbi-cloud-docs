@@ -12,7 +12,7 @@ Orbi reaches only what you explicitly hand it:
 
 - **Your authorized repositories only.** Orbi acts within the repositories included in your GitHub App installation. It performs no discovery and has no access to repositories outside that installation — including other repositories in the same organization or account.
 - **Your identity via OAuth.** The sign-in flow requests the `user:email` scope only. This establishes who you are so Orbi can associate your session with your tenant. It does not grant any repository access.
-- **Minimum repository permissions.** The GitHub App requests only the permissions required to do its job: read Issues, apply and remove labels, post comments, push a branch, open a pull request, and merge that pull request after review. The full list appears on GitHub's install screen and is documented in [Install the GitHub App](/install-app).
+- **Minimum repository permissions.** The GitHub App requests only the permissions required to carry out the full delivery lifecycle. The seven permissions are: **Issues** (read and write — labels, comments, milestones), **Pull requests** (read and write — open, review, and merge the delivery PR), **Contents** (read and write — fetch the repository and push the delivery branch), **Checks** (read-only — read CI results at each gate), **Workflows** (read and write — push files under `.github/workflows/` without silent rejection), **Variables** (read and write — synchronize delivery state), and **Administration** (read and write — register a deploy key during initial provisioning only). A full explanation of each permission appears in [Install the GitHub App](/install-app).
 
 ## Revoking Access
 

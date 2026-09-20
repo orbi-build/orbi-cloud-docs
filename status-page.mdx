@@ -1,5 +1,5 @@
 ---
-title: "Reading the Orbi Cloud Status Page"
+title: "The Orbi Cloud Status Page: Layout and Reference Cards"
 sidebarTitle: "Status Page"
 description: "The status page at orbi.build/api/ shows what Orbi is doing, what needs your attention, and how much quota you have used this month."
 ---
@@ -81,26 +81,8 @@ During repository provisioning, the page auto-refreshes so you can watch the ste
 
 ## Mobile
 
-Whether you are on the included platform quota or your own key. If you configured a key, it is shown masked. See [model configuration](/model-configuration).
-
-### Account
-
-Your GitHub login, your subscription status, and the buttons for **Manage subscription** (or **Subscribe with Stripe**) and **Sign out**.
-
-### Technical support
-
-A link and a QR code for the Telegram group. That is the support channel — see [troubleshooting](/troubleshooting#getting-help).
-
-## On a phone
-
 The page is designed to work at phone width; the tables reflow rather than scrolling sideways.
 
 <Frame caption="The status page at phone width">
   <img src="/images/status-active-mobile.png" alt="The status page at phone width" />
 </Frame>
-
-## Refreshing
-
-The page refreshes itself while provisioning is running, so you can leave it open during that minute or two. Otherwise reload it to get the current state — it reads GitHub live, so what it shows is the real state of your Issues, not a cached copy.
-
-If Orbi cannot reach GitHub at the moment, the page says **Can't reach Orbi right now** or that delivery data is temporarily unavailable, rather than showing you a misleading empty list.

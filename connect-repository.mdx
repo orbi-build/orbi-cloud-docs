@@ -1,10 +1,17 @@
 ---
-title: "Connect a Repository to Orbi Cloud"
+title: "Connect a GitHub Repo to Orbi Cloud for AI Delivery"
 sidebarTitle: "Connect Repository"
-description: "Connect one repository to Orbi Cloud to set the scope of where Issues are delivered and which branch receives pull requests."
+description: "Link your GitHub repository so Orbi knows which Issues to act on, which branch to open pull requests against, and where to deliver completed work."
 ---
 
 Connecting a repository tells Orbi which repo's Issues to act on and which branch to open pull requests against. Orbi works with one active repository at a time — you pick the repo, pick the base branch, and Orbi provisions itself automatically. Previous repository connections are retained in history and are never deleted.
+
+## Requirements
+
+Before connecting a repository, make sure it meets both of the following requirements:
+
+- **Orbi GitHub App installed and authorized for the repository.** The repository must be within the scope of your Orbi GitHub App installation. If it is not, Orbi cannot read Issues or open pull requests on your behalf.
+- **Issues enabled.** GitHub's Issues feature must be turned on for the repository. You can check this in the repository's **Settings → Features** section.
 
 ## Connect Your Repository
 
@@ -25,10 +32,6 @@ Connecting a repository tells Orbi which repo's Issues to act on and which branc
     You are returned to the status page and provisioning starts automatically. This typically takes **1–2 minutes**. The status page will update when the repository is ready for deliveries.
   </Step>
 </Steps>
-
-## Requirements
-
-Before connecting a repository, make sure it meets both of the following requirements:
 
 <Frame caption="The Connect repository page, showing the repository and base branch dropdowns">
   <img src="/images/connect.png" alt="The Connect repository page, showing the repository and base branch dropdowns" />
@@ -58,15 +61,15 @@ If you know the repository's exact path, you can also use the **Enter manually**
 
 ## Changing the Connected Repository
 
-<Frame caption="The connect page in its degraded state, with manual entry fields and a stated reason">
-  <img src="/images/connect-degraded.png" alt="The connect page in its degraded state, with manual entry fields and a stated reason" />
-</Frame>
-
 The previously connected repository moves to **Historical Repositories** at the bottom of the status page. It is not deleted — its delivery history and configuration are preserved and remain readable.
 
 <Note>
   You cannot change the connected repository while a delivery is in flight. Wait until the current delivery reaches `ai-merged` or `ai-blocked` before switching repositories.
 </Note>
+
+<Frame caption="The connect page in its degraded state, with manual entry fields and a stated reason">
+  <img src="/images/connect-degraded.png" alt="The connect page in its degraded state, with manual entry fields and a stated reason" />
+</Frame>
 
 ## Error Reference
 
@@ -77,4 +80,5 @@ If something goes wrong during the connection step, the status page will display
 | Not authorized for the Orbi GitHub App | The repository is outside the scope of your App installation | Add the repository in GitHub → Settings → Applications → Installed GitHub Apps → Orbi → Configure, then reload |
 | Issues are disabled | The Issues feature is turned off for this repository | Enable Issues in the repository's **Settings → Features** |
 | A delivery is still in progress | A delivery is currently running on the active repository | Wait for the delivery to reach `ai-merged` or `ai-blocked`, then try again |
+| Repository list unavailable | Orbi could not fetch the list of repositories from GitHub | Reload the page; if the problem persists, check your GitHub App installation is still active |
 | Repository format is invalid | The manually entered value is not valid `OWNER/REPO` format | Re-enter the repository as `owner/repository` (for example, `acme-corp/backend`) |
