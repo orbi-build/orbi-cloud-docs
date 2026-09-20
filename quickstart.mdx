@@ -15,7 +15,9 @@ This is the shortest complete path. Every step ends with a **Success** check so 
 
 Open **[orbi.build/api/](https://orbi.build/api/)** and click **Sign in with GitHub**.
 
-![The Orbi Cloud sign-in page, with the Sign in with GitHub button](/images/signin.png)
+<Frame caption="The Orbi Cloud sign-in page, with the Sign in with GitHub button">
+  <img src="/images/signin.png" alt="The Orbi Cloud sign-in page, with the Sign in with GitHub button" />
+</Frame>
 
 GitHub asks you to authorize the Orbi Cloud OAuth app. This step only establishes who you are; it does not give Orbi access to any repository yet.
 
@@ -39,7 +41,9 @@ The App needs write access to Issues, pull requests and repository contents to d
 
 Pick your repository from the **Repository** dropdown, then pick the **Base branch** — the branch Orbi opens its pull requests against, normally `main`.
 
-![The Connect repository page, with a repository dropdown and a base branch dropdown](/images/connect.png)
+<Frame caption="The Connect repository page, with a repository dropdown and a base branch dropdown">
+  <img src="/images/connect.png" alt="The Connect repository page, with a repository dropdown and a base branch dropdown" />
+</Frame>
 
 Selecting a repository loads that repository's real branches and preselects its default branch, so in most cases you only need to confirm. Then click **Connect repository**.
 
@@ -71,11 +75,15 @@ That label is the execution switch. Orbi checks for newly labelled Issues on a t
 You can skip the manual labelling. If you already have open Issues, the status page lists them under **Pick one for Orbi to try**, each with a **Let Orbi try this one** button that applies the label for you.
 </Note>
 
-![The status page listing untagged Issues, each with a Let Orbi try this one button](/images/status-ready-issues.png)
+<Frame caption="The status page listing untagged Issues, each with a Let Orbi try this one button">
+  <img src="/images/status-ready-issues.png" alt="The status page listing untagged Issues, each with a Let Orbi try this one button" />
+</Frame>
 
 **Success:** within about five minutes the label `ai-in-progress` appears on the Issue, and the status page's **Happening now** card lists it under **Doing**.
 
-![The status page showing work in progress, usage, the connected repository and the release form](/images/status-active.png)
+<Frame caption="The status page showing work in progress, usage, the connected repository and the release form">
+  <img src="/images/status-active.png" alt="The status page showing work in progress, usage, the connected repository and the release form" />
+</Frame>
 
 From here Orbi writes the code, opens a pull request, reviews it in a separate session and repairs what the review finds. You get a pull request to review when it reaches `ai-pr-opened`, and the Issue reaches `ai-merged` once the reviewed commit is merged.
 

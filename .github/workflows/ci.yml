@@ -54,8 +54,13 @@ jobs:
 
           for path in sorted(glob.glob("*.mdx") + glob.glob("zh/*.mdx")):
               is_zh = path.startswith("zh/")
-              for match in re.finditer(r"\]\((/[^)\s]+)\)", open(path).read()):
-                  target = match.group(1)
+              text = open(path).read()
+              # Images are <Frame><img src=...> rather than Markdown, so both
+              # forms are collected — a check that only reads Markdown links
+              # would pass vacuously now that no image uses that syntax.
+              targets = [m.group(1) for m in re.finditer(r"\]\((/[^)\s]+)\)", text)]
+              targets += [m.group(1) for m in re.finditer(r'<img\s[^>]*src="(/[^"]+)"', text)]
+              for target in targets:
                   if target.startswith("/images/"):
                       if os.path.basename(target) not in images:
                           problems.append(f"{path}: missing image {target}")

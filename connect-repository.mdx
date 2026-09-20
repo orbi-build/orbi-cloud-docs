@@ -13,7 +13,9 @@ Orbi Cloud works in **one active repository at a time**. Connecting is self-serv
 
 From the status page, click **Connect repository** (or **Connect / change repository** in the **Connected repository** card).
 
-![The Connect repository page, showing the repository and base branch dropdowns](/images/connect.png)
+<Frame caption="The Connect repository page, showing the repository and base branch dropdowns">
+  <img src="/images/connect.png" alt="The Connect repository page, showing the repository and base branch dropdowns" />
+</Frame>
 
 1. **Repository** — pick from the repositories your GitHub App installation covers.
 2. **Base branch** — the branch Orbi opens pull requests against. Selecting a repository loads its real branches and preselects its default branch, so usually you just confirm.
@@ -36,7 +38,9 @@ The dropdown only contains repositories your App installation covers. If yours i
 
 You can also use **Enter manually** in either dropdown to type an `OWNER/REPO` value directly. That is useful when the listing is temporarily unavailable, but it does not bypass the authorization check — a repository the App cannot access is still rejected on submit.
 
-![The connect page in its degraded state, with manual entry fields and a stated reason](/images/connect-degraded.png)
+<Frame caption="The connect page in its degraded state, with manual entry fields and a stated reason">
+  <img src="/images/connect-degraded.png" alt="The connect page in its degraded state, with manual entry fields and a stated reason" />
+</Frame>
 
 If GitHub's repository listing cannot be read at all, the page degrades to manual entry and tells you why, rather than blocking you.
 
