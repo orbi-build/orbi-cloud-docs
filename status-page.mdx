@@ -1,43 +1,42 @@
 ---
-title: "The status page"
-sidebarTitle: "Status page"
-description: "How do I read the Orbi Cloud status page?"
+title: "Reading the Orbi Cloud Status Page"
+sidebarTitle: "Status Page"
+description: "The status page at orbi.build/api/ shows what Orbi is doing, what needs your attention, and how much quota you have used this month."
 ---
 
+The status page lives at [orbi.build/api/](https://orbi.build/api/) and is your single view into everything Orbi is doing on your behalf. It is organised by urgency — things that need your attention come first, active work comes second, and reference information sits at the bottom. You do not need to dig through settings to find out whether something is wrong.
 
-The status page at **[orbi.build/api/](https://orbi.build/api/)** is where you see what Orbi is doing, what needs you, and what you have used.
+## Page Layout
 
-It is organised by urgency rather than by feature. The three numbered sections — **① Needs you**, **② Happening now**, **③ Reference** — are in that order on purpose: anything requiring your attention is at the top.
+The page is divided into three numbered sections. You can think of them as three questions answered in order.
 
 <Frame caption="The full status page for an active tenant">
   <img src="/images/status-active.png" alt="The full status page for an active tenant" />
 </Frame>
 
-## ① Needs you
+## ① Needs You
 
-The yellow banner appears only when something is actually waiting on you: a blocked Issue, a failed provisioning, a repository that needs reconnecting, or a disabled Issues setting. It names the problem and gives you the button that fixes it.
+This section appears only when something requires your action. The banner names the problem in plain language and gives you the button or link to resolve it. Once you act, the banner disappears.
 
-When nothing needs you, this section is absent. An empty page here is good news.
+When nothing needs your attention, this section is absent entirely. An empty ① is good news.
 
-## ② Happening now
+## ② Happening Now
 
-The headline sentence is a plain-language summary of your tenant's state — for example **Orbi is coding**, **Orbi opened a PR for you**, **Orbi is stuck and needs you**, **Orbi is idle**, or **Orbi is waiting for your first Issue**.
+The headline sentence at the top of this section gives you a plain-language summary of Orbi's current state — for example, "Orbi is coding", "Orbi is idle", or "Orbi is stuck and needs you". Below it, three tabs break down the work in detail.
 
-Below it, your work is split across three tabs. Each work item appears in exactly one of them:
-
-| Tab | What is in it |
+| Tab | Contents |
 |---|---|
-| **Doing** | Work Orbi is currently handling — anything carrying an `ai-*` label that is not finished |
-| **Awaiting** | Pull requests waiting for your review |
-| **Done** | Finished work: merged, or closed |
+| **Doing** | Work Orbi is currently handling — any Issue carrying an active `ai-*` label |
+| **Awaiting** | Pull requests waiting for your review or approval |
+| **Done** | Finished work: Issues that reached `ai-merged` or were closed |
 
-Each row shows the work item (linking to the GitHub Issue), its status, its pull request, when it was last updated, and its usage. Work that has not reported usage shows `—`.
+Each row in the table shows a link to the work item, a status chip, a PR link where applicable, the time of the last update, and usage for that item. Status chips map directly to labels: **In Progress** corresponds to `ai-in-progress`, **Fix Needed** to `ai-fix-needed`, **Blocked** to `ai-blocked`, and so on.
 
-The status chips map to the labels described in [the delivery lifecycle](/delivery-lifecycle): **In progress**, **Fix needed**, **Blocked**, and so on. Open the work item to see the reason and next steps on the Issue itself.
+### Setup Progress
 
-### Setup progress
+If you have not yet completed the initial setup, a 7-step breadcrumb appears in this section:
 
-Above everything, a seven-step breadcrumb tracks onboarding: **Sign in → Install App → Connect repository → Provision environment → First Issue → Cut a release → Subscribe**. Completed steps are green, the current one is blue, and a step that genuinely failed is red — a step that is merely waiting on you is not treated as a failure. The current step carries a **How to do this step** link.
+**Sign in → Install App → Connect repository → Provision environment → First Issue → Cut a release → Subscribe**
 
 It is the fastest way to see how far you got.
 
@@ -47,23 +46,40 @@ It is the fastest way to see how far you got.
 
 ## ③ Reference
 
-### Monthly usage
+This section contains five cards. They do not change frequently, but they hold the information you need when something goes wrong or when you want to adjust your configuration.
 
-Tokens used this calendar month against your limit, with how many remain and the percentage used.
+<CardGroup cols={2}>
+  <Card title="Monthly Usage">
+    Shows the number of tokens used against your monthly limit, displayed as a percentage bar. The cache hit rate appears beside it. A cache hit rate below 90% means most requests are missing the cache and burning quota roughly 50 times faster than cached requests. If you see a low hit rate, check whether your model or key configuration has changed recently.
+  </Card>
+  <Card title="Connected Repository">
+    Shows your active repository, the base branch Orbi merges into, and the current provisioning status. This card is also where you connect a new repository, switch to a different one, and access the **Cut a release** form.
+  </Card>
+  <Card title="Model Configuration">
+    Shows whether Orbi is using your platform quota or a bring-your-own-key (BYOK) configuration. If you have configured a BYOK API key, it appears masked here. Use this card to add, update, or remove a key and to select which of the 20+ supported providers to use.
+  </Card>
+  <Card title="Account">
+    Shows your GitHub login and your current subscription status. The **Subscribe** or **Manage subscription** button is here, as is the **Sign out** link.
+  </Card>
+</CardGroup>
 
-Beside it, **Monthly cache hit rate**. This one is worth reading: cache-miss tokens cost about 50 times more than cache hits, so a rate below 90% consumes your quota much faster. The page flags that explicitly when it applies.
+The fifth card, **Technical Support**, contains a link to the Telegram support group and a QR code you can scan on mobile. Response from the Orbi team comes through that group.
 
-See [limits and quotas](/limits-and-quotas).
+## Subscription Status Values
 
-### Connected repository
+The Account card displays one of the following status values.
 
-Your active repository, its base branch, and its **Provisioning status**. Repositories you previously connected appear under **Historical repositories** — they are kept, not deleted.
+| Status | Meaning |
+|---|---|
+| Founding Pilot | Active paid subscription at the founding rate |
+| Subscription active | Subscription is in good standing |
+| Past due (payment failed) | Stripe could not charge your payment method — update your card to restore access |
 
-This card is also where **Connect / change repository** lives, and where provisioning failures explain themselves.
+## Page Refresh
 
-It holds the **Cut a release** form too — type a version, and Orbi creates the Release Issue for you. See [releases](/releases).
+During repository provisioning, the page auto-refreshes so you can watch the steps complete without reloading. At all other times, reload manually to see the latest state. The page reads GitHub live on every load — there is no cached copy of your work items. If GitHub is unreachable, the page shows "Can't reach Orbi right now" rather than an empty list that could be mistaken for no active work.
 
-### Model configuration
+## Mobile
 
 Whether you are on the included platform quota or your own key. If you configured a key, it is shown masked. See [model configuration](/model-configuration).
 

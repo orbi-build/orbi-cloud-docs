@@ -1,99 +1,60 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "name": "Orbi Cloud",
-  "theme": "mint",
+  "theme": "luma",
+  "favicon": "https://media.brand.dev/77294c83-5a71-40c2-8b1c-01ee5a0ffb91.svg",
   "colors": {
-    "primary": "#1d76db"
+    "primary": "#10292c",
+    "light": "#7c8c8c",
+    "dark": "#e9eadb"
+  },
+  "font": {
+    "headings": {
+      "family": "Familjen Grotesk"
+    },
+    "body": {
+      "family": "Instrument Sans"
+    }
   },
   "navigation": {
-    "languages": [
+    "tabs": [
       {
-        "language": "en",
-        "default": true,
+        "tab": "Documentation",
         "groups": [
           {
-            "group": "Start here",
-            "icon": "rocket",
+            "group": "Get Started",
             "pages": [
               "index",
-              "quickstart"
-            ]
-          },
-          {
-            "group": "Set up",
-            "icon": "sliders",
-            "pages": [
+              "quickstart",
               "sign-in",
               "install-app",
               "connect-repository",
-              "provisioning",
-              "model-configuration",
-              "billing"
+              "provisioning"
             ]
           },
           {
-            "group": "Deliver",
-            "icon": "compass",
+            "group": "Delivering Work",
             "pages": [
               "first-issue",
               "delivery-lifecycle",
-              "status-page",
-              "releases"
+              "releases",
+              "status-page"
+            ]
+          },
+          {
+            "group": "Configuration",
+            "pages": [
+              "model-configuration",
+              "billing",
+              "limits-and-quotas"
             ]
           },
           {
             "group": "Reference",
-            "icon": "book",
             "pages": [
-              "limits-and-quotas",
-              "troubleshooting",
               "security",
+              "troubleshooting",
               "faq"
-            ]
-          }
-        ]
-      },
-      {
-        "language": "zh",
-        "groups": [
-          {
-            "group": "从这里开始",
-            "icon": "rocket",
-            "pages": [
-              "zh/index",
-              "zh/quickstart"
-            ]
-          },
-          {
-            "group": "开通",
-            "icon": "sliders",
-            "pages": [
-              "zh/sign-in",
-              "zh/install-app",
-              "zh/connect-repository",
-              "zh/provisioning",
-              "zh/model-configuration",
-              "zh/billing"
-            ]
-          },
-          {
-            "group": "交付",
-            "icon": "compass",
-            "pages": [
-              "zh/first-issue",
-              "zh/delivery-lifecycle",
-              "zh/status-page",
-              "zh/releases"
-            ]
-          },
-          {
-            "group": "参考",
-            "icon": "book",
-            "pages": [
-              "zh/limits-and-quotas",
-              "zh/troubleshooting",
-              "zh/security",
-              "zh/faq"
             ]
           }
         ]

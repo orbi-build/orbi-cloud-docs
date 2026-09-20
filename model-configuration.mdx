@@ -1,26 +1,21 @@
 ---
-title: "Model configuration"
-sidebarTitle: "Model configuration"
-description: "Do I need to configure a model, and how do I use my own API key instead?"
+title: "Configure Your AI Model or Use the Included Quota"
+sidebarTitle: "Model Config"
+description: "Orbi Cloud includes 300M tokens/month with no setup required. Optionally bring your own API key to use a specific provider, model, or avoid the monthly cap."
 ---
 
+Orbi Cloud works out of the box — your subscription includes a shared model channel, and every delivery draws from your 300M token monthly quota with no configuration required. Bringing your own key (BYOK) is entirely optional. When you do configure a key, it replaces the platform channel for your tenant only; your own provider account is billed directly for token usage, and the monthly quota pause no longer applies to you.
 
-You do not need to configure a model — a subscription includes model usage — but you can bring your own key if you would rather pay your provider directly.
+## When to Configure Your Own Key
 
-By default, deliveries run on Orbi's platform model channel using the tokens included in your plan. That is why you can install, connect and complete a delivery without entering any key at all.
-
-Configuring your own key — **BYOK**, bring your own key — replaces that channel for your tenant. Use it when you want a specific model, when your organization requires the traffic to go through your own provider account, or when you would rather not be limited by the included monthly quota.
-
-## When you should configure a key
-
-| Situation | What to do |
-|---|---|
-| You just want it to work | Nothing. The included quota is used automatically |
+| Situation | What to Do |
+|-----------|------------|
+| You just want it to work | Nothing — the included quota is used automatically |
 | You want a specific model | Configure BYOK with that provider and model |
-| Your compliance rules require your own provider account | Configure BYOK |
-| You have hit the monthly token quota | Configure BYOK — BYOK tenants are not subject to the quota's pause |
+| Your compliance requires your own provider account | Configure BYOK |
+| You've hit the monthly token quota | Configure BYOK — BYOK tenants are not subject to the quota pause |
 
-## Configure it
+## Configure BYOK
 
 From the status page, in the **Model configuration** card, click **Optional: configure your own model**.
 
@@ -77,24 +72,72 @@ Selecting one of these fills in its base URL automatically. Their names appear i
 Each provider offers a list of known model IDs in the **model_id** dropdown. That list is a convenience, not a limit — **Enter another model** accepts any model ID the provider serves.
 
 <Note>
-A provider being listed is not a promise that your account has quota, access or rate limit for a given model on it. If a model is not available to your key, the delivery fails with the provider's own error.
+  Saving takes effect for deliveries that start afterwards — any delivery already in progress continues with whatever configuration it launched with. If provisioning previously failed because of a bad key, saving a corrected key retries provisioning automatically.
 </Note>
 
-## Using a provider that is not listed
+## How Your Key Is Stored
 
-Choose any provider as a starting point, then edit **baseUrl** to your gateway's URL and type the model ID with **Enter another model**. Any OpenAI-compatible endpoint works. Your configuration is stored as you entered it and shown back to you unchanged.
+Your API key is handled with the following protections from the moment you submit it:
 
-## Removing your key
+- **Encrypted at rest** using AES-256-GCM — the plaintext key is never persisted to disk.
+- **Shown back to you masked only** (for example, `••••1234`) — the full key is never displayed after entry.
+- **Never written to logs** or included in support bundles exported from the platform.
+- **Never shown in any interface** that could be screen-shared, copied, or forwarded.
 
-Clearing your configuration returns your tenant to the platform channel and the included quota.
+<Warning>
+  Do not paste your API key into a GitHub Issue, pull request, or comment. Enter it only on the model configuration page. Keys accidentally exposed in GitHub should be rotated immediately with your provider.
+</Warning>
 
-## What changes when you use BYOK
+## Supported Providers
 
-| | Platform channel (default) | Your own key |
+Selecting a provider from the dropdown fills in its base URL automatically. The full list of built-in providers is below.
+
+| Provider | Base URL |
+|----------|----------|
+| OpenAI | `https://api.openai.com/v1` |
+| DeepSeek | `https://api.deepseek.com/v1` |
+| Z.ai (GLM) | `https://api.z.ai/api/paas/v4` |
+| Z.ai Coding Plan | `https://api.z.ai/api/coding/paas/v4` |
+| Zhipu BigModel | `https://open.bigmodel.cn/api/paas/v4` |
+| Moonshot Kimi (China) | `https://api.moonshot.cn/v1` |
+| Moonshot Kimi (International) | `https://api.moonshot.ai/v1` |
+| OpenRouter | `https://openrouter.ai/api/v1` |
+| Groq | `https://api.groq.com/openai/v1` |
+| Alibaba DashScope (Qwen) | `https://dashscope.aliyuncs.com/compatible-mode/v1` |
+| xAI | `https://api.x.ai/v1` |
+| Mistral | `https://api.mistral.ai/v1` |
+| MiniMax (China) | `https://api.minimax.chat/v1` |
+| MiniMax (International) | `https://api.minimaxi.com/v1` |
+| SiliconFlow | `https://api.siliconflow.cn/v1` |
+| Together | `https://api.together.xyz/v1` |
+| Cerebras | `https://api.cerebras.ai/v1` |
+| Volcengine Ark | `https://ark.cn-beijing.volces.com/api/v3` |
+| Anthropic (compatibility layer) | `https://api.anthropic.com/v1` |
+| Google Gemini (compatibility layer) | `https://generativelanguage.googleapis.com/v1beta/openai` |
+
+<Note>
+  A provider appearing in this list is not a guarantee that your account has quota, access, or sufficient rate limits for any specific model. If a model is unavailable to your key, the delivery fails and the provider's error message is surfaced in the delivery status.
+</Note>
+
+## Using an Unlisted Provider
+
+Any OpenAI-compatible endpoint works with BYOK. To connect one:
+
+1. Select any listed provider as a starting point to populate the base URL field.
+2. Edit the base URL to point to your gateway's endpoint.
+3. Use **Enter another model** to type the exact model ID your endpoint expects.
+
+As long as the endpoint speaks the OpenAI chat completions API, Orbi Cloud can use it.
+
+## Platform Channel vs. BYOK
+
+| | Platform Channel (Default) | Your Own Key (BYOK) |
 |---|---|---|
-| Who pays for tokens | Included in your plan | You pay your provider |
-| Monthly token quota | 300,000,000 per month; deliveries pause at the cap | Not applied — your usage is measured but never paused |
-| Model choice | Operated by Orbi | Yours |
-| Usage shown on the status page | Yes | Yes |
+| **Who pays for tokens** | Included in your plan | You pay your provider directly |
+| **Monthly token quota** | 300M/month; deliveries pause at the cap | Not applied — usage is measured but never paused |
+| **Model choice** | Operated by Orbi | Yours — any provider and model you configure |
+| **Usage shown on status page** | Yes | Yes |
 
-See [limits and quotas](/limits-and-quotas) for how the quota is counted.
+## Removing Your Key
+
+To return to the platform channel, clear your model configuration on the status page. Orbi Cloud immediately reverts to the included quota channel for all subsequent deliveries. Your previous BYOK usage history is retained for reference.

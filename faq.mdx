@@ -1,107 +1,147 @@
 ---
-title: "FAQ"
+title: "Orbi Cloud Frequently Asked Questions"
 sidebarTitle: "FAQ"
-description: "What are the common questions about how Orbi Cloud works?"
+description: "Short answers to the most common questions about Orbi Cloud: getting started, running deliveries, limits, releases, security, and billing."
 ---
 
+Quick answers to the questions that come up most often. Each answer links to the full explanation where relevant.
 
-Short answers to the questions that come up most, with links to the full explanation.
+## Getting Started
 
-## Getting started
+<AccordionGroup>
+  <Accordion title="Do I need to pay before trying it?">
+    No. Sign-in, App installation, connecting a repository, provisioning, and your first 3 merged deliveries are all free. No card is required. See [Billing](/billing).
+  </Accordion>
 
-**Do I need to pay before trying it?**
-No. Sign-in, App installation, connecting a repository, provisioning and your first **3 merged deliveries** are all free, with no card. See [billing](/billing).
+  <Accordion title="Do I need to configure a model or an API key?">
+    No. A subscription includes 300M tokens/month and deliveries use the platform channel by default. Bring-your-own-key (BYOK) is optional — you can configure your own model provider if you prefer. See [Model Configuration](/model-configuration).
+  </Accordion>
 
-**Do I need to configure a model or an API key?**
-No. A subscription includes 300M tokens a month and deliveries use the platform channel by default. Configuring your own key is optional — see [model configuration](/model-configuration).
+  <Accordion title="Do I have to install anything?">
+    No. Everything happens in your browser and in GitHub. You never get a shell on the runner and nothing runs on your machine. The only installation step is adding the Orbi GitHub App to your GitHub account or organization.
+  </Accordion>
 
-**Do I have to install anything?**
-No. Everything happens in your browser and in GitHub. You never get a shell on the runner and nothing runs on your machine.
+  <Accordion title="Can I use it on a private repository?">
+    Yes. The GitHub App works on private repositories you authorize. Orbi can only see repositories you explicitly include in the App installation.
+  </Accordion>
 
-**Can I use it on a private repository?**
-Yes. The GitHub App works on private repositories you authorize.
+  <Accordion title="Can I connect more than one repository?">
+    Not at the same time — one active repository at a time. You can change which repository is connected at any time when no delivery is in flight. See [Connect a Repository](/connect-repository).
+  </Accordion>
 
-**Can I connect more than one repository?**
-Not at the moment — one active repository at a time. You can change which one whenever no delivery is in flight. See [connect a repository](/connect-repository#changing-the-connected-repository).
+  <Accordion title="Does it work on an organization's repository?">
+    Yes. Install the App on the organization rather than your personal account. That creates a separate tenant for the organization, with its own subscription and usage, independent of any personal tenant you may have.
+  </Accordion>
+</AccordionGroup>
 
-**Does it work on an organization's repository?**
-Yes. Install the App on the organization; that creates a separate tenant for the organization with its own subscription and usage.
+## Running Deliveries
 
-## Running deliveries
+<AccordionGroup>
+  <Accordion title="How do I give Orbi work?">
+    Create an Issue in your connected repository and add the `ai-ready` label. Alternatively, use the **Let Orbi try this one** button on the status page. See [Your First Issue](/first-issue).
+  </Accordion>
 
-**How do I give Orbi work?**
-Create an Issue in your connected repository and add the `ai-ready` label — or use **Let Orbi try this one** on the status page. See [file your first Issue](/first-issue).
+  <Accordion title="How long until it starts?">
+    Up to 5 minutes. Issue pickup runs on a timer, not an event webhook, so there is a short delay between applying the label and Orbi beginning work.
+  </Accordion>
 
-**How long until it starts?**
-Up to five minutes. Pickup runs on a timer rather than instantly.
+  <Accordion title="How long does a delivery take?">
+    It depends on the task. Small, well-specified Issues finish quickly. Large or vague Issues take longer and may require more repair rounds. Writing tight, specific Issues consistently produces faster results.
+  </Accordion>
 
-**How long does a delivery take?**
-It depends entirely on the size of the task. Small, well-specified changes finish quickly; large or vague ones take longer and go through more repair rounds.
+  <Accordion title="Can I change my mind while it's working?">
+    Yes. Comment on the Issue with your correction or edit the Issue body. The session restarts and picks up your updated instructions. Orbi accepts up to 3 restarts per delivery; only trusted repository roles (maintainers and above) can steer a delivery in progress. See [Delivery Lifecycle](/delivery-lifecycle).
+  </Accordion>
 
-**Can I change my mind while it is working?**
-Yes. Comment on the Issue or edit its body — the running session restarts with your correction. It accepts 3 such restarts, and only trusted repository roles can steer. See [steering a delivery](/delivery-lifecycle#steering-a-delivery-that-is-already-running).
+  <Accordion title="Can I stop a delivery?">
+    Close the Issue. If the delivery was an unsubscribed delivery that never merged, closing it refunds that free-allowance slot so you can use it on another Issue.
+  </Accordion>
 
-**Can I stop a delivery?**
-Close the Issue. If it was an unsubscribed delivery that never merged, closing it refunds the free-allowance slot.
+  <Accordion title="Does Orbi review its own code?">
+    The review runs in a separate session that did not write the code being reviewed. It is not the same session marking its own work. That said, your CI is what makes the guarantee concrete — the review session reads your check runs and uses them as evidence.
+  </Accordion>
 
-**Will Orbi review its own code?**
-The review runs in a separate session that did not write the code, and it repairs what it finds before anything reaches the merge gate. It is not the same session marking its own work — though it is still Orbi, so your own CI is what makes the guarantee concrete.
+  <Accordion title="Does it merge without my approval?">
+    Yes, when the independent review verdict is clean and the merge gate passes. If you want a human to approve every pull request before it merges, configure your branch protection to require an approving review. See [Security](/security#branch-protection).
+  </Accordion>
 
-**Does it merge without my approval?**
-Yes, when the review verdict is clean and the merge gate passes — that is the point of an unattended loop. If you want a human approval on every delivery, set your branch protection to require one; see [security](/security#branch-protection).
+  <Accordion title="What is `ai-blocked`?">
+    A deliberate stop: automatic recovery wasn't safe, so a person must decide the next step. Read the comment Orbi left on the Issue for the reason, fix the underlying cause, then re-apply `ai-ready`. See [Troubleshooting](/troubleshooting#ai-blocked).
+  </Accordion>
+</AccordionGroup>
 
-**What is `ai-blocked`?**
-A deliberate stop meaning a person has to decide the next step, not a crash. Fix the cause, then re-apply `ai-ready`. See [troubleshooting](/troubleshooting#ai-blocked).
+## Limits and Cost
 
-## Limits and cost
+<AccordionGroup>
+  <Accordion title="What does it cost?">
+    3 merged deliveries are free — no card required. After that, US$79/month includes 300M tokens and unlimited deliveries within that token budget. There is no overage charge; deliveries pause when you reach the cap. See [Billing](/billing).
+  </Accordion>
 
-**What does it cost?**
-3 merged deliveries free, then US$79/month including 300M tokens. No per-token overage — deliveries pause at the cap instead. See [billing](/billing).
+  <Accordion title="Do failed deliveries use up my free allowance?">
+    No. A delivery that ends `ai-blocked` or is closed without merging refunds its slot. Only successfully merged deliveries count against the free allowance.
+  </Accordion>
 
-**Do failed deliveries use up my free allowance?**
-No. A delivery that ends blocked or is closed without merging refunds its slot.
+  <Accordion title="How many deliveries does 300M tokens cover?">
+    Roughly 85–400 merged deliveries per month, depending on task size and how well your model provider supports prompt caching. Smaller, well-specified Issues stay toward the higher end of that range.
+  </Accordion>
 
-**How many deliveries does 300M tokens cover?**
-Roughly 85 to 400 merged deliveries depending on task size, assuming your provider supports prompt caching.
+  <Accordion title="What happens when I hit the monthly cap?">
+    Newly labelled Issues have `ai-ready` removed automatically, with a comment explaining why. Deliveries already in flight are untouched and complete normally. Wait for the next billing period or switch to BYOK to continue. See [Limits and Quotas](/limits-and-quotas).
+  </Accordion>
 
-**What happens when I hit the monthly cap?**
-Newly labelled Issues have `ai-ready` removed with an explanatory comment. In-flight deliveries are untouched. Wait for the next month or switch to your own key — then re-apply the label yourself. See [limits and quotas](/limits-and-quotas).
-
-**My quota is draining fast. Why?**
-Check the cache hit rate on the status page. Cache-miss tokens cost about 50× more, so a rate below 90% burns quota much faster.
+  <Accordion title="My quota is draining fast — why?">
+    Check the **Monthly Cache Hit Rate** on the status page. Cache-miss tokens cost roughly 50× more than cache-hit tokens. A rate below 90% burns through your budget dramatically faster than expected. Large or vague Issues also cost more in both tokens and repair rounds.
+  </Accordion>
+</AccordionGroup>
 
 ## Releases
 
-**Does Orbi release automatically?**
-No, never. You cut a release by typing a version into **Cut a release**, or by opening a Release Issue with the `ai-release` label yourself. See [releases](/releases).
+<AccordionGroup>
+  <Accordion title="Does Orbi release automatically?">
+    No, never. You cut a release manually by typing a version into the **Cut a release** form on the status page. Orbi executes the release process but does not decide when to release or what version to use. See [Releases](/releases).
+  </Accordion>
 
-**Does it pick the version number?**
-No. You type it — the next version is a product decision Orbi will not make for you.
+  <Accordion title="Does it pick the version number?">
+    No. You type it. The next version is a product decision Orbi won't make for you.
+  </Accordion>
 
-**Why did my release stop at scope derivation?**
-The scope comes from a milestone titled exactly like the version. Orbi does not create that milestone for you.
+  <Accordion title="Why did my release stop at scope derivation?">
+    Scope derivation expects a GitHub milestone whose title exactly matches the version you typed. Orbi does not create that milestone for you — create it in your repository before cutting the release.
+  </Accordion>
+</AccordionGroup>
 
-## Security and access
+## Security and Access
 
-**What can Orbi see?**
-Only the repositories in your GitHub App installation, and it works on one connected repository. See [security](/security).
+<AccordionGroup>
+  <Accordion title="What can Orbi see?">
+    Only the repositories in your GitHub App installation, and it works on one connected repository at a time. The OAuth sign-in uses `user:email` scope only — it establishes your identity and grants no repository access. See [Security](/security).
+  </Accordion>
 
-**Where does my API key live?**
-Encrypted at rest with AES-256-GCM, shown back to you masked only, never logged.
+  <Accordion title="Where does my API key live?">
+    Encrypted at rest with AES-256-GCM. Shown back to you masked only (for example, `••••1234`). Never written to logs, never included in support bundles, and never shown in any shareable interface.
+  </Accordion>
 
-**How do I revoke access?**
-Uninstall the GitHub App from GitHub. Access ends immediately. Cancelling a subscription is separate.
+  <Accordion title="How do I revoke access?">
+    Uninstall the GitHub App from GitHub Settings → Applications → Installed GitHub Apps. Access ends immediately. Cancelling your subscription is a separate action — uninstalling the App does not cancel billing.
+  </Accordion>
 
-**Can a platform upgrade interrupt my delivery?**
-No. Deployments cannot restart a delivery that is already executing.
+  <Accordion title="Can a platform upgrade interrupt my delivery?">
+    No. Platform deployments cannot restart or cancel a delivery that is already executing. The same applies to quota guards — they only act on newly dispatched Issues, not deliveries in flight.
+  </Accordion>
+</AccordionGroup>
 
 ## Product
 
-**Is this the same as self-hosted Orbi?**
-Same delivery engine; the difference is who operates the runner. The engine is open source and self-hosting it is free — [orbi.build](https://orbi.build/?ref=cloud-docs-faq).
+<AccordionGroup>
+  <Accordion title="Is this the same as self-hosted Orbi?">
+    Same delivery engine; the difference is who operates the runner. The engine is open source and self-hosting it is free — see [orbi.build](https://orbi.build). Orbi Cloud is the hosted version where Orbi operates the infrastructure for you.
+  </Accordion>
 
-**Is it stable?**
-Orbi Cloud is in Private Beta. This documentation describes what currently ships, not a roadmap.
+  <Accordion title="Is it stable?">
+    Orbi Cloud is in Private Beta. This documentation describes what currently ships. Features and limits may change, but there is no roadmap advertised here — only what exists today.
+  </Accordion>
 
-**Where do I get help?**
-The Telegram group, linked with a QR code from the **Technical support** card at the bottom of the status page. See [troubleshooting](/troubleshooting#getting-help).
+  <Accordion title="Where do I get help?">
+    The Telegram group, linked from the **Technical Support** card on the status page. A QR code is included for joining on a phone. See [Troubleshooting](/troubleshooting#getting-help).
+  </Accordion>
+</AccordionGroup>

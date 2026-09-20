@@ -1,83 +1,80 @@
 ---
-title: "Connect a repository"
-sidebarTitle: "Connect a repository"
-description: "How do I connect a repository to Orbi Cloud and how do I change it later?"
+title: "Connect a Repository to Orbi Cloud"
+sidebarTitle: "Connect Repository"
+description: "Connect one repository to Orbi Cloud to set the scope of where Issues are delivered and which branch receives pull requests."
 ---
 
+Connecting a repository tells Orbi which repo's Issues to act on and which branch to open pull requests against. Orbi works with one active repository at a time — you pick the repo, pick the base branch, and Orbi provisions itself automatically. Previous repository connections are retained in history and are never deleted.
 
-Connecting a repository tells Orbi which repository's Issues it may work on, and which branch to open pull requests against.
+## Connect Your Repository
 
-Orbi Cloud works in **one active repository at a time**. Connecting is self-service: you pick the repository and the base branch on the connect page, and provisioning starts immediately.
+<Steps>
+  <Step title="Open the connection screen">
+    From the Orbi status page, click **Connect repository**.
+  </Step>
+  <Step title="Pick the repository">
+    Select a repository from the dropdown. Only repositories already authorized in your Orbi GitHub App installation appear in this list.
+  </Step>
+  <Step title="Pick the base branch">
+    Choose the branch you want Orbi to open pull requests against. Your repository's default branch is preselected.
+  </Step>
+  <Step title="Click Connect repository">
+    Click **Connect repository** to confirm.
+  </Step>
+  <Step title="Wait for provisioning">
+    You are returned to the status page and provisioning starts automatically. This typically takes **1–2 minutes**. The status page will update when the repository is ready for deliveries.
+  </Step>
+</Steps>
 
-## Connect
+## Requirements
 
-From the status page, click **Connect repository** (or **Connect / change repository** in the **Connected repository** card).
+Before connecting a repository, make sure it meets both of the following requirements:
 
 <Frame caption="The Connect repository page, showing the repository and base branch dropdowns">
   <img src="/images/connect.png" alt="The Connect repository page, showing the repository and base branch dropdowns" />
 </Frame>
 
-1. **Repository** — pick from the repositories your GitHub App installation covers.
-2. **Base branch** — the branch Orbi opens pull requests against. Selecting a repository loads its real branches and preselects its default branch, so usually you just confirm.
-3. Click **Connect repository**.
+## Repository Not Listed?
 
-You return to the status page, where the **Connected repository** card now lists the repository with an **Active** chip, and provisioning begins.
+The repository dropdown only shows repositories that are already authorized in your Orbi GitHub App installation. If you don't see the repo you want:
 
-## Requirements a repository has to meet
+1. Click **Cannot find your repository?** below the dropdown.
+2. Follow the link to your GitHub App configuration and add the repository.
+3. Return to Orbi and reload — the repository will now appear in the dropdown.
 
-A repository can only be connected if:
+If you know the repository's exact path, you can also use the **Enter manually** option and type it in `OWNER/REPO` format (for example, `acme-corp/backend`). Manually entered repositories are still validated against your App installation — Orbi will reject any repository that hasn't been authorized.
 
-- It is **covered by your GitHub App installation**. Orbi only sees repositories you authorized.
-- It has **Issues enabled**. Orbi's entire input channel is Issues, so a repository with Issues turned off is rejected.
+## Branch Protection
 
-Both are checked when you submit, not just when the page renders — so a repository that was de-authorized in between is caught.
+<Warning>
+  If your base branch requires **approving reviews before merge**, every delivery will stall at the merge step. Orbi opens the pull request and merges it as the same GitHub App identity, and GitHub prevents a user from approving their own submission.
 
-## When your repository is not listed
+  Resolve this with one of three approaches:
 
-The dropdown only contains repositories your App installation covers. If yours is missing, open **Cannot find your repository?** on the connect page: it explains the cause and links to GitHub's App settings, where you can add the repository to the installation.
+  1. **Approve each PR yourself.** After Orbi's independent review passes and the PR is ready, add your own approving review to satisfy the branch protection rule.
+  2. **Enable admin bypass.** In your branch protection settings, enable **Allow specified actors to bypass required pull request reviews** and add the Orbi App.
+  3. **Set required approvals to 0.** Remove the approval requirement entirely for the base branch if your workflow doesn't depend on human sign-off.
+</Warning>
 
-You can also use **Enter manually** in either dropdown to type an `OWNER/REPO` value directly. That is useful when the listing is temporarily unavailable, but it does not bypass the authorization check — a repository the App cannot access is still rejected on submit.
+## Changing the Connected Repository
 
 <Frame caption="The connect page in its degraded state, with manual entry fields and a stated reason">
   <img src="/images/connect-degraded.png" alt="The connect page in its degraded state, with manual entry fields and a stated reason" />
 </Frame>
 
-If GitHub's repository listing cannot be read at all, the page degrades to manual entry and tells you why, rather than blocking you.
-
-## Branch protection that blocks every merge
-
-If your base branch requires approving reviews before merge, the connect page warns you in red immediately, because this setting stops **every** delivery at the merge step.
-
-The reason is identity: Orbi opens the pull request and merges it as the same GitHub App, and GitHub does not let a pull request's author approve their own pull request. With required approvals in force, each delivery gets as far as a reviewed, ready pull request and then cannot merge it.
-
-Three ways to resolve it — pick whichever suits your policy:
-
-1. **Approve each delivery yourself.** You or a colleague clicks **Approve** on the pull request, and the merge proceeds. Keeps a human in the loop on every change.
-2. **Let admins bypass.** Under **Settings → Branches → Branch protection rules** (or **Settings → Rules → Rulesets**), enable **Allow admins to bypass**, or add the account to the ruleset's bypass list.
-3. **Set required approvals to 0** in the same setting.
-
-Changing it does not require reconnecting — the next delivery's pull request merges normally.
-
-## Changing the connected repository
-
-Use **Connect / change repository** and connect a different one. The new repository becomes active and the previous one moves to history — it is not deleted, and it still appears under **Historical repositories** on the status page.
-
-Changing repositories provisions a fresh environment for the new one, which again takes a minute or two.
+The previously connected repository moves to **Historical Repositories** at the bottom of the status page. It is not deleted — its delivery history and configuration are preserved and remain readable.
 
 <Note>
-You cannot change repositories while a delivery is in flight. The page tells you **a delivery is still in progress** and asks you to try again later. This protects the running delivery — wait for it to reach `ai-merged` or `ai-blocked`, then rebind.
+  You cannot change the connected repository while a delivery is in flight. Wait until the current delivery reaches `ai-merged` or `ai-blocked` before switching repositories.
 </Note>
 
-## What the errors mean
+## Error Reference
 
-| What the page says | What happened | What to do |
+If something goes wrong during the connection step, the status page will display one of the following messages.
+
+| Message | Cause | Fix |
 |---|---|---|
-| The repository is not authorized for the Orbi GitHub App | The repository is outside your installation's scope | Open installation settings, add the repository, reload the connect page |
-| Issues are disabled | The repository has the Issues feature turned off | Enable it under the repository's **Settings → Features → Issues**, then retry |
-| A delivery is still in progress | A delivery is running in the currently connected repository | Wait for it to finish, then rebind |
-| The repository list was temporarily unavailable | GitHub's API could not be reached | Retry; use manual entry if it persists |
-| Repository format is invalid | The manually entered value is not `OWNER/REPO` | Re-enter as `owner/repository`, for example `orbi-build/orbi` |
-
-## What happens next
-
-Connecting starts [provisioning](/provisioning) — Orbi builds the isolated environment your deliveries run in and installs the `ai-*` labels into your repository. Watch the **Provisioning status** column until it shows **Provisioned**, then [file your first Issue](/first-issue).
+| Not authorized for the Orbi GitHub App | The repository is outside the scope of your App installation | Add the repository in GitHub → Settings → Applications → Installed GitHub Apps → Orbi → Configure, then reload |
+| Issues are disabled | The Issues feature is turned off for this repository | Enable Issues in the repository's **Settings → Features** |
+| A delivery is still in progress | A delivery is currently running on the active repository | Wait for the delivery to reach `ai-merged` or `ai-blocked`, then try again |
+| Repository format is invalid | The manually entered value is not valid `OWNER/REPO` format | Re-enter the repository as `owner/repository` (for example, `acme-corp/backend`) |

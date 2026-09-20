@@ -1,73 +1,87 @@
 ---
-title: "Provisioning"
+title: "Repository Provisioning: What Happens and What to Do If It Fails"
 sidebarTitle: "Provisioning"
-description: "What is provisioning, how long does it take, and what do I do if it fails?"
+description: "Provisioning builds the isolated environment your deliveries run in. It starts automatically when you connect a repository and takes one to two minutes."
 ---
 
+When you connect a repository, Orbi immediately begins provisioning a dedicated environment for it. The process takes one to two minutes and runs entirely in the background — there is nothing for you to do and no way to speed it up. The status page at orbi.build/api/ refreshes itself while provisioning runs, so you can watch progress without reloading.
 
-Provisioning builds the isolated environment your deliveries run in, and it starts automatically the moment you connect a repository.
+## What Happens During Provisioning
 
-You do not trigger it and you cannot speed it up. It normally takes **one to two minutes**, and the status page updates itself while it runs.
+Orbi builds an isolated environment that belongs exclusively to your repository and your account. No other tenant shares it. Each environment is isolated at the OS level.
 
-## What happens during provisioning
+Inside that environment, Orbi:
 
-Orbi creates an environment dedicated to your repository, clones the repository into it, installs the delivery engine, and runs the engine's setup step against your repository. That setup is what creates the `ai-*` labels — `ai-ready`, `ai-in-progress`, `ai-pr-opened`, `ai-fix-needed`, `ai-merged`, `ai-blocked` and the rest — in your repository's label list.
+1. Clones your repository.
+2. Installs the delivery engine.
+3. Runs the engine's setup step.
 
-Setup is declarative: a missing label is created, a drifted one is corrected, and nothing is ever deleted. Your own labels (`bug`, `enhancement`, whatever you use) are never touched.
+The setup step is declarative. It inspects your repository's labels and creates any `ai-*` labels that are missing — `ai-ready`, `ai-in-progress`, `ai-pr-opened`, `ai-fix-needed`, `ai-merged`, `ai-blocked`, and others used internally. If a label exists but has drifted from the expected colour or description, setup corrects it. Setup never deletes labels. Your own labels — `bug`, `enhancement`, and anything else you have created — are never touched.
 
-Each environment belongs to exactly one tenant and one repository. Environments are isolated from one another at the operating-system level.
+## Watching Provisioning
 
-## Watching it
+Open the Connected Repository card on the status page at orbi.build/api/. The **Provisioning Status** column tells you exactly where things stand.
 
-The **Provisioning status** column in the **Connected repository** card shows where it is:
-
-| What you see | What it means |
+| Status | Meaning |
 |---|---|
-| **Provisioning** | Running. Usually one to two minutes; the page refreshes itself |
-| **Provisioned** | Done. You can [file your first Issue](/first-issue) |
-| **Provisioning failed** | Stopped. The card states the reason and the next step |
-| **—** | Provisioning was never triggered — normally because no repository is connected yet |
+| **Provisioning** | Running — usually finishes in 1–2 minutes; the page refreshes itself |
+| **Provisioned** | Complete — file your first Issue when you are ready |
+| **Provisioning failed** | Stopped — the card names the reason and the next step |
+| — | Not yet triggered — no repository is connected |
 
-## When provisioning fails
+## When Provisioning Fails
 
-A failure is never a dead end, and the card always names both a reason and a next step. There are four classes:
+When provisioning stops, the card always names a specific reason and tells you the next step. The four failure classes below cover every case you are likely to encounter.
 
 <Frame caption="The status page showing a failed provisioning with reason, time, request ID and next step">
   <img src="/images/status-provision-failed.png" alt="The status page showing a failed provisioning with reason, time, request ID and next step" />
 </Frame>
 
-### The GitHub App installation or authorization is no longer valid
+**Cause:** The Orbi GitHub App was uninstalled after you connected your repository, or access to the specific repository was removed.
 
-Orbi can no longer mint a token for your installation — usually because the App was uninstalled, or its access to the repository was removed.
+**Fix:** Reinstall the App or re-authorize it for your repository, then retry. The card links directly to the connect page so you do not have to navigate there manually.
 
-**What to do:** reinstall or re-authorize the GitHub App, then retry. The card links to the connect page for this.
+### Model Credential Rejected
 
-### The model credential was not accepted
+**Cause:** Your BYOK API key was rejected by the model provider — typically because the key is invalid, has been revoked, or belongs to a different account.
 
-Your own model key was rejected by the provider.
+**Fix:** Open model configuration and correct the key. Saving the corrected key retries provisioning automatically — you do not need to do anything else.
 
-**What to do:** open [model configuration](/model-configuration) and correct the key. Saving a new configuration automatically retries provisioning — you do not need to reconnect the repository.
+### Model Service Unreachable
 
-### The model service could not be reached
+**Cause:** The provider's base URL appears wrong, the key does not match the configured endpoint, or the provider itself is experiencing an outage.
 
-The key or the base URL appears to be wrong, or the provider is unreachable.
+**Fix:** Open model configuration and verify both the base URL and the key. Saving retries provisioning automatically. If the provider is down, wait for it to recover and then save the configuration again to trigger a retry.
 
-**What to do:** check the base URL and key on the [model configuration](/model-configuration) page. As above, saving retries provisioning automatically.
+### Platform-Side Failure
 
-### A platform-side failure
+**Cause:** Something went wrong inside Orbi's infrastructure — nothing attributable to your GitHub App installation or model configuration.
 
-Anything not attributable to your installation or your model configuration is ours.
+**Fix:** No action is required. Orbi recovers platform-side failures automatically. Check the status page again in a minute or two. If the failure persists, contact support via the Telegram group linked from the status page and include the **request ID** shown on the card — it lets the team locate your run immediately.
 
-**What to do:** nothing. The platform recovers automatically. The card says so explicitly, and asks you to check back in a minute or two. If it has not recovered after that, contact support — the card includes a **request ID** that identifies your exact provisioning attempt, so quote it.
+## Automatic Retries
 
-## Retries
+Provisioning retries automatically a limited number of times after a failure. The card tells you whether retries are still ongoing or have been exhausted.
 
-Provisioning retries automatically a limited number of times. The card tells you which situation you are in: either **provisioning will retry automatically**, or **automatic retries are exhausted**.
+Fixing a tenant-side cause re-arms the retry counter. If provisioning failed because of a bad model key, saving a corrected key in model configuration triggers a fresh attempt even after retries are otherwise exhausted.
 
-When retries are exhausted for a tenant-side cause, fixing the cause rearms it — saving a corrected model configuration retries even an exhausted request. When they are exhausted for a platform-side cause, platform recovery takes over without any action from you.
+For platform-side failures, you do not need to take any action — recovery and retries happen automatically.
 
-## After provisioning succeeds
+<Note>
+  Saving a corrected model configuration always retries provisioning, regardless of whether the retry counter is exhausted. You never need to disconnect and reconnect a repository just to retry.
+</Note>
 
-Nothing else is required. The environment stays provisioned; you do not reprovision between deliveries. [File an Issue and label it `ai-ready`](/first-issue).
+## After Provisioning Succeeds
 
-Connecting a **different** repository provisions a fresh environment for it.
+Once the status shows **Provisioned**, your environment is ready and nothing further is required before you start delivering work. The environment stays provisioned between deliveries — Orbi does not tear it down and rebuild it for each Issue.
+
+If you connect a different repository later, Orbi provisions a fresh, separate environment for it. The environment for your original repository is unaffected.
+
+<CardGroup cols={2}>
+  <Card title="File Your First Issue" icon="tag" href="first-issue">
+    Start delivering work with the ai-ready label.
+  </Card>
+  <Card title="Model Configuration" icon="key" href="model-configuration">
+    Set up your own API key or use the included quota.
+  </Card>
+</CardGroup>
