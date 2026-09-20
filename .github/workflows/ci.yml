@@ -1,0 +1,74 @@
+name: CI
+
+# Publishing is NOT done here. The Mintlify GitHub App deploys this repo
+# automatically on every push to the default branch; adding a deploy step
+# would publish the same commit twice. This workflow only guards what the
+# App would otherwise publish broken: an MDX file that does not build, a
+# dead internal link, or an en/zh pair that has drifted apart.
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      # The CLI version is pinned deliberately, the same way orbi-build/orbi
+      # pins it: an unpinned `npm install -g mint` resolves a fresh manifest
+      # and a bad transitive dependency reddens every open PR for a reason
+      # that has nothing to do with the change under review. Upgrading is a
+      # one-line bump here.
+      - name: Install the Mintlify CLI
+        run: npm install -g mint@4.2.890
+
+      # Strict: exits non-zero on any warning or error, so a broken build or
+      # a dead internal link fails the check rather than shipping.
+      - name: Validate the docs build
+        run: mint validate
+
+      # The en/zh contract: same page set, and every zh internal link stays
+      # inside /zh/. A zh page that links to an en page silently drops the
+      # reader out of their language, and a missing translation is a 404 in
+      # the zh navigation — neither is something `mint validate` checks.
+      - name: Check en/zh parity and zh link prefixes
+        run: |
+          python3 - <<'PY'
+          import glob, os, re, sys
+
+          en = {os.path.splitext(f)[0] for f in glob.glob("*.mdx")}
+          zh = {os.path.splitext(os.path.basename(f))[0] for f in glob.glob("zh/*.mdx")}
+          images = set(os.listdir("images"))
+          problems = []
+
+          for name in sorted(en - zh):
+              problems.append(f"missing translation: zh/{name}.mdx")
+          for name in sorted(zh - en):
+              problems.append(f"zh page with no English source: zh/{name}.mdx")
+
+          for path in sorted(glob.glob("*.mdx") + glob.glob("zh/*.mdx")):
+              is_zh = path.startswith("zh/")
+              for match in re.finditer(r"\]\((/[^)\s]+)\)", open(path).read()):
+                  target = match.group(1)
+                  if target.startswith("/images/"):
+                      if os.path.basename(target) not in images:
+                          problems.append(f"{path}: missing image {target}")
+                  elif is_zh:
+                      if not target.startswith("/zh/"):
+                          problems.append(f"{path}: zh page links outside /zh/ -> {target}")
+                      elif target.split("#")[0][len("/zh/"):] not in zh:
+                          problems.append(f"{path}: dead link {target}")
+                  elif target.split("#")[0].lstrip("/") not in en:
+                      problems.append(f"{path}: dead link {target}")
+
+          for problem in problems:
+              print(problem)
+          print(f"\n{len(en)} en pages, {len(zh)} zh pages, {len(problems)} problems")
+          sys.exit(1 if problems else 0)
+          PY
