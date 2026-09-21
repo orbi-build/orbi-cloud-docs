@@ -148,7 +148,11 @@ jobs:
 
           en = {os.path.splitext(f)[0] for f in glob.glob("*.mdx")}
           zh = {os.path.splitext(os.path.basename(f))[0] for f in glob.glob("zh/*.mdx")}
-          images = set(os.listdir("images"))
+          # Checked by full path, not basename: the zh pages point at
+          # images/zh/, whose files share their names with the English ones, so
+          # a basename set would pass a reference to a file that is not there.
+          images = {os.path.join(root, f)
+                    for root, _, names in os.walk("images") for f in names}
           problems = []
 
           for name in sorted(en - zh):
@@ -166,7 +170,7 @@ jobs:
               targets += [m.group(1) for m in re.finditer(r'<img\s[^>]*src="(/[^"]+)"', text)]
               for target in targets:
                   if target.startswith("/images/"):
-                      if os.path.basename(target) not in images:
+                      if target.lstrip("/") not in images:
                           problems.append(f"{path}: missing image {target}")
                   elif is_zh:
                       if not target.startswith("/zh/"):

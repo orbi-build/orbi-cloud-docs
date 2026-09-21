@@ -16,7 +16,7 @@ description: "怎么让 Orbi Cloud 把我的第一张 GitHub Issue 交付成一�
 打开 **[orbi.build/api/](https://orbi.build/api/)**，点 **使用 GitHub 登录** (Sign in with GitHub)。
 
 <Frame caption="Orbi Cloud 登录页，带「使用 GitHub 登录」按钮">
-  <img src="/images/signin.png" alt="Orbi Cloud 登录页，带「使用 GitHub 登录」按钮" />
+  <img src="/images/zh/signin.png" alt="Orbi Cloud 登录页，带「使用 GitHub 登录」按钮" />
 </Frame>
 
 GitHub 会让你授权 Orbi Cloud 的 OAuth app。这一步只确认你是谁，此时还没有把任何仓库的权限给 Orbi。
@@ -42,7 +42,7 @@ GitHub 会让你授权 Orbi Cloud 的 OAuth app。这一步只确认你是谁，
 在 **Repository** 下拉里选你的仓库，然后选 **Base branch** —— Orbi 提交拉取请求的目标分支，通常是 `main`。
 
 <Frame caption="连接仓库页，有一个仓库下拉和一个基础分支下拉">
-  <img src="/images/connect.png" alt="连接仓库页，有一个仓库下拉和一个基础分支下拉" />
+  <img src="/images/zh/connect.png" alt="连接仓库页，有一个仓库下拉和一个基础分支下拉" />
 </Frame>
 
 选中一个仓库之后，页面会载入这个仓库真实的分支列表，并预选它的默认分支，所以多数情况下你只需要确认一下。然后点 **连接仓库**。
@@ -76,13 +76,13 @@ GitHub 会让你授权 Orbi Cloud 的 OAuth app。这一步只确认你是谁，
 </Note>
 
 <Frame caption="状态页列出未打标的 Issue，每一张都带「让 Orbi 试这张」按钮">
-  <img src="/images/status-ready-issues.png" alt="状态页列出未打标的 Issue，每一张都带「让 Orbi 试这张」按钮" />
+  <img src="/images/zh/status-ready-issues.png" alt="状态页列出未打标的 Issue，每一张都带「让 Orbi 试这张」按钮" />
 </Frame>
 
 **成功判据：**大约五分钟内，`ai-in-progress` 标签出现在这张 Issue 上，状态页的**正在发生**卡片把它列在**进行中**下面。
 
 <Frame caption="状态页显示正在进行的工作、用量、绑定的仓库和发版表单">
-  <img src="/images/status-active.png" alt="状态页显示正在进行的工作、用量、绑定的仓库和发版表单" />
+  <img src="/images/zh/status-active.png" alt="状态页显示正在进行的工作、用量、绑定的仓库和发版表单" />
 </Frame>
 
 从这里开始，Orbi 写代码、提交拉取请求、在另一个会话里评审它、修掉评审发现的问题。走到 `ai-pr-opened` 时你会拿到一个待评审的拉取请求；评审过的那个 commit 合并之后，Issue 走到 `ai-merged`。
