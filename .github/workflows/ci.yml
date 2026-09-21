@@ -68,6 +68,75 @@ jobs:
           sys.exit(1 if problems else 0)
           PY
 
+      # Chinese has no inter-word spaces, so a closing ** that lands before a
+      # Han character is not a valid closing delimiter under CommonMark and
+      # renders as literal asterisks — taking the rest of the line's bold with
+      # it. `mint validate` builds such a page happily. This renders every
+      # page with a CommonMark parser and fails if any ** survives.
+      - name: Check bold renders (Chinese ** closing-delimiter trap)
+        run: |
+          npm install --no-save --silent markdown-it@14
+          node - <<'JS'
+          const md = require('markdown-it')({html: true});
+          const fs = require('fs'), path = require('path');
+          const files = [...fs.readdirSync('.'), ...fs.readdirSync('zh').map(f => 'zh/' + f)]
+            .filter(f => f.endsWith('.mdx'));
+          let bad = 0;
+          for (const rel of files) {
+            const lines = fs.readFileSync(rel, 'utf8').split('\n');
+            let fmDone = false, inFm = false, inFence = false;
+            lines.forEach((line, i) => {
+              if (!fmDone) {
+                if (i === 0 && line.trim() === '---') { inFm = true; return; }
+                if (inFm && line.trim() === '---') { inFm = false; fmDone = true; return; }
+                if (inFm) return;
+                fmDone = true;
+              }
+              if (/^\s*```/.test(line)) { inFence = !inFence; return; }
+              if (inFence || !line.includes('**')) return;
+              if (md.renderInline(line).replace(/<[^>]+>/g, '').includes('**')) {
+                console.log(`${rel}:${i + 1}  bold does not render: ${line.trim().slice(0, 100)}`);
+                bad++;
+              }
+            });
+          }
+          console.log(`\n${files.length} pages checked, ${bad} lines with literal **`);
+          if (bad) console.log('\nMove the punctuation outside the bold: **\u6210\u529f\u5224\u636e**\uff1a not **\u6210\u529f\u5224\u636e\uff1a**');
+          process.exit(bad ? 1 : 0);
+          JS
+
+      # UI element names in zh/ must match what the product's Chinese interface
+      # actually shows (orbi-cloud src/i18n.ts, where Chinese is the source and
+      # English the translation). That repo is private, so instead of checking
+      # every string this guards the mismatches found on 2026-09-21 from
+      # creeping back in. Add a row when a new one is found and fixed.
+      - name: Check zh UI names against known product wording
+        run: |
+          python3 - <<'PY'
+          import glob, io, sys
+
+          WRONG = {
+              "**等你评审**": "**待评审** (the status page tab)",
+              "**通过 Stripe 订阅**": "**订阅 Orbi Cloud** (the Chinese button; 'Subscribe with Stripe' is the English one)",
+              "**这一步怎么做**": "**看这一步怎么做 ▶**",
+              "**request ID**": "**request id**",
+              "**自动重试次数已用尽**": "**自动重试次数已用完**",
+              "**① 需要你处理**": "**①需要你处理** (no space after ①)",
+              "**② 正在发生**": "**②正在发生**",
+              "**③ 参考**": "**③参考**",
+          }
+          bad = []
+          for f in sorted(glob.glob("zh/*.mdx")):
+              for i, line in enumerate(io.open(f, encoding="utf-8"), 1):
+                  for wrong, right in WRONG.items():
+                      if wrong in line:
+                          bad.append(f"{f}:{i}  {wrong} -> the product says {right}")
+          for b in bad:
+              print(b)
+          print(f"\n{len(WRONG)} known mismatches guarded, {len(bad)} present")
+          sys.exit(1 if bad else 0)
+          PY
+
       # The en/zh contract: same page set, and every zh internal link stays
       # inside /zh/. A zh page that links to an en page silently drops the
       # reader out of their language, and a missing translation is a 404 in
