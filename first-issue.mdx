@@ -1,68 +1,77 @@
 ---
-title: "File Your First Issue and Dispatch Work to Orbi Cloud"
-sidebarTitle: "First Issue"
-description: "Dispatch work to Orbi Cloud by adding the ai-ready label to a GitHub Issue. Learn how to write Issues that succeed on the first attempt."
+title: "File your first Issue"
+sidebarTitle: "File your first Issue"
+description: "How do I dispatch work to Orbi and how should I write the Issue?"
 ---
 
-Dispatching work to Orbi requires nothing more than a normal GitHub Issue and a single label. Add `ai-ready` to any Issue in your connected repository and Orbi picks it up automatically — no command, no form, no separate queue. Pickup happens on a timer, so allow up to 5 minutes for `ai-in-progress` to appear.
+
+You dispatch work by creating a normal GitHub Issue in your connected repository and adding the `ai-ready` label.
+
+That label is the execution switch. Nothing else is required — no command, no form, no separate queue. Orbi checks for newly labelled Issues on a timer, so pickup takes **up to five minutes**.
 
 ## Dispatch an Issue
 
-<Steps>
-  <Step title="Create a GitHub Issue">
-    In your connected repository, open a new Issue and describe the one change you want made. Be as specific as you can about what should change and how you will know it worked.
-  </Step>
-  <Step title="Add the ai-ready label">
-    Apply the `ai-ready` label to the Issue. This label was created automatically when you provisioned your repository — you do not need to create it yourself.
-  </Step>
-  <Step title="Watch for pickup">
-    Within approximately 5 minutes the `ai-ready` label is replaced by `ai-in-progress`, and the Issue appears under the **Doing** tab on the status page. You will also see activity in any CI checks tied to the working branch.
-  </Step>
-</Steps>
+1. In your connected repository on GitHub, create an Issue describing one change.
+2. Add the **`ai-ready`** label.
+
+The label already exists — [provisioning](/provisioning) created it along with the rest of the `ai-*` set.
+
+Within about five minutes, `ai-in-progress` appears on the Issue and it shows up under **Doing** on the status page.
 
 <Note>
-  Orbi only processes Issues in the single repository you have connected. Issues in other repositories — even ones you own — are ignored until you connect them.
+Orbi only works on Issues in the repository you connected. An Issue in any other repository is ignored, even if the App is installed there.
 </Note>
 
-The status page at [orbi.build/api/](https://orbi.build/api/) provides two shortcuts if you prefer to start from there. The **"Let Orbi try this one"** button applies the `ai-ready` label to an existing Issue for you. The **"Create an Issue"** button opens GitHub's new-Issue form with the label pre-selected so it is dispatched the moment you save.
+### Dispatching from the status page
 
-## How to Write a Good Issue
+You do not have to label by hand. When you have open Issues that Orbi has not been given yet, the status page lists them under **Pick one for Orbi to try**, each with a **Let Orbi try this one** button that applies the `ai-ready` label for you.
 
 <Frame caption="The status page listing untagged Issues with Let Orbi try this one buttons">
   <img src="/images/status-ready-issues.png" alt="The status page listing untagged Issues with Let Orbi try this one buttons" />
 </Frame>
 
-- **Say what should change and where.** "The export button on the Orders page produces a CSV with no header row; it should include one" gives Orbi a precise target. "Fix export" does not.
-- **Say how you'll know it worked.** The acceptance criterion you write is exactly what the independent review checks. "A downloaded CSV starts with a header row" is checkable. "Export works properly" is not.
-- **One Issue, one change.** Bundling several changes into a single Issue produces a bundled PR that is harder to review and more likely to fail the independent review stage.
-- **Name constraints explicitly.** If a public API must not change, say so in the Issue body. Orbi will not infer prohibitions — anything not stated as off-limits is fair game.
-- **Don't ask for production evidence.** The delivery environment contains your repository and its tests, not your production credentials or live site. Issues that require production data, live service calls, or environment secrets will be marked `ai-blocked`.
+There is also a **Create an Issue in `owner/repo`** button that opens GitHub's new-Issue form for your connected repository with the label preselected.
+
+An Issue that already carries any `ai-*` label is not offered here — Orbi is already handling it, or has finished with it.
+
+## How to write the Issue
+
+Write it the way you would for a capable colleague who has not seen your codebase before. Orbi reads the Issue body and comments as its instructions, so what you put there is the specification.
+
+The things that consistently matter:
+
+**Say what should change, and where it is if you know.** "The export button on the reports page produces a CSV with no header row; it should include one" gives more to work with than "fix export".
+
+**Say how you will know it worked.** An acceptance criterion is what the independent review checks against. "A downloaded CSV starts with a header row matching the column titles" is checkable; "export works properly" is not.
+
+**Keep one Issue to one change.** A bundled Issue produces a bundled pull request that is harder to review and more likely to need repair rounds.
+
+**Name constraints explicitly.** If a public API must not change, if a file is off limits, or if a specific approach is required, say so in the Issue. Orbi will not infer prohibitions.
+
+**Do not ask for things the environment cannot do.** A delivery runs in an isolated environment with your repository, not against your production systems. Acceptance criteria that require production credentials, real third-party accounts, or a live deployment cannot be satisfied there — and an Issue that demands them will spin until it reaches `ai-blocked`. If you need that kind of evidence, gather it yourself and state in the Issue that it is out of scope for the delivery.
+
+## Choosing what to start with
+
+Your first Issue is worth choosing deliberately. A well-scoped small change — a bug with a clear reproduction, a missing test, a contained refactor — finishes fast and shows you the whole loop. Save the ambiguous architectural work until you have seen how Orbi handles your codebase.
+
+Note that **your CI defines what is guaranteed.** The review runs your repository's test suite; the release gate reads your repository's check runs. If your repository has strong tests, Orbi's guarantees are strong. If it has none, both gates pass vacuously and the delivery ships on the review's judgement alone.
+
+## Steering a delivery in flight
+
+You do not have to wait for the result to correct course. While an Issue is `ai-in-progress`, add a comment with the new decision or edit the Issue body — the running session picks the correction up and restarts with it, usually within a minute.
+
+A delivery accepts 3 such restarts, and only comments from the repository's owner, maintainers, members or collaborators can steer it. See [steering a delivery](/delivery-lifecycle#steering-a-delivery-that-is-already-running).
 
 ## Priority
 
-By default, Orbi picks up Issues in the order they become `ai-ready`. To move an Issue ahead of the queue, add the `p0` label alongside `ai-ready`. Pickup order is: `p0`-labelled Issues first, then Issues labelled `bug`, then everything else.
+Add the **`p0`** label to have an Issue picked up ahead of others. The pickup order is `p0` first, then Issues labelled `bug`, then everything else.
 
-## Task Types
+## Other kinds of work
 
-The `ai-ready` label on its own dispatches a standard development task — coding, PR, independent review, and merge. Pair it with a second label to request a different type of work.
+`ai-ready` dispatches development work by default. Pair it with a second label for other task types — ops and research (`ai-ops-only`), content (`ai-content-only`), or a release (`ai-release`). See [the delivery lifecycle](/delivery-lifecycle#task-types).
 
-| Task Type | Labels | What You Get |
-|---|---|---|
-| Development (default) | `ai-ready` | Full chain: coding, PR, independent review, merge |
-| Release | `ai-ready` + `ai-release` | Deterministic release state machine |
-| Ops / Research | `ai-ready` + `ai-ops-only` | Full execution session; deliverable is evidence posted on the Issue |
-| Content | `ai-ready` + `ai-content-only` | Text in, text out, delivered as an Issue comment — no git |
+## What happens next
 
-## Steering a Delivery in Flight
+Follow it on the Issue's labels or on [the status page](/status-page). The sequence you are looking for is `ai-in-progress` → `ai-pr-opened` → `ai-merged`; a repair round shows up as `ai-fix-needed` in between, which is normal.
 
-If a delivery is running and you realise the scope needs to change, you do not have to wait for it to finish. While the `ai-in-progress` label is present, add a comment to the Issue or edit the Issue body with your correction. Orbi restarts the session with your updated instructions within approximately 1 minute.
-
-Two limits apply: each delivery supports a maximum of 3 steering restarts, and only repository owners, maintainers, members, and collaborators can trigger a restart. This prevents public commenters from redirecting a running session.
-
-<Tip>
-  For a full explanation of how steering fits into the delivery flow, see [Steering a Running Delivery](/delivery-lifecycle#steering-a-running-delivery).
-</Tip>
-
-## Choosing Your First Issue
-
-For your first dispatch, pick something small and well-scoped: a bug with a clear reproduction step, a missing test, or a contained refactor with a defined boundary. A tight scope makes it easy to verify the result and gives you a clean end-to-end view of how Orbi works. Save ambiguous architectural decisions or open-ended exploratory work for after you have seen a successful delivery.
+When a pull request is open and waiting for you, the status page says so under **Awaiting**.

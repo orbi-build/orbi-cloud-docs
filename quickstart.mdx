@@ -1,86 +1,98 @@
 ---
-title: "Orbi Cloud Quickstart: Go From Sign-In to Merged PR"
+title: "Quickstart: your first delivery in five steps"
 sidebarTitle: "Quickstart"
-description: "Sign in with GitHub, install the Orbi App, connect a repository, and watch Orbi turn your first labelled Issue into a merged pull request."
+description: "How do I get Orbi Cloud to deliver my first GitHub Issue as a merged pull request?"
 ---
 
-This page walks you through everything you need to do to get Orbi Cloud to deliver your first pull request: creating an account, granting repository access, connecting a repo, and labelling your first Issue. From sign-in to a merged PR, the process takes about five minutes of your time — the rest is Orbi working in the background.
 
-<Steps>
-  <Step title="Sign In with GitHub">
-    Go to [orbi.build/api/](https://orbi.build/api/) and click **Sign in with GitHub**. GitHub will ask you to authorize the Orbi OAuth application.
+Sign in, install the GitHub App, connect a repository, label an Issue `ai-ready`, and review the pull request Orbi opens.
 
-    <Frame caption="The Orbi Cloud sign-in page, with the Sign in with GitHub button">
-      <img src="/images/signin.png" alt="The Orbi Cloud sign-in page, with the Sign in with GitHub button" />
-    </Frame>
+This is the shortest complete path. Every step ends with a **Success** check so you can tell whether to continue or to stop and fix something. The whole path happens in a browser and in GitHub — you never get a shell on the runner, and you never install anything locally.
 
-    <Note>
-      The OAuth grant requests only the `user:email` scope — Orbi cannot read or write your repositories at this stage. Repository access is granted separately through the GitHub App in the next step. Sessions remain active for 7 days before you need to sign in again.
-    </Note>
-  </Step>
+**Before you start** you need a GitHub account and a repository you can install a GitHub App on (you must be its owner, or an organization owner/admin). The repository must have **Issues enabled** — Orbi reads and labels Issues, so a repository with Issues turned off cannot be connected.
 
-  <Step title="Install the GitHub App">
-    On the Orbi status page, click **Install GitHub App**. GitHub redirects you to the app installation screen where you grant Orbi access to your repositories.
+## 1. Sign in with GitHub
 
-    On that screen, select **Only select repositories** and choose the specific repository you want Orbi to manage, then click **Install**.
+Open **[orbi.build/api/](https://orbi.build/api/)** and click **Sign in with GitHub**.
 
-    <Tip>
-      You can authorize multiple repositories during installation or add more later from your GitHub settings. However, Orbi connects and works on one repository at a time — you choose the active repository in the next step.
-    </Tip>
-  </Step>
+<Frame caption="The Orbi Cloud sign-in page, with the Sign in with GitHub button">
+  <img src="/images/signin.png" alt="The Orbi Cloud sign-in page, with the Sign in with GitHub button" />
+</Frame>
 
-  <Step title="Connect Your Repository">
-    On the status page, click **Connect repository**. Select your repository from the dropdown and confirm the base branch — the branch Orbi will open pull requests against. Your repository's default branch is preselected, so usually you only need to confirm. Then click **Connect repository**.
+GitHub asks you to authorize the Orbi Cloud OAuth app. This step only establishes who you are; it does not give Orbi access to any repository yet.
 
-    <Frame caption="The Connect repository page, with a repository dropdown and a base branch dropdown">
-      <img src="/images/connect.png" alt="The Connect repository page, with a repository dropdown and a base branch dropdown" />
-    </Frame>
+<Note>
+The page opens in Chinese if your browser prefers Chinese. Use the 🇬🇧 flag in the top right to switch to English — the choice is remembered in a cookie for a year.
+</Note>
 
-    Provisioning starts automatically once you confirm. It typically completes in one to two minutes.
+**Success:** you land on the status page, titled **Orbi Cloud Status**, and the **Account** card greets you by your GitHub login.
 
-    <Warning>
-      If your base branch has a branch protection rule that requires a minimum number of human approvals before merging, Orbi will not be able to merge pull requests automatically. Disable that requirement for the base branch, or approve each PR yourself. See [connect a repository](/connect-repository#branch-protection) for the three options.
-    </Warning>
-  </Step>
+## 2. Install the Orbi GitHub App
 
-  <Step title="Wait for Provisioning">
-    Watch the **Provisioning status** column in the **Connected repository** card on the status page. When it shows **Provisioned**, Orbi is ready. During provisioning, Orbi creates the `ai-ready`, `ai-in-progress`, `ai-pr-opened`, `ai-merged`, `ai-fix-needed`, and `ai-blocked` labels directly in your GitHub repository.
+On the status page, the reminder at the top says **Connect a GitHub repository first**. Click **Connect repository**.
 
-    <Note>
-      If provisioning fails, the card tells you the reason and the next step. There are [four failure classes](/provisioning#when-provisioning-fails) — most platform-side failures recover automatically within a couple of minutes.
-    </Note>
-  </Step>
+If you have not installed the Orbi GitHub App yet, you are sent to GitHub's installation screen. Choose the account or organization that owns your repository, select **Only select repositories**, and pick the one repository you want Orbi to work in.
 
-  <Step title="Label an Issue ai-ready">
-    Create a GitHub Issue in your connected repository. Describe the single change you want made — what should change and how you'll know the change worked. Then apply the **`ai-ready`** label to the Issue. The label already exists; provisioning created it.
+The App needs write access to Issues, pull requests and repository contents to do its job — it labels Issues, opens pull requests and pushes the branch it works on. You can review the exact permission list on GitHub's install screen before you approve, and you can revoke the whole installation from GitHub at any time.
 
-    Alternatively, open the status page and click **Let Orbi try this one** next to any existing open Issue to apply the label from the UI.
+**Success:** GitHub returns you to Orbi Cloud and you are on the **Connect repository** page.
 
-    <Frame caption="The status page listing untagged Issues, each with a Let Orbi try this one button">
-      <img src="/images/status-ready-issues.png" alt="The status page listing untagged Issues, each with a Let Orbi try this one button" />
-    </Frame>
+## 3. Connect the repository
 
-    Orbi picks up labelled Issues within five minutes and begins delivery.
-  </Step>
-</Steps>
+Pick your repository from the **Repository** dropdown, then pick the **Base branch** — the branch Orbi opens its pull requests against, normally `main`.
 
-## What Happens Next
+<Frame caption="The Connect repository page, with a repository dropdown and a base branch dropdown">
+  <img src="/images/connect.png" alt="The Connect repository page, with a repository dropdown and a base branch dropdown" />
+</Frame>
 
-After you apply `ai-ready`, Orbi moves through a deterministic label sequence so you always know where your delivery stands. The label changes to `ai-in-progress` once Orbi starts implementing the change, then to `ai-pr-opened` when the pull request is created and routed to the independent review session. If the reviewer finds issues, the label briefly shows `ai-fix-needed` while Orbi applies repairs — this is a normal part of the cycle, not a failure. Once the review session approves the PR, Orbi merges it and the label updates to `ai-merged`.
+Selecting a repository loads that repository's real branches and preselects its default branch, so in most cases you only need to confirm. Then click **Connect repository**.
 
-You can follow every transition in real time on the [status page](/status-page) or directly in the GitHub Issue timeline.
+<Note>
+If your repository is not in the dropdown, Orbi cannot see it — the App was installed without it. Open **Cannot find your repository?** on that page for the link to GitHub's App settings, where you can add the repository to the installation. One repository is active at a time; connecting another replaces it.
+</Note>
 
-## Tips for Your First Issue
+**Success:** you return to the status page, and the **Connected repository** card lists your repository with a green **Active** chip.
 
-- **Pick something small and specific.** A bug with a clear reproduction, a missing test, or a contained refactor finishes fast and shows you the whole loop.
-- **Say what should change and how you'll know it worked.** "The export button produces a CSV with no header row; it should include one" gives Orbi more to work with than "fix export".
-- **One Issue, one change.** Bundled Issues produce bundled PRs that are harder to review.
+## 4. Wait for provisioning
 
-<CardGroup cols={2}>
-  <Card title="File Your First Issue" icon="tag" href="/first-issue">
-    Learn how to write Issues that Orbi delivers successfully on the first attempt.
-  </Card>
-  <Card title="Delivery Lifecycle" icon="arrow-progress" href="/delivery-lifecycle">
-    Understand the ai-* label state machine and the independent review loop.
-  </Card>
-</CardGroup>
+Connecting a repository starts provisioning: Orbi builds an isolated environment for your repository and installs the delivery labels into it. **This usually takes one to two minutes.** You do not have to do anything.
+
+Watch the **Provisioning status** column in the **Connected repository** card. Reload the page to update it.
+
+**Success:** the **Provisioning status** column shows a green **Provisioned** chip.
+
+If it shows **Provisioning failed** instead, the card tells you the reason and the next step. Most failures are platform-side and recover on their own — see [provisioning](/provisioning#when-provisioning-fails).
+
+## 5. File an Issue and label it `ai-ready`
+
+In your connected repository on GitHub, create a normal Issue describing one change you want. Write it the way you would for a competent colleague who does not know your codebase: say what should change, and how you will know it worked.
+
+Then add the **`ai-ready`** label to that Issue. The label already exists — provisioning created it.
+
+That label is the execution switch. Orbi checks for newly labelled Issues on a timer, so pickup takes **up to five minutes**.
+
+<Note>
+You can skip the manual labelling. If you already have open Issues, the status page lists them under **Pick one for Orbi to try**, each with a **Let Orbi try this one** button that applies the label for you.
+</Note>
+
+<Frame caption="The status page listing untagged Issues, each with a Let Orbi try this one button">
+  <img src="/images/status-ready-issues.png" alt="The status page listing untagged Issues, each with a Let Orbi try this one button" />
+</Frame>
+
+**Success:** within about five minutes the label `ai-in-progress` appears on the Issue, and the status page's **Happening now** card lists it under **Doing**.
+
+<Frame caption="The status page showing work in progress, usage, the connected repository and the release form">
+  <img src="/images/status-active.png" alt="The status page showing work in progress, usage, the connected repository and the release form" />
+</Frame>
+
+From here Orbi writes the code, opens a pull request, reviews it in a separate session and repairs what the review finds. You get a pull request to review when it reaches `ai-pr-opened`, and the Issue reaches `ai-merged` once the reviewed commit is merged.
+
+## What to do next
+
+Watch the Issue's labels, or the status page. The three tabs on the **Happening now** card — **Doing**, **Awaiting** and **Done** — are the fastest read on where your work stands.
+
+When you are ready to ship what has merged, the **Cut a release** form in the **Connected repository** card creates the Release Issue for you: type a version like `v1.2.3` and Orbi bumps, tags and publishes the GitHub Release. It needs a milestone with that exact title — see [releases](/releases).
+
+- To understand each label and what moves between them, read [the delivery lifecycle](/delivery-lifecycle).
+- To use your own model key instead of the included quota, read [model configuration](/model-configuration).
+- If the Issue reaches `ai-blocked`, read [troubleshooting](/troubleshooting#ai-blocked) — that state is waiting on a decision from you.

@@ -1,84 +1,93 @@
 ---
-title: "Delivery Lifecycle: How Orbi Moves from Issue to Merged PR"
-sidebarTitle: "Delivery Lifecycle"
-description: "The ai-* labels are both the controls and the record of every delivery. Learn what each label means and what moves an Issue between them."
+title: "The delivery lifecycle"
+sidebarTitle: "Delivery lifecycle"
+description: "What do the ai-* labels mean and what moves an Issue between them?"
 ---
 
-Every delivery is recorded entirely inside your GitHub repository. An Issue moves through a sequence of `ai-*` labels, from `ai-ready` to `ai-merged`, and each transition leaves a comment, a PR, or a branch as evidence. There is no separate dashboard to check — the labels, comments, and pull request in your repository are the delivery record.
 
-## The State Machine
+An Issue moves through the `ai-*` labels from `ai-ready` to `ai-merged`, and the labels themselves are the delivery record.
 
-The diagram below shows every state an Issue can reach and what triggers each transition.
+Orbi Cloud keeps no separate dashboard of truth. The labels on your Issue, the comments Orbi leaves, and the pull request it opens are the complete state of a delivery — which means you can read, audit and correct everything from GitHub alone.
+
+## The state machine
 
 ```mermaid
 flowchart LR
   ready["ai-ready"] -->|claimed| progress["ai-in-progress"]
   progress -->|PR opened and verified| opened["ai-pr-opened"]
-  opened --> review{"independent review"}
+  opened --> review{"independent<br/>review"}
   review -->|clean verdict + merge gate| merged["ai-merged"]
   review -->|finding to repair| fix["ai-fix-needed"]
   fix --> opened
-  review -->|rounds exhausted| blocked["ai-blocked"]
+  review -->|rounds exhausted, or unsafe to fix| blocked["ai-blocked"]
 ```
 
-## What Each Label Means
-
-Orbi sets and clears these labels automatically as work progresses.
+## What each label means
 
 | Label | Meaning |
 |---|---|
-| `ai-ready` | Dispatched to Orbi; claimed on the next pickup tick |
-| `ai-in-progress` | Running: a workspace exists and code is being written |
-| `ai-pr-opened` | PR is open and verified, awaiting independent review |
-| `ai-fix-needed` | Review found issues; resumes on the next tick |
-| `ai-merged` | Success — the reviewed commit was merged to your base branch |
-| `ai-blocked` | Stopped; automatic recovery is not safe — a person must decide |
-| `ai-awaiting-merge` | PR is delivered and waiting for a maintainer to approve and merge |
+| `ai-ready` | You dispatched this Issue to Orbi. It may be claimed on the next tick. |
+| `ai-in-progress` | Claimed and running: a workspace exists and a session is writing code. |
+| `ai-pr-opened` | The pull request is open and verified, awaiting the independent review. |
+| `ai-fix-needed` | The review found something, or the head is not mergeable yet. The next tick resumes the same run, branch and pull request. |
+| `ai-merged` | Success. The reviewed commit was merged and the merge confirmed on your base branch. |
+| `ai-blocked` | Stopped on purpose. Automatic recovery is not safe, and a person has to decide the next step. |
+| `ai-awaiting-merge` | The reviewed pull request is delivered and waiting for a maintainer to approve and merge it. |
 
 Two labels are set by people, never by Orbi:
 
-| Label | When you set it |
+| Label | Who sets it |
 |---|---|
-| `ai-release` | Pair with `ai-ready` to start a release |
-| `ai-human-review` | Set to record that you have confirmed manual review of a PR |
+| `ai-release` | You, to start a release. See [releases](/releases). |
+| `ai-human-review` | You, to record that a person confirmed the delivery checklist. Orbi never adds or removes it. |
 
 ## Timing
 
-Pickup runs on a timer rather than responding to events instantly, so allow up to 5 minutes between adding a label and seeing the next state. The same tick interval applies to every transition — `ai-fix-needed` resuming to `ai-pr-opened`, for example, takes the same time as initial pickup.
+Orbi works on a timer rather than reacting instantly, so **pickup takes up to five minutes** after you add `ai-ready`. The same tick interval applies to every transition: a delivery that needs a repair round waits for the next tick before resuming.
 
-Delivery time beyond that first transition depends entirely on the size and complexity of the task. The status page at [orbi.build/api/](https://orbi.build/api/) shows runtime, model request count, and resumption count for each work item so you can see how much has happened.
+How long a delivery takes after pickup depends entirely on the size of the task. A small, well-specified change can finish in minutes; a large one takes longer and may go through several repair rounds. The status page shows runtime, model requests and resumption count per work item once a delivery reports usage.
 
-## The Independent Review
+## The independent review
 
-After the coding session opens a PR, a completely separate AI session reads the diff from scratch. That reviewing session did not write the code and has no memory of the coding session — it only sees what a human reviewer would see.
+The session that reviews the pull request is **not** the session that wrote it. It reads the diff fresh, runs the tests again, and either returns a clean verdict or files findings.
 
-The reviewer runs the tests again and either returns a clean verdict or files specific findings. If findings are filed, a repair round begins and the loop repeats. The number of repair rounds is bounded. If the rounds are exhausted before a clean verdict is reached, the Issue is marked `ai-blocked` and the PR, branch, and workspace are all preserved exactly as they are.
+When it files findings, Orbi repairs them and the pull request goes back for another round. This loop is bounded: if rounds are exhausted without reaching a clean verdict, the Issue is marked `ai-blocked` rather than looping forever. The pull request, branch and workspace all stay intact when that happens, so nothing is lost.
 
-Only a clean verdict passes through the merge gate. Orbi merges the exact commit that was reviewed — no additional changes are made between the verdict and the merge.
+Only a clean verdict reaches the merge gate, and the merge is of the **exact commit that was reviewed** — not a rebuilt or rebased version of it.
 
-## Steering a Running Delivery
+## Steering a delivery that is already running
 
-While the `ai-in-progress` label is present, you can redirect the work without waiting for the session to finish.
+You do not have to wait for a delivery to finish to correct it. While an Issue is `ai-in-progress`, add a comment with the new decision, or edit the Issue body. Both channels are equivalent, and the running session restarts with your correction — normally within a minute.
 
-To steer, add a comment to the Issue or edit the Issue body with your correction. Orbi detects the change and restarts the coding session with your updated instructions within approximately 1 minute.
+This is the intended way to redirect work that is going the wrong way; you do not need to cancel anything.
 
-Two limits apply:
+Two limits are worth knowing:
 
-- Each delivery supports a maximum of **3 steering restarts**. After that, let the current session finish and put your revised scope in a follow-up Issue.
-- Only repository owners, maintainers, members, and collaborators can trigger a restart. This prevents anyone with public comment access from redirecting a running session.
+**Steering is bounded.** A delivery accepts **3 steering restarts** by default. After that, further corrections do not restart it — let the delivery finish and put the revised scope into a follow-up Issue.
 
-## `ai-blocked` Is a Decision Point
+**Only trusted commenters can steer.** Comments from the repository's owner, maintainers, members and collaborators steer a run; a comment from an arbitrary public commenter is ignored by design, because otherwise anyone who can comment on your Issue could redirect what the agent does.
 
-`ai-blocked` is a deliberate stop, not a crash. Orbi has evaluated the situation, determined that automatic recovery is not safe, and is waiting for a human to decide what happens next. The comment Orbi leaves on the Issue explains exactly why it stopped.
+## `ai-blocked` is a decision point, not a failure
 
-You have three options:
+`ai-blocked` is a terminal state that means a human must decide what happens next. The comment Orbi leaves on the Issue states why automatic recovery was not possible.
 
-- **Change the code directly** on the PR branch, then re-apply `ai-ready` once the underlying problem is resolved.
-- **Rewrite the acceptance criteria** in the Issue body if the original description was ambiguous or incorrect, then re-apply `ai-ready`.
-- **Close the ticket** if the work is no longer needed or the scope needs to be redesigned from scratch.
+"Decide the next step" genuinely means any next step: change the code, rewrite the Issue's acceptance criteria, or close the ticket. **Removing the label alone does not restart anything** — fix the underlying problem first, then re-apply `ai-ready` to put the Issue back in the queue.
 
-<Warning>
-  Removing the `ai-blocked` label alone does not restart anything. Fix the underlying cause first — then re-apply `ai-ready` to queue the Issue for a fresh pickup.
-</Warning>
+See [troubleshooting](/troubleshooting#ai-blocked) for how to read a blocked comment.
 
-For step-by-step recovery guidance, see [Recovering from ai-blocked](/troubleshooting#ai-blocked).
+## Task types
+
+`ai-ready` is the execution switch for every kind of task. A second label chooses which playbook runs:
+
+| Task type | Labels | What you get |
+|---|---|---|
+| Development (the default) | `ai-ready` | The full chain: workspace, tests, one pull request, independent review, merge |
+| Release | `ai-ready` + `ai-release` | The deterministic release state machine — tag and GitHub Release. See [releases](/releases) |
+| Ops / research | `ai-ready` + `ai-ops-only` | A full execution session running the ops playbook; the deliverable is the evidence posted on the Issue. If it commits code, that code still takes the normal pull request route |
+| Content | `ai-ready` + `ai-content-only` | Text in, text out, delivered as an Issue comment — no execution and no git. The Issue is closed after delivery |
+
+One more label affects ordering rather than behaviour: `p0` marks an Issue urgent, and Orbi picks up `p0`-labelled Issues before bug-labelled ones, which come before plain ones.
+
+<Note>
+This page describes the lifecycle as you experience it on Cloud. The engine's own reference — every transition, the exact resume semantics, and the full config surface — is at [docs.orbi.build/workflow](https://docs.orbi.build/workflow).
+</Note>

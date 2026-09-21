@@ -1,97 +1,85 @@
 ---
-title: "Security Boundaries and Access Controls in Orbi Cloud"
+title: "Security"
 sidebarTitle: "Security"
-description: "Orbi Cloud's access is scoped to repositories you authorize. Every grant is revocable from GitHub. This page states what Orbi can reach and what it cannot."
+description: "What can Orbi Cloud access, where does my model key live, and what are the boundaries?"
 ---
 
-Orbi Cloud's access is limited to the repositories you authorize in your GitHub App installation — no broader. Every grant is revocable by you directly from GitHub, without involving Orbi at all. This page states the boundaries plainly so you can make informed decisions about what you connect and when.
 
-## What Orbi Can Access
+Orbi Cloud's access is scoped to the repositories you authorize on GitHub, and every grant is revocable by you from GitHub.
 
-Orbi reaches only what you explicitly hand it:
+This page states the boundaries plainly, including the ones that are uncomfortable. If something here is a problem for your organization, it is better to know before you connect a repository than after.
 
-- **Your authorized repositories only.** Orbi acts within the repositories included in your GitHub App installation. It performs no discovery and has no access to repositories outside that installation — including other repositories in the same organization or account.
-- **Your identity via OAuth.** The sign-in flow requests the `user:email` scope only. This establishes who you are so Orbi can associate your session with your tenant. It does not grant any repository access.
-- **Minimum repository permissions.** The GitHub App requests only the permissions required to carry out the full delivery lifecycle. The seven permissions are: **Issues** (read and write — labels, comments, milestones), **Pull requests** (read and write — open, review, and merge the delivery PR), **Contents** (read and write — fetch the repository and push the delivery branch), **Checks** (read-only — read CI results at each gate), **Workflows** (read and write — push files under `.github/workflows/` without silent rejection), **Variables** (read and write — synchronize delivery state), and **Administration** (read and write — register a deploy key during initial provisioning only). A full explanation of each permission appears in [Install the GitHub App](/install-app).
+## What Orbi can reach
 
-## Revoking Access
+**Only the repositories in your GitHub App installation.** Orbi does not discover repositories, and it works on Issues in exactly one connected repository at a time. A repository outside the installation is inaccessible — the API calls themselves fail.
 
-You can cut off Orbi's repository access at any time directly from GitHub:
+**Your identity, through OAuth.** Signing in requests one scope, `user:email`. That establishes who you are; it grants no repository access on its own.
 
-1. Go to **GitHub Settings → Applications → Installed GitHub Apps**.
-2. Find **Orbi** and select **Configure**.
-3. Scroll to the bottom and select **Uninstall**.
+The App's repository permissions are listed on GitHub's install screen before you approve, and explained in [install the GitHub App](/install-app#what-the-permissions-are-for). They amount to what an agent needs to do the job: read your Issues, label them, comment, push a branch, open a pull request, and merge it after review.
 
-Access ends immediately when the uninstall completes. This control lives entirely on GitHub — you do not need Orbi's cooperation, a support request, or any action inside the Orbi interface to revoke access.
+## Revoking access
+
+Uninstall the GitHub App from GitHub — **Settings → Applications → Installed GitHub Apps → Orbi → Configure → Uninstall**. Access ends immediately.
+
+This is the real control, and it lives on GitHub rather than in Orbi's own interface, which is the point: you do not need Orbi's cooperation to cut it off.
+
+## Where your model key lives
+
+If you [configure your own key](/model-configuration), it is encrypted at rest with **AES-256-GCM** and stored encrypted. It is:
+
+- Displayed back to you **masked only** — `••••1234`, never in full.
+- **Never written to logs**, and never included in support evidence.
+- Never shown in an interface that could be screen-shared or pasted.
+
+Enter it on the model configuration page and nowhere else. Do not email it, and do not paste it into an Issue, a pull request or a comment — those are public to anyone who can read your repository, and a key in an Issue body stays in the edit history.
+
+## Isolation between tenants
+
+Each tenant's delivery environment is a separate operating-system user with its own home directory and credentials. Environments cannot read each other's files, and every database read is scoped to the tenant making it.
+
+Cross-tenant access, shared writable workspaces and credential leakage are treated as release blockers rather than bugs to triage later.
+
+## What the delivery environment does not have
+
+The environment a delivery runs in has your repository and its test suite. It does **not** have:
+
+- Your production credentials or deployment pipeline.
+- Your third-party service accounts.
+- A browser against your live site.
+- Access to your other repositories.
+
+This is a security property, and also a practical constraint on what you can ask for — see [writing the Issue](/first-issue#do-not-ask-for-things-the-environment-cannot-do).
+
+## What Orbi writes to your repository
+
+Orbi pushes to the branch it creates for a delivery, and merges the reviewed pull request into your base branch. It does not push directly to your base branch outside that reviewed merge, and it never force-pushes a shared branch or moves an existing tag.
+
+The complete record of everything it did is in your repository: the Issue's labels and comments, the pull request, the review rounds, and — for a release — the tag and the GitHub Release notes carrying the gate evidence.
+
+## Branch protection
+
+Branch protection interacts with Orbi in a specific way worth knowing: if your base branch requires approving reviews, every delivery stops at the merge step, because Orbi authors and merges as the same App identity and GitHub forbids self-approval.
+
+The connect page warns you about this, and [explains the three ways to resolve it](/connect-repository#branch-protection-that-blocks-every-merge). Requiring a human approval on every delivery is a legitimate choice — you just have to know you are making it.
+
+## What your CI guarantees
+
+Orbi's merge and release gates read **your repository's** check runs. That means the strength of the guarantee is the strength of your test suite:
+
+- Good unit tests → the merge gate guarantees your code logic.
+- A business-flow end-to-end test → it guarantees the loop closes.
+- No CI at all → both gates pass with explicit "no check runs" evidence, and the change ships on the review's judgement alone.
+
+Running no CI is a choice Orbi permits and records honestly, rather than pretending to a guarantee it cannot make.
+
+## Upgrades never interrupt a delivery
+
+Platform deployments and upgrades cannot restart a delivery that is already executing. Neither can the quota guards — they act only on newly dispatched Issues. A delivery in flight runs to completion.
+
+## Reporting a security problem
+
+Use the Telegram group linked from the **Technical support** card on the status page. Do not include credentials, tokens or keys in the report.
 
 <Note>
-  Revoking App access and cancelling your subscription are separate actions. Uninstalling the App stops Orbi from reading your repository but does not cancel your billing. Cancel your subscription from the status page if you want to stop both.
+This page covers the Cloud product's boundaries. The engine's own security boundaries — what it never pushes to, what it never merges — are documented at [docs.orbi.build/security](https://docs.orbi.build/security).
 </Note>
-
-## API Key Storage
-
-If you configure a bring-your-own-key (BYOK) model credential, Orbi handles it as follows:
-
-- The key is **encrypted at rest with AES-256-GCM**.
-- It is shown back to you **masked only** (for example, `••••1234`) — never in full after the initial save.
-- It is **never written to logs** and never included in support evidence bundles.
-- It is **never shown in any shareable interface** — not on the status page, not in delivery details, not anywhere a second party could read it.
-
-<Warning>
-  Do not email your key or paste it into an Issue, PR, or comment. Keys in Issue bodies stay in edit history and may be visible to anyone who can read your repository.
-</Warning>
-
-## Tenant Isolation
-
-Every customer's delivery environment runs in strict isolation:
-
-- Each tenant's delivery environment is a **separate OS user** with its own home directory and credentials.
-- Environments **cannot read each other's files** — the filesystem boundary is enforced at the OS level.
-- Every database read is **scoped to the requesting tenant** — no query can return another tenant's records.
-- Cross-tenant access and credential leakage are treated as **release blockers**, not ordinary bugs. A build that could allow one tenant to reach another's data does not ship.
-
-## What the Delivery Environment Cannot Access
-
-The delivery environment contains your repository and test suite, and nothing else. The following are explicitly outside its reach:
-
-- Your production credentials or deployment pipeline
-- Your third-party service accounts
-- A browser session against your live site
-- Your other repositories
-
-<Note>
-  This is both a security property and a practical constraint. If your acceptance criteria require production evidence, the delivery will block. See [Your First Issue](/first-issue) for how to write Issues that work within this boundary.
-</Note>
-
-## What Orbi Writes to Your Repository
-
-Orbi's write surface is narrow and fully traceable:
-
-- It **pushes commits to the branch it creates** for a delivery.
-- It **merges the reviewed pull request** into your base branch once the review verdict is clean and the merge gate passes.
-- It does **not push directly to your base branch** outside that reviewed merge flow.
-- It **never force-pushes a shared branch** and never moves or deletes an existing tag.
-- The complete record of every commit, label change, and comment Orbi made stays in your repository — nothing is hidden or off-ledger.
-
-## Branch Protection
-
-If your base branch requires approving reviews before merge, every delivery will stop at the merge step. Orbi opens and merges as the same GitHub App identity, and GitHub forbids an actor from approving its own pull request — so the merge is blocked.
-
-The connect-repository page warns about this and explains three ways to resolve it. Requiring human approval on every delivery is a legitimate policy choice — just be deliberate about making it. See [Connect a Repository](/connect-repository#branch-protection) for the resolution options.
-
-## Your CI and What Orbi Guarantees
-
-Orbi's merge gate and release gate both read your repository's check runs. The guarantee Orbi can offer is only as strong as your test suite:
-
-- **Good tests → strong guarantees.** If your CI catches regressions reliably, the merge gate is a meaningful quality signal.
-- **No CI → gates pass on review judgement alone.** When there are no check runs, the gate records "no check runs" as evidence and relies entirely on the independent review session's verdict.
-
-Running no CI is permitted and recorded honestly in the delivery evidence. It is your call — Orbi does not require CI, but it cannot manufacture confidence that your tests don't provide.
-
-## Platform Upgrades
-
-Platform upgrades never interrupt a delivery that is already executing. A deployment may update the code that handles new work, but it cannot restart or cancel a session that is mid-flight. The same guarantee applies to quota guards: they act only on newly dispatched Issues and cannot stop a delivery that has already started.
-
-## Reporting a Security Problem
-
-Use the Telegram group linked from the **Technical Support** card on the [status page](https://orbi.build/api/). Describe the issue clearly without including credentials, tokens, keys, or other sensitive values in the message. For suspected vulnerabilities, the Telegram group reaches the team directly.

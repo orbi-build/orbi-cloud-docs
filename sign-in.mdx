@@ -1,68 +1,50 @@
 ---
-title: "Sign In to Orbi Cloud with GitHub OAuth Authentication"
-sidebarTitle: "Sign In"
-description: "Orbi Cloud uses GitHub OAuth with the user:email scope to identify you. No repository access is granted until you separately install the GitHub App."
+title: "Sign in"
+sidebarTitle: "Sign in"
+description: "How do I sign in to Orbi Cloud and what does signing in give it access to?"
 ---
 
-Signing in to Orbi Cloud is a single GitHub OAuth click. The process requests only your identity and email address — Orbi cannot read, write, or interact with any of your repositories until you separately install the GitHub App.
 
-## Sign In
+Signing in is a single GitHub OAuth click that establishes who you are, and it grants Orbi no repository access by itself.
 
-<Steps>
-  <Step title="Go to the Orbi status page">
-    Navigate to [orbi.build/api/](https://orbi.build/api/) in your browser.
-  </Step>
-  <Step title="Click Sign in with GitHub">
-    Click the **Sign in with GitHub** button on the landing screen.
-  </Step>
-  <Step title="Authorize the OAuth request">
-    GitHub will ask you to approve the `user:email` scope. This grants Orbi access to your GitHub identity and email address only. Click **Authorize** to continue.
-  </Step>
-</Steps>
+Orbi Cloud has no password of its own. Your GitHub account is your identity, and the repository access is a separate, explicit step — [installing the GitHub App](/install-app) — that you control from GitHub.
 
-## What Signing In Grants
+## Sign in
 
-Signing in with GitHub OAuth establishes your identity inside Orbi Cloud. It does **not** grant Orbi access to your repositories, issues, pull requests, or any code.
+Open **[orbi.build/api/](https://orbi.build/api/)** and click **Sign in with GitHub**.
 
 <Frame caption="The Orbi Cloud sign-in page">
   <img src="/images/signin.png" alt="The Orbi Cloud sign-in page" />
 </Frame>
 
-<Tip>
-  If you ever want to review what OAuth scopes Orbi holds, go to **GitHub → Settings → Applications → Authorized OAuth Apps**.
-</Tip>
+GitHub shows you its standard authorization screen. Approving it returns you to the Orbi Cloud status page.
 
-## Personal and Organization Accounts
+The sign-in requests one OAuth scope, `user:email` — your identity and your email address, nothing more. It does not grant access to any repository's code or Issues. That comes from the GitHub App installation, which is authorized separately and lists its own permissions.
 
-Each GitHub account — whether a personal account or an organization — creates its own independent Orbi tenant. Tenants are fully isolated from one another. Each has its own:
+## Choosing your language
 
-- Repository connection
-- Subscription and billing
-- Delivery history and usage
-- Model configuration
+Orbi Cloud is available in English and Chinese. The page follows your browser's preferred language on first visit, so it may open in Chinese.
 
-If you sign in with a personal account and later need to work under an organization, sign out and sign back in with the organization account. The two tenants will not share any data.
+Use the flags in the top right to switch: 🇬🇧 for English, 🇨🇳 for Chinese. Your choice is stored in a cookie and remembered for a year, on that browser.
 
-## Language
+## Personal and organization accounts
 
-Orbi Cloud supports **English** and **Chinese**. Toggle between them using the 🇬🇧 and 🇨🇳 flag buttons in the top-right corner of the status page. Your choice is stored in a browser cookie and persists for **1 year**, so the page will remember your preferred language across visits.
+If you install the Orbi GitHub App on an **organization** rather than on your personal account, the organization gets its own Orbi tenant — its repository, its subscription and its usage are tracked separately from your personal one.
 
-## Sessions
+You sign in the same way either way. Which tenant you are operating on is decided by the installation you came through, so when you own both a personal and an organization installation, return through the installation whose tenant you want to work on.
 
-A session lasts **7 days** from the moment you sign in. Sessions are **not** extended by activity — browsing the status page or triggering deliveries does not reset the clock.
+## Signing out
 
-When your session expires, the status page displays the message **"GitHub sign-in has expired"** along with a **Sign in again** link.
+The **Sign out** button is in the **Account** card at the bottom of the status page.
 
 <Frame caption="The signed-out confirmation page">
   <img src="/images/signed-out.png" alt="The signed-out confirmation page" />
 </Frame>
 
-Click the **Sign in again** link to start a new session. All your tenant data — repository connection, delivery history, and model configuration — is preserved between sessions. Nothing is lost when a session expires.
+Signing out clears the session on that device only. It does not uninstall the GitHub App, cancel a subscription, or stop a delivery that is already running.
 
-## Signing Out
+## When your session expires
 
-To sign out, scroll to the **Account** card at the bottom of the status page and click **Sign out**.
+A session lasts **7 days** and is not extended by activity, so you sign in again about once a week. If yours has expired, the page says **GitHub sign-in has expired** and offers **Sign in again**; pages that need an identity say so rather than failing silently.
 
-<Note>
-  Signing out clears your session on that device only. It does not stop a delivery that is already in progress, and it does not cancel your subscription. Return and sign in again at any time to resume where you left off.
-</Note>
+Signing in again restores everything — your repository connection, your model configuration and your delivery history are stored against your tenant, not against the browser session.

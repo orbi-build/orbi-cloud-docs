@@ -1,64 +1,111 @@
 ---
-title: "Orbi Cloud: From GitHub Issue to Merged Pull Request"
+title: "Orbi Cloud"
 sidebarTitle: "Overview"
-description: "Orbi Cloud turns labelled GitHub Issues into reviewed, merged pull requests automatically. No new tools — just your repository and a label."
+description: "What is Orbi Cloud and what do I get from it?"
 ---
 
-Orbi Cloud is a hosted runner that watches your GitHub repository and automatically converts labelled Issues into reviewed, repaired, and merged pull requests. You interact entirely through GitHub — writing Issues, applying labels, and inspecting pull requests — while Orbi handles implementation, an independent review cycle, and the final merge. This documentation covers everything you need to connect a repository, dispatch work, understand the delivery lifecycle, and manage your account.
 
-<CardGroup cols={2}>
-  <Card title="Quickstart" icon="rocket" href="/quickstart">
-    Go from sign-in to your first merged pull request in five steps.
+Orbi Cloud is a hosted runner that turns a labelled GitHub Issue into a tested, independently reviewed, merged pull request — on infrastructure Orbi operates.
+
+You keep working in GitHub. You file an Issue in your own repository and add the `ai-ready` label; Orbi Cloud claims it, writes the code in an isolated workspace, runs your test suite, opens a pull request, reviews that pull request in a separate session, repairs what the review finds, and merges the exact reviewed commit. The Issues, the pull requests and the release evidence all stay in your repository. There is no second workspace to adopt and no new password.
+
+Orbi Cloud runs the same delivery engine as self-hosted [Orbi](https://orbi.build/?ref=cloud-docs-index), which is open source. The difference is who operates the runner: with Cloud, Orbi does.
+
+## The whole path, end to end
+
+Everything below the dashed line is automatic. Your part is the four steps of setup, then one label per piece of work — and the decision to cut a release.
+
+```mermaid
+flowchart TD
+  subgraph setup["Setup — once"]
+    direction LR
+    s1["1 Sign in<br/>with GitHub"] --> s2["2 Install the<br/>GitHub App"] --> s3["3 Connect one<br/>repository"] --> s4["4 Provisioning<br/>~1–2 min"]
+  end
+
+  subgraph work["Per piece of work — you label, Orbi delivers"]
+    direction LR
+    w1["5 You label an<br/>Issue ai-ready"] -.-> w2["Orbi codes<br/>ai-in-progress"] --> w3["PR opened<br/>ai-pr-opened"] --> w4{"Independent<br/>review"}
+    w4 -->|clean| w5["Merged<br/>ai-merged"]
+    w4 -->|finding| w6["Repair<br/>ai-fix-needed"] --> w3
+    w4 -->|unsafe to fix| w7["Stops for you<br/>ai-blocked"]
+  end
+
+  subgraph rel["Release — only when you say so"]
+    direction LR
+    r1["6 You type a<br/>version"] -.-> r2["Gates, CI wait,<br/>bump, tag"] --> r3["GitHub Release<br/>milestone closed"]
+  end
+
+  setup --> work --> rel
+```
+
+The two dotted arrows are the only two switches you throw: the `ai-ready` label, and the version number. Orbi never throws either one for you.
+
+## What you actually do
+
+<CardGroup>
+  <Card title="Sign in with GitHub" href="/sign-in">
+    One OAuth click. Your GitHub account is your Orbi identity — there is no separate credential.
   </Card>
-  <Card title="Dispatch Work" icon="tag" href="/first-issue">
-    Learn how to write Issues that Orbi delivers successfully.
+  <Card title="Install the GitHub App" href="/install-app">
+    You choose which repositories the runner may work in, and you can revoke it from GitHub at any time.
   </Card>
-  <Card title="Delivery Lifecycle" icon="arrow-progress" href="/delivery-lifecycle">
-    Understand the ai-* label state machine and the independent review loop.
+  <Card title="Connect one repository" href="/connect-repository">
+    Pick the repository and its base branch. Orbi provisions a runner for it, usually in about a minute.
   </Card>
-  <Card title="Status Page" icon="gauge" href="/status-page">
-    Read every card on your Orbi Cloud status page.
+  <Card title="Label an Issue `ai-ready`" href="/first-issue">
+    That label is the execution switch. Everything after it is automatic until a pull request is waiting for you.
   </Card>
 </CardGroup>
 
-## How It Works
+## The delivery loop
 
-<Steps>
-  <Step title="Sign In with GitHub">
-    Visit [orbi.build/api/](https://orbi.build/api/) and click **Sign in with GitHub**. Orbi requests only the `user:email` OAuth scope — no access to your code at this stage.
-  </Step>
-  <Step title="Install the GitHub App">
-    Click **Install GitHub App** on the status page. On GitHub's installation screen, select **Only select repositories** and choose the repository you want Orbi to manage.
-  </Step>
-  <Step title="Connect a Repository">
-    Back on the status page, click **Connect repository**, choose your repository and base branch, and let provisioning complete. Provisioning typically takes one to two minutes.
-  </Step>
-  <Step title="Label an Issue ai-ready">
-    Create a GitHub Issue describing the change you want made, then apply the `ai-ready` label. Orbi picks it up within five minutes and begins delivery.
-  </Step>
-</Steps>
+```mermaid
+flowchart LR
+  issue["Issue labelled<br/>ai-ready"] --> claim["ai-in-progress<br/>(claimed, coding)"]
+  claim --> pr["ai-pr-opened<br/>(PR opened + verified)"]
+  pr --> review{"Independent<br/>review"}
+  review -->|clean| merged["ai-merged<br/>(terminal)"]
+  review -->|finding| fix["ai-fix-needed<br/>(repair, then re-review)"]
+  fix --> pr
+  review -->|cannot be fixed safely| blocked["ai-blocked<br/>(you decide)"]
+```
 
-## What Orbi Does
+The review is a separate session that did not write the code. It repairs the findings it can and re-runs the tests; only a clean verdict reaches the merge gate. When automatic recovery is not safe, the Issue lands on `ai-blocked` with a comment saying why — that state is a deliberate stop, waiting for a human decision, not a crash.
 
-Once you label an Issue, Orbi takes full ownership of delivery: it implements the change, opens a pull request, and routes that PR to a completely separate AI session for review. The reviewer can request repairs, which Orbi applies before the PR is merged — all without any manual intervention on your part.
+Read [the delivery lifecycle](/delivery-lifecycle) for what each label means and what moves an Issue between them.
 
-<CardGroup cols={2}>
-  <Card title="Independent Review" icon="shield-check">
-    A second AI session reviews every pull request, catches issues, and requests repairs before anything merges into your base branch.
-  </Card>
-  <Card title="Automatic Merge" icon="code-merge">
-    After the review session approves the PR, Orbi merges it automatically so your base branch always reflects completed work.
-  </Card>
-  <Card title="Release Automation" icon="tag">
-    Type a version string into the "Cut a release" form on the status page and Orbi cuts a release using a deterministic state machine — no scripts required.
-  </Card>
-  <Card title="Bring Your Own Key" icon="key">
-    Connect any of 20+ model providers using your own API key. You control which model powers your deliveries and keep full visibility into token usage.
-  </Card>
-</CardGroup>
+## What it costs
 
-## Pricing
+Your first **3 merged deliveries are free** — no card and no subscription. Failed deliveries do not use up that allowance. After it, Orbi Cloud is **US$79 per month**, which includes **300,000,000 tokens of model usage per month**. There is no per-token overage billing: when the monthly allowance runs out, new deliveries pause until the next calendar month.
+
+See [limits and quotas](/limits-and-quotas) for how the allowance is counted and what happens at the cap.
+
+## What Orbi Cloud does not do
+
+It does not discover repositories on its own — it only ever works in the one repository you connect. It does not start a release on its own; you open the release Issue and apply the `ai-release` label, which only a human can set. It does not push to your protected branches outside of the reviewed merge, and it does not touch a delivery that is already running when the platform is upgraded.
+
+Read [security](/security) for the full boundary list, including where your model key is stored and what the runner can reach.
 
 <Note>
-  Your first 3 merged deliveries are free — no credit card required. After that, a single plan at **US$79/month** includes 300,000,000 model tokens with no per-token overage billing. Bring your own model API key (BYOK) to use your existing provider credits instead.
+Orbi Cloud is in Private Beta. One repository can be connected at a time, and the walkthrough here reflects the product as it currently ships — not a roadmap.
 </Note>
+
+## Where to go next
+
+If you want the shortest path to a merged pull request, start with the [quickstart](/quickstart). If something is already wrong, go to [troubleshooting](/troubleshooting).
+
+## The engine's own documentation
+
+These pages cover Orbi Cloud — the hosted product. The delivery engine underneath is open source and documented separately at **[docs.orbi.build](https://docs.orbi.build)**. Go there when you want the mechanism rather than the product:
+
+<CardGroup>
+  <Card title="The delivery workflow in depth" href="https://docs.orbi.build/workflow">
+    The full label state machine, the review and repair loop, steering, and the release state machine — the engine's own reference for everything Cloud runs on your behalf.
+  </Card>
+  <Card title="The engine's security boundaries" href="https://docs.orbi.build/security">
+    What the engine will and will not do: what it never pushes to, what it never merges, and why.
+  </Card>
+  <Card title="Run it yourself instead" href="https://docs.orbi.build/quickstart">
+    Self-hosting is free and stays free. Same engine, you operate the runner.
+  </Card>
+</CardGroup>
