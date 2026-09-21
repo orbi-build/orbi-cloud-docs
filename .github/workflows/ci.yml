@@ -33,6 +33,41 @@ jobs:
       - name: Validate the docs build
         run: mint validate
 
+      # The diagrams are hand-written and a documentation generator run
+      # against this repo deletes them (2026-09-20: three of four went, and
+      # every zh/ page with them). `mint validate` is happy either way — it
+      # checks that the MDX builds, not that the content is still there. This
+      # asserts the four flow diagrams survive any future pass.
+      - name: Check the hand-written mermaid diagrams are intact
+        run: |
+          python3 - <<'PY'
+          import sys
+
+          expected = {
+              "index.mdx": 2,
+              "delivery-lifecycle.mdx": 1,
+              "zh/index.mdx": 2,
+              "zh/delivery-lifecycle.mdx": 1,
+          }
+          problems = []
+          for path, want in sorted(expected.items()):
+              try:
+                  got = open(path).read().count("```mermaid")
+              except FileNotFoundError:
+                  problems.append(f"{path}: file is missing entirely")
+                  continue
+              if got != want:
+                  problems.append(f"{path}: expected {want} mermaid diagram(s), found {got}")
+
+          for problem in problems:
+              print(problem)
+          print(f"\n{len(expected)} pages checked, {len(problems)} problems")
+          if problems:
+              print("\nSee 'Hand-written content' in README.md. If a diagram was")
+              print("removed on purpose, update the expected counts in this check.")
+          sys.exit(1 if problems else 0)
+          PY
+
       # The en/zh contract: same page set, and every zh internal link stays
       # inside /zh/. A zh page that links to an en page silently drops the
       # reader out of their language, and a missing translation is a 404 in

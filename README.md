@@ -29,6 +29,32 @@ The open-source delivery engine lives in [orbi-build/orbi](https://github.com/or
 | `security.mdx` | Access boundaries, key storage, isolation, what CI guarantees |
 | `faq.mdx` | Short answers with links to the detail |
 
+## Hand-written content — do not regenerate
+
+Two things in this repository are written by hand and will be destroyed by a
+full-site generation pass. Read this before pointing any documentation
+generator — including the Mintlify GitHub App's authoring bot — at this repo.
+
+- **The Chinese pages under `zh/`.** These are translations maintained against
+  the English pages, not machine output regenerated on demand. A generator that
+  only knows about the English pages deletes all sixteen of them.
+- **The `mermaid` diagrams.** Four pages carry flow diagrams —
+  `index.mdx` (the end-to-end path and the delivery loop), `delivery-lifecycle.mdx`,
+  and their `zh/` counterparts. They encode the actual label state machine.
+  A generator that rewrites prose replaces them with generic cards.
+
+Beyond those two, the prose itself is specific on purpose: the error tables
+(what the page says / what happened / what to do), the exact permission
+rationale, the `?ref=` tracking parameters on outbound links, and the deep
+links with anchors are all load-bearing. A regeneration pass that "improves
+readability" trades them for longer text that says less.
+
+This already happened once, on 2026-09-20: two bot commits deleted every `zh/`
+page, dropped three of the four diagrams, and replaced the error tables with
+card groups. Both were reverted in full — no salvageable content was found in
+either. If a generation pass is ever wanted here, run it on a branch and read
+the diff against `main` page by page before merging.
+
 ## Local preview
 
 Requires Node 22+.
