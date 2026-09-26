@@ -69,11 +69,13 @@ On a plan that allows several repositories, click **Add repository** on the stat
 
 With more than one repository connected, the status page shows an overview with one row per repository. Click a row to open that repository's detail: its base branch, its delivery scope, what is happening now, its delivery history, its versions, and **Deactivate this repository**.
 
-When you are at your limit, the connect page says **Repository limit reached**. Deactivate a repository you no longer need, or move to a plan with more — the page offers **Upgrade to Pro (up to 5 repositories)**.
+When a paid plan is at its limit, connecting another repository is refused with **Repository limit reached**. Deactivate a repository you no longer need first. On Solo the page also offers **Upgrade to Pro (up to 5 repositories)**; on Pro it links back to the connect page, where each connected repository has a **Deactivate** button.
 
 ## Changing the connected repository
 
-On a plan with a single repository, connecting a different one replaces the current one: the new repository becomes active, and the previous one moves to history. It is not deleted — it still appears under **Historical repositories** in **Settings and reference** on the status page, with its delivery and usage history.
+On the free plan, connecting a different repository replaces the current one: the new repository becomes active, and the previous one moves to history. It is not deleted — it still appears under **Historical repositories** in **Settings and reference** on the status page, with its delivery and usage history.
+
+On Solo and Pro, a new repository is added rather than swapped in. When you are already at your plan's limit, deactivate the repository you are leaving first (below), then connect the new one.
 
 You can also take a repository out of service without replacing it: **Deactivate** on the connect page (or **Deactivate this repository** in the repository's detail), then **Confirm deactivation**. Deactivating reclaims that repository's environment; its delivery and usage history remains available. Connecting it again later provisions it afresh.
 
@@ -90,7 +92,7 @@ You cannot change repositories while a delivery is in flight. The page says **Re
 | The repository is not authorized for the GitHub App | The repository is outside your installation's scope | Open the GitHub App installation settings, add the repository, reload the connect page |
 | **Cannot connect repository** — GitHub Issues disabled | The repository has the Issues feature turned off | Enable it under the repository's **Settings → Features → Issues**, then retry |
 | **Repository connected; cannot change it yet** | A delivery is running in the currently connected repository | Wait for it to finish, then change |
-| **Repository limit reached** | You already have as many repositories as your plan allows | Deactivate one, or upgrade to Pro |
+| **Repository limit reached** | Your Solo or Pro plan already has as many repositories as it allows | Deactivate one first; on Solo you can also upgrade to Pro |
 | The repository list was temporarily unavailable | GitHub's API could not be reached | Retry; use **Enter manually** if it persists |
 | Invalid repository format | The manually entered value is not `OWNER/REPO` | Re-enter as `owner/repository`, for example `orbi-build/orbi` |
 

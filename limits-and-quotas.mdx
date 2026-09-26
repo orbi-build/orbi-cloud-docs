@@ -14,7 +14,7 @@ None of them ever interrupts a delivery that is already running.
 | | Free | Solo | Pro |
 |---|---|---|---|
 | Deliveries | First 3 merged deliveries | Unlimited within the token allowance | Unlimited within the token allowance |
-| Model tokens per month | — | 100,000,000 | 300,000,000 |
+| Model tokens per month | Not a practical limit at 3 deliveries | 100,000,000 | 300,000,000 |
 | Repositories connected at once | 1 | 1 | 5 |
 
 Prices and the yearly option are on the [pricing page](https://orbi.build/cloud/?ref=cloud-docs-limits); [billing](/billing) covers subscribing.
@@ -67,7 +67,7 @@ The **Next** card says **Monthly quota exhausted: Orbi has paused claiming new I
 
 ## The repository limit
 
-Free and Solo connect **one repository at a time**; Pro connects **up to five**. On a one-repository plan, connecting a different repository replaces the current one. At the limit, the connect page says **Repository limit reached** and offers the upgrade. See [connect a repository](/connect-repository#more-than-one-repository) — and note that you cannot change repositories while a delivery is in flight.
+Free and Solo connect **one repository at a time**; Pro connects **up to five**. On Free, connecting a different repository replaces the current one. On Solo and Pro, connecting another repository at the limit is refused with **Repository limit reached** — deactivate one first, or on Solo upgrade to Pro. See [connect a repository](/connect-repository#more-than-one-repository) — and note that you cannot change repositories while a delivery is in flight.
 
 ## What is never interrupted
 
@@ -81,5 +81,5 @@ Platform upgrades and deployments have the same property: they never restart a d
 |---|---|---|---|
 | Free allowance | 3 merged deliveries | `ai-ready` removed, comment with subscribe link | Subscribe, re-apply `ai-ready` |
 | Monthly tokens | Solo 100,000,000 · Pro 300,000,000, per calendar month (UTC) | New Issues wait; labels stay | Automatic on the 1st (UTC), or immediately with your own key or an upgrade |
-| Repositories | Free and Solo 1 · Pro 5 | Connecting another replaces it (1), or is refused (at the limit) | Deactivate one, or upgrade |
+| Repositories | Free and Solo 1 · Pro 5 | Free: connecting another replaces it. Solo and Pro: refused at the limit | Deactivate one first, or upgrade |
 | Pickup interval | Up to 5 minutes | — | — |
