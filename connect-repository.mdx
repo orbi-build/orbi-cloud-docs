@@ -7,11 +7,11 @@ description: "How do I connect a repository to Orbi Cloud, add more, or change i
 
 Connecting a repository tells Orbi which repository's Issues it may work on, and which branch to open pull requests against.
 
-Connecting is self-service: you pick the repository and the base branch on the connect page, and provisioning starts immediately. How many repositories can be connected at the same time depends on your plan — one on Free and Solo, up to five on Pro. See [limits and quotas](/limits-and-quotas).
+Connecting is self-service: you pick the repository and the base branch on the connect page, and provisioning starts immediately. How many repositories can be connected at the same time depends on your plan — one on Free and Solo, up to five on Pro — and changing one always means deactivating it first. See [limits and quotas](/limits-and-quotas).
 
 ## Connect
 
-From the status page, click **Connect repository** (or **Add repository** once you already have one).
+From the status page, click **Connect repository** — or, once you already have one, **Manage repositories**, which opens the same page.
 
 <Frame caption="The Connect repository page, showing the repository and base branch lists">
   <img src="/images/connect.png" alt="The Connect repository page, showing the repository and base branch lists" />
@@ -65,25 +65,20 @@ Changing it does not require reconnecting — the next delivery's pull request m
 
 ## More than one repository
 
-On a plan that allows several repositories, click **Add repository** on the status page — or on the connect page, where it shows how many you have used against your limit (for example **Used 1 / limit 5 repositories**). Each repository gets its own environment and its own provisioning.
+On a plan that allows several repositories, open **Manage repositories** on the status page. The connect page shows how many you have used against your limit (for example **Used 1 / limit 5 repositories**) and lists the connected ones; pick another repository and click **Add repository**. Each repository gets its own environment and its own provisioning.
 
 With more than one repository connected, the status page shows an overview with one row per repository. Click a row to open that repository's detail: its base branch, its delivery scope, what is happening now, its delivery history, its versions, and **Deactivate this repository**.
 
-When a paid plan is at its limit, connecting another repository is refused with **Repository limit reached**. Deactivate a repository you no longer need first. On Solo the page also offers **Upgrade to Pro (up to 5 repositories)**; on Pro it links back to the connect page, where each connected repository has a **Deactivate** button.
-
 ## Changing the connected repository
 
-On the free plan, connecting a different repository replaces the current one: the new repository becomes active, and the previous one moves to history. It is not deleted — it still appears under **Historical repositories** in **Settings and reference** on the status page, with its delivery and usage history.
+There is one rule on every plan: **deactivate the repository you are leaving, then connect the new one.** Connecting never replaces a repository on its own.
 
-On Solo and Pro, a new repository is added rather than swapped in. When you are already at your plan's limit, deactivate the repository you are leaving first (below), then connect the new one.
+1. Open **Manage repositories**. Under **Connected repositories**, click **Deactivate** next to the repository you are leaving, then **Confirm deactivation**. (In a repository's detail view on the status page, **Deactivate this repository** does the same.)
+2. Pick the new repository and click **Add repository**.
 
-You can also take a repository out of service without replacing it: **Deactivate** on the connect page (or **Deactivate this repository** in the repository's detail), then **Confirm deactivation**. Deactivating reclaims that repository's environment; its delivery and usage history remains available. Connecting it again later provisions it afresh.
+Deactivating reclaims that repository's environment. It is not deleted from your history — it appears under **Historical repositories** in **Settings and reference** on the status page, with its delivery and usage history. Connecting it again later provisions it afresh, which takes a minute or two like any new repository.
 
-Every newly connected repository is provisioned from scratch, which again takes a minute or two.
-
-<Note>
-On the free plan, you cannot change repositories while a delivery is in flight. The page says **Repository connected; cannot change it yet** and asks you to wait until the current delivery ends — its pull request merged, or its Issue closed. This protects the running delivery.
-</Note>
+If you try to connect a repository while you are already at your plan's limit, the page says **Repository limit reached** and offers **Return to the connection page to deactivate a repository**. On Free and Solo, which connect one repository at a time, it also offers **Upgrade to Pro (up to 5 repositories)**.
 
 ## What the errors mean
 
@@ -91,8 +86,7 @@ On the free plan, you cannot change repositories while a delivery is in flight. 
 |---|---|---|
 | The repository is not authorized for the GitHub App | The repository is outside your installation's scope | Open the GitHub App installation settings, add the repository, reload the connect page |
 | **Cannot connect repository** — GitHub Issues disabled | The repository has the Issues feature turned off | Enable it under the repository's **Settings → Features → Issues**, then retry |
-| **Repository connected; cannot change it yet** | A delivery is running in the currently connected repository | Wait for it to finish, then change |
-| **Repository limit reached** | Your Solo or Pro plan already has as many repositories as it allows | Deactivate one first; on Solo you can also upgrade to Pro |
+| **Repository limit reached** | You already have as many repositories as your plan allows | Deactivate one first; on Free and Solo you can also upgrade to Pro |
 | The repository list was temporarily unavailable | GitHub's API could not be reached | Retry; use **Enter manually** if it persists |
 | Invalid repository format | The manually entered value is not `OWNER/REPO` | Re-enter as `owner/repository`, for example `orbi-build/orbi` |
 

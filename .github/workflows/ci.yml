@@ -130,6 +130,9 @@ jobs:
               "**发个版本（版本号）**": "**版本** under **设置与参考**",
               "**本月缓存命中率**": "**缓存命中率**",
               "**配置自己的模型**": "**模型配置** in the account menu",
+              "**仓库已连接，暂时不能更换**": "nothing: since v0.6.70 every plan deactivates first, so this page no longer exists",
+              "**技术支持（Telegram）**": "**Telegram 群** (the footer label since v0.6.70)",
+              "**ZH / EN**": "**🇨🇳 ZH | 🇺🇸 EN** (the signed-out pages use the shared switch since v0.6.70)",
           }
           bad = []
           for f in sorted(glob.glob("zh/*.mdx")):
