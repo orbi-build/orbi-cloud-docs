@@ -116,14 +116,20 @@ jobs:
           import glob, io, sys
 
           WRONG = {
-              "**等你评审**": "**待评审** (the status page tab)",
+              "**等你评审**": "**评审中** (the delivery history tab)",
+              "**待评审**": "**评审中** (the tab was renamed with the 2026-09-26 status page redesign)",
               "**通过 Stripe 订阅**": "**订阅 Orbi Cloud** (the Chinese button; 'Subscribe with Stripe' is the English one)",
               "**这一步怎么做**": "**看这一步怎么做 ▶**",
               "**request ID**": "**request id**",
               "**自动重试次数已用尽**": "**自动重试次数已用完**",
-              "**① 需要你处理**": "**①需要你处理** (no space after ①)",
-              "**② 正在发生**": "**②正在发生**",
-              "**③ 参考**": "**③参考**",
+              "**①需要你处理**": "**① 需要你处理** (the redesigned page puts a space after ①)",
+              "**③参考**": "**设置与参考** (the ①②③ layout is gone)",
+              "**技术支持**卡片": "the account menu's **加入 Telegram 群获取技术支持** (the support card was removed)",
+              "**账户**卡片": "the account menu under the avatar (the account card was removed)",
+              "**让 Orbi 试这张**": "**试试 →**",
+              "**发个版本（版本号）**": "**版本** under **设置与参考**",
+              "**本月缓存命中率**": "**缓存命中率**",
+              "**配置自己的模型**": "**模型配置** in the account menu",
           }
           bad = []
           for f in sorted(glob.glob("zh/*.mdx")):

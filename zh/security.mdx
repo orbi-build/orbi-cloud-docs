@@ -11,7 +11,7 @@ Orbi Cloud 的访问范围限于你在 GitHub 上授权的仓库，每一项授�
 
 ## Orbi 能访问到什么
 
-**只有你 GitHub App 安装范围内的仓库。** Orbi 不会自己发现仓库，同一时间只在你连接的那一个仓库里处理 Issue。安装范围之外的仓库根本访问不到 —— API 调用本身就会失败。
+**只有你 GitHub App 安装范围内的仓库。** Orbi 不会自己发现仓库，只处理你连接的仓库里的 Issue。安装范围之外的仓库根本访问不到 —— API 调用本身就会失败。
 
 **你的身份，通过 OAuth。** 登录只申请一个 scope：`user:email`。它确认你是谁，本身不授予任何仓库访问权。
 
@@ -78,7 +78,7 @@ Orbi 的合并门禁和发版门禁读的是**你仓库**的 check runs。也就
 
 ## 报告安全问题
 
-用状态页**技术支持**卡片里的 Telegram 群。报告里不要包含凭据、token 或 key。
+用[获取帮助](/zh/troubleshooting)里列出的任一渠道。涉及敏感内容的，发邮件到 support@orbi.build，不要发在群里。报告里不要包含凭据、token 或 key。
 
 <Note>
 这一页讲的是 Cloud 产品的边界。引擎自己的安全边界 —— 它永远不推哪里、永远不合并什么 —— 在 [docs.orbi.build/zh/security](https://docs.orbi.build/zh/security)。

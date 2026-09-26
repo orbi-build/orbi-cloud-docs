@@ -19,7 +19,7 @@ Everything below the dashed line is automatic. Your part is the four steps of se
 flowchart TD
   subgraph setup["Setup — once"]
     direction LR
-    s1["1 Sign in<br/>with GitHub"] --> s2["2 Install the<br/>GitHub App"] --> s3["3 Connect one<br/>repository"] --> s4["4 Provisioning<br/>~1–2 min"]
+    s1["1 Sign in<br/>with GitHub"] --> s2["2 Install the<br/>GitHub App"] --> s3["3 Connect a<br/>repository"] --> s4["4 Provisioning<br/>~1–2 min"]
   end
 
   subgraph work["Per piece of work — you label, Orbi delivers"]
@@ -32,13 +32,15 @@ flowchart TD
 
   subgraph rel["Release — only when you say so"]
     direction LR
-    r1["6 You type a<br/>version"] -.-> r2["Gates, CI wait,<br/>bump, tag"] --> r3["GitHub Release<br/>milestone closed"]
+    r1["6 You start a<br/>release"] -.-> r2["Gates, CI wait,<br/>bump, tag"] --> r3["GitHub Release<br/>milestone closed"]
   end
 
   setup --> work --> rel
 ```
 
-The two dotted arrows are the only two switches you throw: the `ai-ready` label, and the version number. Orbi never throws either one for you.
+The two dotted arrows are the only two switches you throw: the `ai-ready` label, and the release. Orbi never throws either one for you.
+
+The status page walks you through the same path. Its **Setup progress** list has seven steps — the six above plus **Subscribe** — and marks the one that is waiting on you.
 
 ## What you actually do
 
@@ -49,11 +51,11 @@ The two dotted arrows are the only two switches you throw: the `ai-ready` label,
   <Card title="Install the GitHub App" href="/install-app">
     You choose which repositories the runner may work in, and you can revoke it from GitHub at any time.
   </Card>
-  <Card title="Connect one repository" href="/connect-repository">
-    Pick the repository and its base branch. Orbi provisions a runner for it, usually in about a minute.
+  <Card title="Connect a repository" href="/connect-repository">
+    Pick the repository and its base branch. Orbi provisions a runner for it, usually in one to two minutes.
   </Card>
   <Card title="Label an Issue `ai-ready`" href="/first-issue">
-    That label is the execution switch. Everything after it is automatic until a pull request is waiting for you.
+    That label is the execution switch. Not sure what to try first? The status page can create a small starter Issue for you.
   </Card>
 </CardGroup>
 
@@ -76,19 +78,17 @@ Read [the delivery lifecycle](/delivery-lifecycle) for what each label means and
 
 ## What it costs
 
-Your first **3 merged deliveries are free** — no card and no subscription. Failed deliveries do not use up that allowance. After it, Orbi Cloud is **US$79 per month**, which includes **300,000,000 tokens of model usage per month**. There is no per-token overage billing: when the monthly allowance runs out, new deliveries pause until the next calendar month.
+Your first **3 merged deliveries are free** — no card and no subscription. Failed deliveries do not use up that allowance.
 
-See [limits and quotas](/limits-and-quotas) for how the allowance is counted and what happens at the cap.
+After that there are two paid plans, **Solo** and **Pro**. Both include model usage in the price — Solo with 100,000,000 tokens a month and one repository, Pro with 300,000,000 tokens a month and up to five repositories. There is no per-token overage billing: when the month's allowance runs out, new deliveries pause until the next month, or until you add your own model key.
+
+The current prices, the yearly option and any founding offer are on the [pricing page](https://orbi.build/cloud/?ref=cloud-docs-index). [Billing](/billing) covers how subscribing works, and [limits and quotas](/limits-and-quotas) covers how the allowance is counted.
 
 ## What Orbi Cloud does not do
 
-It does not discover repositories on its own — it only ever works in the one repository you connect. It does not start a release on its own; you open the release Issue and apply the `ai-release` label, which only a human can set. It does not push to your protected branches outside of the reviewed merge, and it does not touch a delivery that is already running when the platform is upgraded.
+It does not discover repositories on its own — it only ever works in the repositories you connect. It does not start a release on its own; the release Issue carries the `ai-release` label, which only a human can set. It does not push to your protected branches outside of the reviewed merge, and it does not touch a delivery that is already running when the platform is upgraded.
 
 Read [security](/security) for the full boundary list, including where your model key is stored and what the runner can reach.
-
-<Note>
-Orbi Cloud is in Private Beta. One repository can be connected at a time, and the walkthrough here reflects the product as it currently ships — not a roadmap.
-</Note>
 
 ## Where to go next
 

@@ -7,7 +7,7 @@ description: "What is provisioning, how long does it take, and what do I do if i
 
 Provisioning builds the isolated environment your deliveries run in, and it starts automatically the moment you connect a repository.
 
-You do not trigger it and you cannot speed it up. It normally takes **one to two minutes**, and the status page updates itself while it runs.
+You do not trigger it and you cannot speed it up. It normally takes **one to two minutes**, and the page refreshes itself while it runs — you can leave it open.
 
 ## What happens during provisioning
 
@@ -19,55 +19,67 @@ Each environment belongs to exactly one tenant and one repository. Environments 
 
 ## Watching it
 
-The **Provisioning status** column in the **Connected repository** card shows where it is:
+While provisioning runs, the **Next** card on the status page says **Orbi is preparing the environment**, and the **Setup progress** list shows **Provision environment** with **About 2 minutes**. When it finishes, that step turns to **✓ Done**.
+
+The same state is listed per repository under **Settings and reference → Connected repository**, in the **Provisioning status** column:
 
 | What you see | What it means |
 |---|---|
 | **Provisioning** | Running. Usually one to two minutes; the page refreshes itself |
-| **Provisioned** | Done. You can [file your first Issue](/first-issue) |
-| **Provisioning failed** | Stopped. The card states the reason and the next step |
+| **Provisioned** | Done. You can [hand Orbi its first Issue](/first-issue) |
+| **Provisioning failed** | Stopped. The row states the reason, when it happened, a request ID and the next step |
 | **—** | Provisioning was never triggered — normally because no repository is connected yet |
 
 ## When provisioning fails
 
-A failure is never a dead end, and the card always names both a reason and a next step. There are four classes:
+A failure is never a dead end. The **Next** card tells you which of three situations you are in, and **View failure reasons and repair steps** takes you to the details.
 
-<Frame caption="The status page showing a failed provisioning with reason, time, request ID and next step">
-  <img src="/images/status-provision-failed.png" alt="The status page showing a failed provisioning with reason, time, request ID and next step" />
+<Frame caption="A failed provisioning that the platform is recovering from automatically">
+  <img src="/images/status-provision-failed.png" alt="A failed provisioning that the platform is recovering from automatically" />
 </Frame>
+
+| Headline | Whose move it is |
+|---|---|
+| **Orbi is stuck and needs you** | Yours — the cause is on your side, and the repair steps say what to change |
+| **Provisioning failed; the platform will retry automatically** | Nobody's yet — Orbi retries on its own |
+| **Provisioning failed; the platform is recovering automatically** | Ours — no action needed; check back later |
+
+With several repositories, the same distinction appears as a chip on the repository's row: **Needs you**, **Retrying automatically** or **Platform recovering**.
+
+The causes behind those headlines fall into four classes.
 
 ### The GitHub App installation or authorization is no longer valid
 
 Orbi can no longer mint a token for your installation — usually because the App was uninstalled, or its access to the repository was removed.
 
-**What to do:** reinstall or re-authorize the GitHub App, then retry. The card links to the connect page for this.
+**What to do:** reinstall or re-authorize the GitHub App, then retry. The repair steps link to the connect page for this.
 
 ### The model credential was not accepted
 
 Your own model key was rejected by the provider.
 
-**What to do:** open [model configuration](/model-configuration) and correct the key. Saving a new configuration automatically retries provisioning — you do not need to reconnect the repository.
+**What to do:** open **Model config** from the account menu and correct the key — see [model configuration](/model-configuration). Saving a new configuration automatically retries provisioning; you do not need to reconnect the repository.
 
 ### The model service could not be reached
 
 The key or the base URL appears to be wrong, or the provider is unreachable.
 
-**What to do:** check the base URL and key on the [model configuration](/model-configuration) page. As above, saving retries provisioning automatically.
+**What to do:** check the base URL and key in **Model config**, and use **Test connection** before saving. As above, saving retries provisioning automatically.
 
 ### A platform-side failure
 
 Anything not attributable to your installation or your model configuration is ours.
 
-**What to do:** nothing. The platform recovers automatically. The card says so explicitly, and asks you to check back in a minute or two. If it has not recovered after that, contact support — the card includes a **request ID** that identifies your exact provisioning attempt, so quote it.
+**What to do:** nothing. The platform recovers automatically, and the page says so. If it has not recovered after a while, [contact support](/troubleshooting#getting-help) — the failure details include a **Request ID** that identifies your exact provisioning attempt, so quote it.
 
 ## Retries
 
-Provisioning retries automatically a limited number of times. The card tells you which situation you are in: either **provisioning will retry automatically**, or **automatic retries are exhausted**.
+Provisioning retries automatically a limited number of times. The details tell you which situation you are in: either **Provisioning will retry automatically**, or **Automatic retries are exhausted**.
 
-When retries are exhausted for a tenant-side cause, fixing the cause rearms it — saving a corrected model configuration retries even an exhausted request. When they are exhausted for a platform-side cause, platform recovery takes over without any action from you.
+When retries are exhausted for a cause on your side, fixing the cause rearms it — saving a corrected model configuration retries even an exhausted request. When they are exhausted for a platform-side cause, platform recovery takes over without any action from you.
 
 ## After provisioning succeeds
 
-Nothing else is required. The environment stays provisioned; you do not reprovision between deliveries. [File an Issue and label it `ai-ready`](/first-issue).
+Nothing else is required. The environment stays provisioned; you do not reprovision between deliveries. [Hand Orbi its first Issue](/first-issue).
 
-Connecting a **different** repository provisions a fresh environment for it.
+Connecting another repository provisions a fresh environment for it, and deactivating a repository reclaims its environment.

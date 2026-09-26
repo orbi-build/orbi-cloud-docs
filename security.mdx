@@ -11,7 +11,7 @@ This page states the boundaries plainly, including the ones that are uncomfortab
 
 ## What Orbi can reach
 
-**Only the repositories in your GitHub App installation.** Orbi does not discover repositories, and it works on Issues in exactly one connected repository at a time. A repository outside the installation is inaccessible — the API calls themselves fail.
+**Only the repositories in your GitHub App installation.** Orbi does not discover repositories, and it works only on Issues in the repositories you connect. A repository outside the installation is inaccessible — the API calls themselves fail.
 
 **Your identity, through OAuth.** Signing in requests one scope, `user:email`. That establishes who you are; it grants no repository access on its own.
 
@@ -48,7 +48,7 @@ The environment a delivery runs in has your repository and its test suite. It do
 - A browser against your live site.
 - Access to your other repositories.
 
-This is a security property, and also a practical constraint on what you can ask for — see [writing the Issue](/first-issue#do-not-ask-for-things-the-environment-cannot-do).
+This is a security property, and also a practical constraint on what you can ask for — see [writing the Issue](/first-issue#how-to-write-the-issue).
 
 ## What Orbi writes to your repository
 
@@ -78,7 +78,7 @@ Platform deployments and upgrades cannot restart a delivery that is already exec
 
 ## Reporting a security problem
 
-Use the Telegram group linked from the **Technical support** card on the status page. Do not include credentials, tokens or keys in the report.
+Use one of the channels in [getting help](/troubleshooting#getting-help) — for anything sensitive, email support@orbi.build rather than posting in the group. Do not include credentials, tokens or keys in the report.
 
 <Note>
 This page covers the Cloud product's boundaries. The engine's own security boundaries — what it never pushes to, what it never merges — are documented at [docs.orbi.build/security](https://docs.orbi.build/security).

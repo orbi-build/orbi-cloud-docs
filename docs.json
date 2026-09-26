@@ -96,8 +96,40 @@
               "zh/faq"
             ]
           }
-        ]
+        ],
+        "navbar": {
+          "links": [
+            {
+              "label": "GitHub",
+              "href": "https://github.com/orbi-build/orbi"
+            }
+          ],
+          "primary": {
+            "type": "button",
+            "label": "价格",
+            "href": "https://orbi.build/cloud/?ref=cloud-docs-nav"
+          }
+        }
       }
     ]
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/orbi-build/orbi"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Pricing",
+      "href": "https://orbi.build/cloud/?ref=cloud-docs-nav"
+    }
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/orbi-build/orbi",
+      "telegram": "https://t.me/orbi_build"
+    }
   }
 }

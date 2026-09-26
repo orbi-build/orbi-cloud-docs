@@ -1,13 +1,23 @@
 ---
 title: "Limits and quotas"
 sidebarTitle: "Limits and quotas"
-description: "What are the free allowance and the monthly token quota, and what happens when I reach them?"
+description: "What are the free allowance, the monthly token allowance and the repository limit, and what happens when I reach them?"
 ---
 
 
-Two limits apply: a free allowance of 3 merged deliveries before you subscribe, and 300,000,000 tokens of model usage per month once you do.
+Three limits apply: a free allowance of 3 merged deliveries before you subscribe, a monthly token allowance that depends on your plan, and a limit on how many repositories can be connected at once.
 
-Both work the same way when they are reached: newly dispatched work is paused with an explanation on the Issue, and **a delivery that is already running is never interrupted**.
+None of them ever interrupts a delivery that is already running.
+
+## At a glance
+
+| | Free | Solo | Pro |
+|---|---|---|---|
+| Deliveries | First 3 merged deliveries | Unlimited within the token allowance | Unlimited within the token allowance |
+| Model tokens per month | Not a practical limit at 3 deliveries | 100,000,000 | 300,000,000 |
+| Repositories connected at once | 1 | 1 | 5 |
+
+Prices and the yearly option are on the [pricing page](https://orbi.build/cloud/?ref=cloud-docs-limits); [billing](/billing) covers subscribing.
 
 ## The free allowance
 
@@ -17,57 +27,59 @@ A slot is taken when you label an Issue `ai-ready`, and it is **refunded** if th
 
 Counting is per Issue and idempotent: re-labelling the same Issue does not consume another slot. Re-delivering the same Issue after a refund uses the slot it gave back.
 
+Orbi keeps you informed as you go: the merge comment on a free delivery says how many free deliveries remain, and the status page shows **Your first 3 deliveries are free (N left)** in the **Next** card.
+
 ### When the allowance runs out
 
-The next Issue you label `ai-ready` has that label removed and gets a comment saying the free allowance is used up, with a link to subscribe.
+The next Issue you label `ai-ready` has that label removed and gets a comment saying the free deliveries are used up, with a link to subscribe. The status page says **Your 3 free deliveries are used up** with a **Subscribe** button, and the last setup step reads **Subscribe after your 3 free deliveries**.
 
-<Frame caption="The status page for a tenant whose free allowance is used up">
-  <img src="/images/status-free-exhausted.png" alt="The status page for a tenant whose free allowance is used up" />
+<Frame caption="The status page after the free deliveries are used up">
+  <img src="/images/status-free-exhausted.png" alt="The status page after the free deliveries are used up" />
 </Frame>
 
 **To resume:** subscribe, then **re-apply the `ai-ready` label** to the Issue. The label is not restored automatically. Deliveries already in flight when the allowance ran out finish normally.
 
-## The monthly token quota
+## The monthly token allowance
 
-A subscription includes **300,000,000 tokens per calendar month (UTC)**. There is no per-token overage billing — when the allowance is used up, new deliveries pause until the next month starts.
+A subscription includes model usage — **100,000,000 tokens a month on Solo, 300,000,000 on Pro** — counted per calendar month in UTC. There is no per-token overage billing.
 
 Usage counts input tokens, output tokens and cache-read tokens. Re-delivering the same Issue accumulates: each delivery is a separate run.
 
-As a rough guide, 300M tokens covers somewhere between **85 and 400 merged deliveries** depending on how large the tasks are. That range assumes your provider supports prompt caching.
+How many deliveries that buys depends on how large the tasks and the codebase are, and on prompt caching. The [pricing page](https://orbi.build/cloud/?ref=cloud-docs-limits) gives current measured ranges.
 
 ### Watching your usage
 
-The **Monthly usage** card on the status page shows tokens used against the limit, how many remain, and a percentage bar.
+Open **Settings and reference** on the status page. The **Monthly usage** line shows tokens used against your allowance, the percentage used and the **Cache hit rate**, with a bar that turns amber at 80% and red at 100%.
 
-Beside it, **Monthly cache hit rate** matters more than it looks. Cache-miss tokens cost roughly **50 times** more than cache hits, so a rate below 90% burns the quota noticeably faster. If yours is low, it is worth understanding why before assuming the quota is too small.
+The cache hit rate matters more than it looks. Cache-miss tokens cost roughly **50 times** more than cache hits, so a low rate burns the allowance noticeably faster. If yours is low, it is worth understanding why before assuming the allowance is too small.
 
-Each work item also has its own usage detail — input, output and cache tokens, runtime, model requests and how many times the run resumed. Work that never reported usage shows `—`.
+Each work item in **Delivery history** also shows its own usage — runtime, model requests, input and output tokens, and cache use. Work that never reported usage shows `—`.
 
-### When the quota runs out
+### When the monthly quota runs out
 
-The behaviour matches the free allowance: the `ai-ready` label is removed from newly dispatched Issues and a comment explains why, naming your actual usage and the cap. In-flight deliveries are untouched.
+Orbi **pauses claiming new Issues**. Your `ai-ready` labels stay where they are, and deliveries already running finish normally.
 
-**To resume:** wait for the next calendar month, or [configure your own model key](/model-configuration) — BYOK usage is measured but never paused. Either way you must **re-apply `ai-ready`** yourself.
+The **Next** card says **Monthly quota exhausted: Orbi has paused claiming new Issues; in-progress deliveries will finish normally**, and offers the ways out:
 
-<Note>
-If Orbi's usage measurement is unhealthy, the quota check fails closed rather than guessing — new dispatch pauses with a comment saying usage collection is temporarily abnormal. This is deliberate: it will not spend against a number it cannot trust. It clears on its own.
-</Note>
+- **Connect your own model key.** Saving a key in **Model config** resumes delivery immediately, with no quota limit — see [model configuration](/model-configuration).
+- **Upgrade to Pro** (on Solo), for 300,000,000 tokens a month.
+- **Or wait.** On the 1st of the next month (UTC) the allowance resets and the waiting Issues start automatically. You do not need to re-apply any label.
+
+## The repository limit
+
+Free and Solo connect **one repository at a time**; Pro connects **up to five**. On Free, connecting a different repository replaces the current one. On Solo and Pro, connecting another repository at the limit is refused with **Repository limit reached** — deactivate one first, or on Solo upgrade to Pro. See [connect a repository](/connect-repository#more-than-one-repository) — and note that on Free you cannot change repositories while a delivery is in flight.
 
 ## What is never interrupted
 
-Neither limit ever stops work in progress. Both guards only act on an Issue that has just been labelled `ai-ready` and carries no other `ai-*` label — so a delivery that is `ai-in-progress`, `ai-pr-opened` or `ai-fix-needed` runs to completion regardless.
+No limit ever stops work in progress. A delivery that is `ai-in-progress`, `ai-pr-opened` or `ai-fix-needed` runs to completion regardless.
 
 Platform upgrades and deployments have the same property: they never restart a delivery that is already executing.
-
-## The one-repository limit
-
-Orbi Cloud works in **one active repository at a time**. You can change which one at any time — see [connect a repository](/connect-repository#changing-the-connected-repository) — but not while a delivery is in flight.
 
 ## Summary
 
 | Limit | Value | At the limit | To resume |
 |---|---|---|---|
 | Free allowance | 3 merged deliveries | `ai-ready` removed, comment with subscribe link | Subscribe, re-apply `ai-ready` |
-| Monthly tokens | 300,000,000 per calendar month (UTC) | `ai-ready` removed, comment naming usage and cap | Next month, or BYOK; re-apply `ai-ready` |
-| Active repositories | 1 | Connecting another replaces it | — |
+| Monthly tokens | Solo 100,000,000 · Pro 300,000,000, per calendar month (UTC) | New Issues wait; labels stay | Automatic on the 1st (UTC), or immediately with your own key or an upgrade |
+| Repositories | Free and Solo 1 · Pro 5 | Free: connecting another replaces it. Solo and Pro: refused at the limit | Deactivate one first, or upgrade |
 | Pickup interval | Up to 5 minutes | — | — |

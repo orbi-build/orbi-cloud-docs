@@ -1,45 +1,66 @@
 ---
 title: "发版"
 sidebarTitle: "发版"
-description: "怎么发一个版本，Orbi 在打 tag 之前会检查什么?"
+description: "怎么发一个版本，Orbi 在打 tag 之前会检查什么？"
 ---
 
 
-你在状态页的**发个版本**里填一个版本号，Orbi 从那里开始按确定的流程把版本发出去。
+你在状态页上把一次发版规划成一个版本，等它的工作做完再开始发版；之后 Orbi 按确定的流程把它发出去。
 
-发版永远不是自动的。Orbi 不会替你判断「这些工作可以发了」，也永远不会替你递增版本号 —— 下一个版本是什么，是产品决策。你把版本号定下来之后，Orbi 做的是每次都一样的事：过门禁，逐条核验 scope，bump 版本号，等 CI，打 tag，发布，关闭 milestone。
+发版永远不是自动的。Orbi 不会替你判断「这些工作可以发了」，也永远不会替你递增版本号，下一个版本是什么是产品决策。你把版本号定下来之后，Orbi 每次都做一样的事：过门禁，逐条核验 scope，bump 版本号，等 CI，打 tag，发布，关闭 milestone。
 
-发版不是一次开发交付。没有模型会话，也没有拉取请求，它跑的是一个固定的状态机。
+发版不是一次开发交付。没有模型会话，也没有 pull request，它跑的是一个固定的状态机。
+
+## 状态页上的版本
+
+在状态页展开 **设置与参考**，找到 **版本**。（有多个仓库时，每个仓库自己的视图里有它的版本。）
+
+<Frame caption="版本：当前交付范围、未发布的版本和新建版本输入框">
+  <img src="/images/zh/status-versions.png" alt="版本：当前交付范围、未发布的版本和新建版本输入框" />
+</Frame>
+
+一个版本就是一个标题为版本号的 GitHub milestone，比如 `v1.2.3`。这一块显示：
+
+- **当前交付范围**：Orbi 正在朝哪个版本做，或者 **未设置**。**在 GitHub 查看** 会打开你仓库的 milestone 列表。
+- **未发布的版本**：你开着的版本 milestone，各自有几张开放 Issue，以及两个操作：**开始交付** 和 **发版**。当前那个版本标着 **当前交付中**，操作换成 **创建发版 Issue**。
+- **新建版本**：填一个版本号，点 **新建并开始交付**。
+- **说明**：折叠起来的一段按钮说明。
+
+### 交付范围
+
+交付范围是你告诉 Orbi 正在做哪个版本的方式。设置了范围时，Orbi 只认领属于这个版本 milestone 的 `ai-ready` Issue。范围之外的 `ai-ready` Issue 会等着，状态页显示 **Orbi 待命中，有 Issue 不在当前交付范围内**，并提供两个选择：把这张 Issue 挪进当前版本，或者切换交付范围。
+
+没有设置范围时，所有 `ai-ready` Issue 都可以被认领。用 Orbi 完全可以不用版本，只有当你想分批发布时它才有意义。
+
+| 按钮 | 做什么 |
+|---|---|
+| **新建并开始交付** | 在 GitHub 上为你填的版本新建 milestone，并把交付范围切过去。不会开发版 Issue |
+| **开始交付** | 把交付范围切到这个版本 |
+| **发版** / **创建发版 Issue** | 在你的仓库里开一张 **Release vX** Issue，打上 `ai-ready` 和 `ai-release`，并把交付范围切到这个版本 |
+
+版本号必须是开头一个 `v`、后面跟点号分隔的数字，比如 `v1.2.3`；其他形状会在 GitHub 上发生任何改动之前就被拒绝。
 
 ## 发一个版本
 
-在状态页的**绑定的仓库** (Connected repository) 卡片里找到**发个版本（版本号）**。
+一个版本的工作都进去了之后，点 **发版**（当前版本上是 **创建发版 Issue**）。
 
-<Frame caption="状态页上的发个版本表单，含版本号输入框，下方显示基础分支与版本文件">
-  <img src="/images/zh/status-active.png" alt="状态页上的发个版本表单，含版本号输入框，下方显示基础分支与版本文件" />
-</Frame>
-
-1. 填版本号，形如 `v1.2.3` —— 开头一个 `v`，后面是点号分隔的数字。其他形状会在创建 Issue **之前**就被拒绝。
-2. 点**发个版本**。
-
-Orbi 会在你连接的仓库里建一张 Release Issue，打上 `ai-ready` 和 `ai-release` 标签，然后直接把你带到这张 Issue。之后引擎会像认领其他工作一样认领它。
-
-表单下方会显示这次发版要用的东西：**基础分支**，以及 Orbi 在你仓库里探测到的**版本文件**。
+Orbi 会开出 Release Issue。发版会等这个版本的其他 Issue 都完成，然后更新版本号、打 tag、发布 GitHub Release，发布成功后关闭这张 Issue。
 
 ### milestone 是必需的
 
-发版的 scope 来自**标题与你填的版本号完全一致的那个 milestone** —— 填 `v1.2.3` 就需要一个叫 `v1.2.3` 的 milestone。
+发版的 scope 来自**标题与版本号完全一致的那个 milestone**，所以 `v1.2.3` 需要一个叫 `v1.2.3` 的 milestone。用 **新建并开始交付** 建版本时会替你建好这个 milestone；如果你手写 Release Issue，要自己确认 milestone 存在。
 
-Orbi 不会替你创建这个 milestone。没有它，发版会停在 scope 推导这一步并说明原因。发版之前先建好 milestone，并把它覆盖的 Issue 和 PR 放进去。
+如果发版因为缺 milestone 停下，状态页上那张受阻的 Issue 会提供 **一键创建里程碑并继续**。
 
-### 表单报错时
+### 发版请求报错时
 
 | 提示 | 原因 | 怎么修 |
 |---|---|---|
-| 版本号无效 | 不是 `vN.N…` 的形状 | 重填，例如 `v1.2.3` |
-| 没有仓库 | 没有生效中的仓库 | 先[连接一个](/zh/connect-repository) |
-| 版本文件探测失败 | Orbi 无法判断你的项目用什么声明版本号 | 见下 |
-| GitHub 错误 | GitHub 不可达，或 App 权限不足 | 重试；持续失败就重装 App |
+| 版本号不是有效的发版标签 | 版本号不是 `vN.N…` 的形状 | 重填，例如 `v1.2.3` |
+| 这个仓库不属于当前账户的已连接范围 | 仓库已被停用，或者属于另一个账户 | [连接它](/zh/connect-repository) |
+| 交付范围没有改动，请检查 GitHub App 的 Contents 写权限 | Orbi 写不进这个仓库 | 检查 App 的权限，必要时重装 |
+| GitHub 暂时没有响应 | GitHub 不可达 | 重试 |
+| 暂时无法读取仓库根目录的版本文件（接口出错），本次没有创建 Release Issue；请稍后重试。 | Orbi 这次没能探测到仓库的版本文件 | 稍后重试 |
 
 ### 版本文件
 
@@ -47,11 +68,11 @@ Orbi 会探测你的项目用什么声明版本号，按这个顺序找：
 
 `pyproject.toml`、`package.json`、`pom.xml`、`build.gradle`、`build.gradle.kts`、`gradle.properties`、`Cargo.toml`、`composer.json`、`pubspec.yaml`
 
-一个都没有时，这次发版是**只打 tag** —— 不 bump 版本号，只有 tag 和 GitHub Release。Orbi 拒绝猜：与其默认回退到 `pyproject.toml` 然后改错文件，它宁可报告探测失败。
+一个都没有时，这次发版是**只打 tag**：不 bump 版本号，只有 tag 和 GitHub Release。Orbi 不会猜。与其默认回退到 `pyproject.toml` 然后改错文件，它宁可报告探测失败。
 
 ## 自己手写 Release Issue
 
-表单只是个便利入口。你也可以手动建这张 Issue —— 打上 `ai-ready` 和 `ai-release`，并写一段 `## Release`：
+按钮只是个便利入口。你也可以手动建这张 Release Issue：打上 `ai-ready` 和 `ai-release`，并写一段 `## Release`：
 
 ```text
 ## Release
@@ -66,38 +87,38 @@ Orbi 会探测你的项目用什么声明版本号，按这个顺序找：
 
 ## 打 tag 之前 Orbi 检查什么
 
-门禁按顺序执行，**查不了的门禁算没过**。
+门禁按顺序执行，查不了的门禁算没过。
 
-**先冻结 base。** 发版 commit 就是认领那一刻你基础分支的 tip。此后所有判断都针对这一个 commit。
+**先冻结 base。** 发版 commit 就是认领那一刻你基础分支的 tip，此后所有判断都针对这一个 commit。
 
-**这个 milestone 里不能有未完成的工作。** 只要里面还有 Issue 处于 `ai-in-progress`、`ai-pr-opened` 或 `ai-fix-needed`，发版就停。开着的 PR **故意不算**门禁 —— 一个开着的 PR 是队列状态，不代表这个版本的任何结论。
+**这个版本的 milestone 里不能有未完成的工作。** 只要里面还有 Issue 处于 `ai-in-progress`、`ai-pr-opened` 或 `ai-fix-needed`，发版就停。开着的 PR 故意*不*算门禁：一个开着的 PR 是队列状态，不代表这个版本的任何结论。
 
 **发版 commit 上的 CI 必须是绿的。** 这就是测试验收，也是这里最值得搞明白的一条：
 
-> **你的 CI 决定了 Orbi 保证什么。** 门禁读的是**你仓库**在发版 commit 上的 GitHub Actions check runs。你把单元测试放进去，发版就保证你的代码逻辑；你把业务流程 e2e 放进去，它就保证这条流程能走通。**完全不跑 CI 也是一种选择**：没有 check runs 时门禁带着明确的「无 check runs」证据通过，版本照样发出去 —— 只是少了它唯一的测试验收。
+> **你的 CI 决定了 Orbi 保证什么。** 门禁读的是你仓库在发版 commit 上的 GitHub Actions check runs。你把单元测试放进去，发版就保证你的代码逻辑；你把业务流程 e2e 放进去，它就保证这条流程能走通。完全不跑 CI 时，门禁带着明确的「无 check runs」证据通过，版本照样发出去，只是少了它唯一的测试验收。
 
 pending 的 check 不算失败：门禁会等最终结论，默认最多等 30 分钟，等待期间持续上报进度。等待超时会如实报成超时，绝不会伪装成 CI 失败。
 
-**scope 逐条实时核验。** 每一条要么是已合并的 PR，要么是以 completed 关闭的 Issue。Issue 正文里的勾选框**完全不看** —— 核验走 GitHub API。以「not planned」关闭的 Issue 会被记为排除，不进 changelog。
+**scope 逐条实时核验。** 每一条要么是已合并的 PR，要么是以 completed 关闭的 Issue。Issue 正文里的勾选框完全不看，核验走 GitHub API。以「not planned」关闭的 Issue 会被记为排除，不进 changelog。
 
 ## 产出什么
 
-- 在发版 commit 上创建一个**带注释的 tag**，用普通 push 推上去 —— 永远不用 `--force`。如果 tag 已存在，它必须**恰好**指向这个 commit，否则发版失败，而不是去移动它。
+- 在发版 commit 上创建一个**带注释的 tag**，用普通 push 推上去，永远不用 `--force`。如果 tag 已存在，它必须恰好指向这个 commit，否则发版失败，不会去移动它。
 - 发布一个 **GitHub Release**，release notes 里带完整证据：版本号、tag、发版 commit、逐条 scope 证据、门禁证据和测试证据。
 - **关闭 milestone**。
 
-每一步都是幂等的，所以在门禁上失败的发版，修掉原因后可以重试 —— 它会接着跑而不是从头来，也永远不会移动或覆盖一个已经存在的 tag。
+每一步都是幂等的，所以在门禁上失败的发版，修掉原因后可以重试，它会接着跑而不是从头来。
 
 ## 发版失败时
 
 CI 红了或超时会走正常的失败路径，Issue 被标记 `ai-blocked` 并写明原因。
 
-这时版本号的 bump 可能已经落在你的基础分支上了，这是一个可接受的状态：bump 是幂等的，修好 CI 重跑一次会安全地把同一个版本再准备一遍。
+这时版本号的 bump 可能已经落在你的基础分支上了，这是可接受的状态：bump 是幂等的，修好 CI 重跑一次会安全地把同一个版本再准备一遍。
 
 ## 为什么发版保持手动
 
-release 标签是 Orbi 唯一不会自己打的开关。循环里其他环节可以自动，是因为错了能收回来 —— 一个坏 PR 关掉就是了，一张 `ai-blocked` 的 Issue 重新派发就是了。而一个已经发布的 tag 和 GitHub Release 是公开的，收回来代价大得多，所以这个决定留给人。
+release 标签是 Orbi 唯一不会自己打的开关。循环里其他环节可以自动，是因为错了能收回来：坏 PR 关掉就是了，受阻的 Issue 重新派发就是了。已经发布的 tag 和 GitHub Release 是公开的，收回来代价大得多，所以这个决定留给人。
 
 <Note>
-发版状态机属于引擎，不属于 Cloud。它的完整参考 —— 每一道门禁、接续行为、写下的证据 —— 在 [docs.orbi.build/zh/workflow](https://docs.orbi.build/zh/workflow)。
+发版状态机属于引擎，不属于 Cloud。它的完整参考，包括每一道门禁、接续行为和写下的证据，在 [docs.orbi.build/zh/workflow](https://docs.orbi.build/zh/workflow)。
 </Note>
