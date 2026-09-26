@@ -5,41 +5,61 @@ description: "How do I cut a release, and what does Orbi check before it tags on
 ---
 
 
-You cut a release by typing a version into **Cut a release** on the status page, and Orbi runs the release deterministically from there.
+You plan a release as a version on the status page, and when its work is done you start the release; Orbi runs it deterministically from there.
 
 Releases are never automatic. Orbi does not decide that your work is ready to ship, and it never increments a version for you — the next version is a product decision. What Orbi does, once you have named the version, is run the release the same way every time: check the gates, verify the scope item by item, bump the version, wait for CI, tag, publish, and close the milestone.
 
 A release is not a development task. There is no model session and no pull request; it runs a fixed state machine.
 
-## Cut a release
+## Versions on the status page
 
-In the **Connected repository** card on the status page, find **Cut a release (version)**.
+Open **Settings and reference** on the status page and find **Versions**. (With several repositories, each repository's own view has its versions.)
 
-<Frame caption="The Cut a release form on the status page, with a version field and the base branch and version file shown">
-  <img src="/images/status-active.png" alt="The Cut a release form on the status page, with a version field and the base branch and version file shown" />
+<Frame caption="Versions: the current delivery scope, unreleased versions and the New version box">
+  <img src="/images/status-versions.png" alt="Versions: the current delivery scope, unreleased versions and the New version box" />
 </Frame>
 
-1. Type the version, in the form `v1.2.3` — a leading `v` followed by dot-separated numbers. Anything else is rejected before an Issue is created.
-2. Click **Cut a release**.
+A version is a GitHub milestone whose title is the version number, like `v1.2.3`. The section shows:
 
-Orbi creates a Release Issue in your connected repository, labelled `ai-ready` and `ai-release`, and takes you straight to it. From there the engine picks it up like any other dispatched work.
+- **Current delivery scope** — the version Orbi is working towards, or **Not set**. **View on GitHub** opens your repository's milestones.
+- **Unreleased versions** — your open version milestones, with how many open Issues each has and two actions: **Start delivery** and **Release**. The current one is marked **Delivery in progress** and offers **Create release Issue**.
+- **New version** — type a version and click **Create and start delivery**.
+- **Guide** — a short folded explanation of the buttons.
 
-Below the form, the card shows you what the release will use: the **base branch**, and the **version file** it detected in your repository.
+### The delivery scope
+
+The delivery scope is how you tell Orbi which version you are working on. While a scope is set, Orbi only picks up `ai-ready` Issues that belong to that version's milestone. An `ai-ready` Issue outside it waits, and the status page says **Orbi is standing by; an Issue is outside the current delivery scope**, offering to move the Issue into the current version or to switch the scope.
+
+While no scope is set, every `ai-ready` Issue is eligible. You do not need versions at all to use Orbi — they only matter once you want to ship in batches.
+
+| Button | What it does |
+|---|---|
+| **Create and start delivery** | Creates the milestone for the version you typed on GitHub and switches the delivery scope to it. It does not open a release Issue |
+| **Start delivery** | Switches the delivery scope to that version |
+| **Release** / **Create release Issue** | Opens a **Release vX** Issue in your repository, labelled `ai-ready` and `ai-release`, and switches the delivery scope to that version |
+
+Version numbers must be a leading `v` followed by dot-separated numbers, such as `v1.2.3`; anything else is rejected before anything is changed on GitHub.
+
+## Cut a release
+
+When the work for a version is in, click **Release** (or **Create release Issue** on the current version).
+
+Orbi opens the Release Issue. The release waits until the version's other Issues are finished, then updates the version number, tags, publishes the GitHub Release, and closes the Issue once the release is published.
 
 ### The milestone requirement
 
-The release scope comes from **the milestone whose title is exactly the version you typed** — so `v1.2.3` needs a milestone called `v1.2.3`.
+The release scope comes from **the milestone whose title is exactly the version** — so `v1.2.3` needs a milestone called `v1.2.3`. Creating a version with **Create and start delivery** creates that milestone for you; if you write a release Issue by hand, make sure the milestone exists.
 
-Orbi does not create that milestone for you. Without it, the release stops at scope derivation and explains why. Create the milestone and put the Issues and pull requests it covers into it before cutting the release.
+If a release stops because the milestone is missing, the blocked Issue on the status page offers **Create the milestone and continue**.
 
-### If the form reports an error
+### If the release request reports an error
 
 | What it says | Cause | Fix |
 |---|---|---|
-| Invalid version | The version is not `vN.N…` | Retype it, for example `v1.2.3` |
-| No repository | No active repository is connected | [Connect one](/connect-repository) |
-| Version file could not be probed | Orbi could not determine how your project declares its version | See below |
-| GitHub error | GitHub could not be reached, or the App lacks permission | Retry; if it persists, reinstall the App |
+| The version is not valid | The version is not `vN.N…` | Retype it, for example `v1.2.3` |
+| The repository is not connected to the current account | The repository was deactivated or belongs to another account | [Connect it](/connect-repository) |
+| The delivery scope was not changed — check the GitHub App's Contents write permission | Orbi could not write to the repository | Check the App's permissions; reinstall it if needed |
+| GitHub error | GitHub could not be reached | Retry |
 
 ### The version file
 
@@ -51,7 +71,7 @@ If none is present, the release is **tag-only** — no version bump, just the ta
 
 ## Writing the Release Issue yourself
 
-The form is a convenience. You can create the Release Issue by hand instead — label it `ai-ready` and `ai-release`, and give it a `## Release` section:
+The buttons are a convenience. You can create the Release Issue by hand instead — label it `ai-ready` and `ai-release`, and give it a `## Release` section:
 
 ```text
 ## Release

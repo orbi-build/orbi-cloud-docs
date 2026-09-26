@@ -11,13 +11,13 @@ Signing in tells Orbi who you are. The App installation is the separate, revocab
 
 ## Install it
 
-From the status page, click **Connect repository**. If the App is not installed yet, you are taken to GitHub's installation screen.
+From the status page, click **Connect repository**. If the App is not installed yet, you are taken to GitHub's installation screen. (If you started from a sign-up button on orbi.build, you may see that screen straight away.)
 
 On that screen:
 
 1. Choose the **account or organization** that owns the repository you want Orbi to work in.
 2. Select **Only select repositories**.
-3. Pick the repository.
+3. Pick the repository. One small repository is enough to try Orbi; you can add more to the installation later.
 
 Approve the installation. GitHub returns you to Orbi Cloud, on the [Connect repository](/connect-repository) page.
 
@@ -43,15 +43,15 @@ These are the permissions that let an agent do the job you are asking it to do: 
 
 ## Changing which repositories are covered
 
-Orbi works in **one connected repository at a time**, but the App installation can be authorized for more than one. If your target repository is not offered on the connect page, the App was installed without it.
+The App installation decides which repositories Orbi can **see**; connecting a repository decides which ones it **works in**. How many you can connect at once depends on your plan — see [limits and quotas](/limits-and-quotas). If your target repository is not offered on the connect page, the App was installed without it.
 
-To fix that, open GitHub's App settings — the **Cannot find your repository?** section on the connect page links straight there — and add the repository to the installation. Then return to Orbi Cloud and reload the connect page.
+To fix that, open GitHub's App settings — **Cannot find your repository?** on the connect page has a **Manage App authorization** link straight there — and add the repository to the installation. Then return to Orbi Cloud and reload the connect page.
 
 ## Revoking
 
 Uninstall the Orbi GitHub App from GitHub at any time: **Settings → Applications → Installed GitHub Apps → Orbi → Configure → Uninstall** (for an organization, the same path under the organization's settings).
 
-Uninstalling immediately removes Orbi's access to your code. The status page detects it and tells you **The GitHub App was uninstalled**, offering to reinstall.
+Uninstalling immediately removes Orbi's access to your code. The status page detects it, says **The GitHub App was uninstalled**, and offers **Reinstall the Orbi GitHub App**.
 
 <Note>
 Uninstalling the App does not cancel a subscription. Cancel that separately through [billing](/billing).

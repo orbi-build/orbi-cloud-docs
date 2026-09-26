@@ -1,69 +1,77 @@
 ---
 title: "Billing"
 sidebarTitle: "Billing"
-description: "How do I subscribe, manage my payment method, or cancel?"
+description: "Which plan do I need, how do I subscribe, manage my payment method, or cancel?"
 ---
 
 
-Subscribing and cancelling both happen through Stripe, reached from the **Account** card on the status page.
+You can try Orbi Cloud without paying anything, then subscribe to Solo or Pro through Stripe from the account menu.
 
 Orbi Cloud does not hold your card details. Payment, invoices and cancellation are handled by Stripe's own hosted pages.
 
-## The plan
+## The plans
 
-| | |
-|---|---|
-| Free allowance | **3 merged deliveries**, no card required |
-| Price after that | **US$79 per month** |
-| Included model usage | **300,000,000 tokens per calendar month** |
-| Overage billing | None — deliveries pause at the cap instead |
+| | Free | Solo | Pro |
+|---|---|---|---|
+| What you get | Your first **3 merged deliveries** | Deliveries within the monthly allowance | Deliveries within the monthly allowance |
+| Model usage included | — | **100,000,000 tokens** a month | **300,000,000 tokens** a month |
+| Repositories connected at once | 1 | 1 | Up to 5 |
+| Card required | No | Yes | Yes |
 
-Failed deliveries do not consume the free allowance. See [limits and quotas](/limits-and-quotas) for exactly how both allowances are counted.
+Both paid plans can be billed monthly or yearly, and neither has per-token overage billing — when the month's allowance runs out, new deliveries pause instead. Current prices, the yearly discount and any founding offer are on the **[pricing page](https://orbi.build/cloud/?ref=cloud-docs-billing)**, which is the reference for what you will be charged.
+
+Failed deliveries never consume the free allowance, and you can use your own model key on any plan. See [limits and quotas](/limits-and-quotas) for exactly how each allowance is counted.
+
+**Which plan?** Solo fits one repository and a steady trickle of Issues. Pick Pro when you want several repositories connected at once, or when Solo's monthly allowance runs out before the month does.
 
 Self-hosting the open-source [Orbi](https://orbi.build/?ref=cloud-docs-billing) engine is free, and stays free.
 
 ## Subscribe
 
-On the status page, in the **Account** card, click **Subscribe with Stripe**. You are taken to Stripe Checkout; completing payment returns you to Orbi Cloud.
+There are two ways in:
 
-Your subscription activates as soon as Stripe confirms the payment — you do not need to do anything else, and you do not need to reconnect your repository or reconfigure anything.
+- **From the pricing page.** Choose Solo or Pro, monthly or yearly, on [orbi.build/cloud](https://orbi.build/cloud/?ref=cloud-docs-billing). If you are not signed in yet, you sign in with GitHub first; your choice is kept, and the account menu shows **You picked … on the pricing page — Continue subscription** until you finish.
+- **From the account menu.** Click your avatar, then **Subscribe with Stripe**. This subscribes you to Pro, billed monthly; use the pricing page when you want Solo or yearly billing.
+
+Either way you complete payment on Stripe Checkout, where you can also enter a promotion code, and Stripe returns you to Orbi Cloud.
+
+Your subscription activates as soon as Stripe confirms the payment. The account menu shows **Subscription active**, and your plan's name appears next to your login. You do not need to reconnect your repository or reconfigure anything.
 
 <Note>
 You do not have to subscribe before trying Orbi Cloud. Sign-in, App installation, connecting a repository, provisioning and your first three merged deliveries are all free.
 </Note>
 
-## Manage your subscription
+## Managing your subscription
 
-Once subscribed, the same place in the **Account** card becomes **Manage subscription**. It opens the Stripe billing portal, where you can update your payment method, download invoices, and cancel.
+Once subscribed, the account menu shows **Manage subscription** instead. It opens the Stripe billing portal, where you can update your payment method, download invoices and cancel.
+
+On Solo, when your monthly allowance runs out the status page also offers **Upgrade to Pro** directly — see [limits and quotas](/limits-and-quotas#when-the-monthly-quota-runs-out).
 
 ## Subscription states
 
-The **Subscription status** line in the **Account** card shows where you stand:
+The chip next to your login in the account menu shows your plan:
 
 | What it says | What it means |
 |---|---|
-| **Founding Pilot** | An active paid subscription |
-| **Subscription active** | Your subscription is in good standing |
+| **Not subscribed** | On the free allowance |
+| **Solo** or **Pro** | An active paid subscription on that plan |
+| **Founding Pilot** or **Design Partner** | An active subscription from an early-access programme |
 | **Past due (payment failed)** | Stripe could not charge your payment method |
 
-If you are **past due**, fix the payment method in the same billing portal — the portal is reachable in that state precisely so you can repair it. While past due, your tenant is treated as unsubscribed for dispatch purposes, so new Issues are subject to the free allowance rules.
+If you are **past due**, fix the payment method in the same billing portal — **Manage subscription** stays available in that state precisely so you can repair it. While past due, your account is treated as unsubscribed for dispatch, so new Issues are subject to the free allowance rules.
 
 ## Cancelling
 
-Cancel through the Stripe billing portal. Cancelling stops future charges; it does not delete your repository connection, your delivery history or your model configuration.
+Cancel through the Stripe billing portal. Cancelling stops future charges; it does not delete your repository connections, your delivery history or your model configuration.
 
-After cancelling you keep whatever remains of your free allowance behaviour — that is, new dispatch follows the unsubscribed rules described in [limits and quotas](/limits-and-quotas).
+After cancelling, new dispatch follows the unsubscribed rules described in [limits and quotas](/limits-and-quotas).
 
 To remove Orbi's access to your code entirely, [uninstall the GitHub App](/install-app#revoking). Cancelling a subscription and uninstalling the App are separate actions.
-
-## Founding Partner
-
-The first ten subscribers are Founding Partners: the subscription is free, with the 300M monthly tokens covered, in exchange for one accepted Issue per month steering the product. The coupons are limited in number; once they run out, subscriptions are at the regular US$79.
-
-<Note>
-**Founding Pilot** and **Founding Partner** are two different things. Founding Pilot is the name of the paid plan, and it is what the **Subscription status** line shows for any active subscription. Founding Partner is the programme described here, limited to the first ten subscribers.
-</Note>
 
 ## Invoices and receipts
 
 All invoices live in the Stripe billing portal under **Manage subscription**. Orbi Cloud does not email them separately.
+
+## Questions about a charge
+
+Billing and refund questions go to **support@orbi.build** — see [getting help](/troubleshooting#getting-help).

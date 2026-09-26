@@ -17,25 +17,49 @@ Open **[orbi.build/api/](https://orbi.build/api/)** and click **Sign in with Git
   <img src="/images/signin.png" alt="The Orbi Cloud sign-in page" />
 </Frame>
 
-GitHub shows you its standard authorization screen. Approving it returns you to the Orbi Cloud status page.
+GitHub shows you its standard authorization screen. Approving it returns you to the Orbi Cloud status page — or, if you were on your way to a specific page, to that page.
 
 The sign-in requests one OAuth scope, `user:email` — your identity and your email address, nothing more. It does not grant access to any repository's code or Issues. That comes from the GitHub App installation, which is authorized separately and lists its own permissions.
 
+<Note>
+If you start from a sign-up button on orbi.build and have never installed the App, GitHub may show the App installation screen first and sign you in when it returns. The result is the same: you are signed in, and the App is installed on the repositories you picked.
+</Note>
+
+## The account menu
+
+Once signed in, your GitHub avatar and login sit in the top-right corner of every Orbi Cloud page. Click it to open the account menu:
+
+<Frame caption="The account menu, opened from the avatar in the top right">
+  <img src="/images/account-menu.png" alt="The account menu, opened from the avatar in the top right" />
+</Frame>
+
+| Item | What it does |
+|---|---|
+| Your login and plan | Shows which account you are signed in as and its plan — **Not subscribed**, **Solo**, **Pro**, and so on |
+| **🇨🇳 ZH** and **🇺🇸 EN** | Switches the interface language |
+| **Manage subscription** or **Subscribe with Stripe** | Opens the Stripe billing portal, or starts a subscription — see [billing](/billing) |
+| **Model config** | Your own model key, if you use one — see [model configuration](/model-configuration) |
+| **Join the Telegram group for support** | The support group — see [getting help](/troubleshooting#getting-help) |
+| **Read the online docs** | These pages |
+| **Sign out** | Signs this device out |
+
+When you manage more than one installation — your personal account and an organization, say — the menu also shows which installation you are acting on and offers **Switch to the … installation** buttons.
+
 ## Choosing your language
 
-Orbi Cloud is available in English and Chinese. The page follows your browser's preferred language on first visit, so it may open in Chinese.
+Orbi Cloud is available in English and Chinese. The page follows your browser's preferred language on the first visit, so it may open in Chinese.
 
-Use the flags in the top right to switch: 🇬🇧 for English, 🇨🇳 for Chinese. Your choice is stored in a cookie and remembered for a year, on that browser.
+Switch from the account menu (**🇨🇳 ZH | 🇺🇸 EN**), or with **ZH / EN** in the top right of the sign-in page. Your choice is stored in a cookie and remembered for a year, on that browser.
 
 ## Personal and organization accounts
 
-If you install the Orbi GitHub App on an **organization** rather than on your personal account, the organization gets its own Orbi tenant — its repository, its subscription and its usage are tracked separately from your personal one.
+If you install the Orbi GitHub App on an **organization** rather than on your personal account, the organization gets its own Orbi tenant — its repositories, its subscription and its usage are tracked separately from your personal one.
 
-You sign in the same way either way. Which tenant you are operating on is decided by the installation you came through, so when you own both a personal and an organization installation, return through the installation whose tenant you want to work on.
+You sign in the same way either way. When you have access to more than one installation, use the **Switch to the … installation** buttons in the account menu to choose which tenant you are working on.
 
 ## Signing out
 
-The **Sign out** button is in the **Account** card at the bottom of the status page.
+Open the account menu and click **Sign out**.
 
 <Frame caption="The signed-out confirmation page">
   <img src="/images/signed-out.png" alt="The signed-out confirmation page" />
@@ -45,6 +69,6 @@ Signing out clears the session on that device only. It does not uninstall the Gi
 
 ## When your session expires
 
-A session lasts **7 days** and is not extended by activity, so you sign in again about once a week. If yours has expired, the page says **GitHub sign-in has expired** and offers **Sign in again**; pages that need an identity say so rather than failing silently.
+A session lasts **7 days** and is not extended by activity, so you sign in again about once a week. If the GitHub authorization behind your session has lapsed, the status page shows **GitHub sign-in has expired** with a **Sign in again** link; pages that need an identity say so rather than failing silently.
 
-Signing in again restores everything — your repository connection, your model configuration and your delivery history are stored against your tenant, not against the browser session.
+Signing in again restores everything — your repository connections, your model configuration and your delivery history are stored against your tenant, not against the browser session.

@@ -13,7 +13,7 @@ Short answers to the questions that come up most, with links to the full explana
 No. Sign-in, App installation, connecting a repository, provisioning and your first **3 merged deliveries** are all free, with no card. See [billing](/billing).
 
 **Do I need to configure a model or an API key?**
-No. A subscription includes 300M tokens a month and deliveries use the platform channel by default. Configuring your own key is optional — see [model configuration](/model-configuration).
+No. The free deliveries and both paid plans include model usage, and deliveries use the platform channel by default. Configuring your own key is optional — see [model configuration](/model-configuration).
 
 **Do I have to install anything?**
 No. Everything happens in your browser and in GitHub. You never get a shell on the runner and nothing runs on your machine.
@@ -22,7 +22,13 @@ No. Everything happens in your browser and in GitHub. You never get a shell on t
 Yes. The GitHub App works on private repositories you authorize.
 
 **Can I connect more than one repository?**
-Not at the moment — one active repository at a time. You can change which one whenever no delivery is in flight. See [connect a repository](/connect-repository#changing-the-connected-repository).
+On Pro, up to five at once. Free and Solo connect one at a time, and you can change which one whenever no delivery is in flight. See [connect a repository](/connect-repository#more-than-one-repository).
+
+**What should my first Issue be?**
+Something small. The status page can create a starter Issue for you — **Let Orbi make a starter Issue → Try →** — which adds a CI badge to your README. See [your first Issue](/first-issue).
+
+**Is it safe to give it write access?**
+The App only reaches the repositories you select, you can pick a single small repository to start, and every change arrives as a pull request that is reviewed before it merges. See [install the GitHub App](/install-app#what-the-permissions-are-for) and [security](/security).
 
 **Does it work on an organization's repository?**
 Yes. Install the App on the organization; that creates a separate tenant for the organization with its own subscription and usage.
@@ -30,7 +36,7 @@ Yes. Install the App on the organization; that creates a separate tenant for the
 ## Running deliveries
 
 **How do I give Orbi work?**
-Create an Issue in your connected repository and add the `ai-ready` label — or use **Let Orbi try this one** on the status page. See [file your first Issue](/first-issue).
+Create an Issue in your connected repository and add the `ai-ready` label — or use **Try →** on the status page. See [file your first Issue](/first-issue).
 
 **How long until it starts?**
 Up to five minutes. Pickup runs on a timer rather than instantly.
@@ -56,35 +62,38 @@ A deliberate stop meaning a person has to decide the next step, not a crash. Fix
 ## Limits and cost
 
 **What does it cost?**
-3 merged deliveries free, then US$79/month including 300M tokens. No per-token overage — deliveries pause at the cap instead. See [billing](/billing).
+3 merged deliveries free, then Solo (100M tokens a month, one repository) or Pro (300M tokens a month, up to five repositories), billed monthly or yearly. No per-token overage — deliveries pause at the cap instead. Current prices are on the [pricing page](https://orbi.build/cloud/?ref=cloud-docs-faq); see [billing](/billing).
 
 **Do failed deliveries use up my free allowance?**
 No. A delivery that ends blocked or is closed without merging refunds its slot.
 
-**How many deliveries does 300M tokens cover?**
-Roughly 85 to 400 merged deliveries depending on task size, assuming your provider supports prompt caching.
+**How many deliveries does the allowance cover?**
+It depends on task size, codebase size and prompt caching. The [pricing page](https://orbi.build/cloud/?ref=cloud-docs-faq) gives current measured ranges for each plan.
 
 **What happens when I hit the monthly cap?**
-Newly labelled Issues have `ai-ready` removed with an explanatory comment. In-flight deliveries are untouched. Wait for the next month or switch to your own key — then re-apply the label yourself. See [limits and quotas](/limits-and-quotas).
+Orbi pauses claiming new Issues; their labels stay, and in-flight deliveries finish. Delivery resumes automatically on the 1st of the month (UTC), or immediately when you save your own model key or upgrade. See [limits and quotas](/limits-and-quotas#when-the-monthly-quota-runs-out).
 
 **My quota is draining fast. Why?**
-Check the cache hit rate on the status page. Cache-miss tokens cost about 50× more, so a rate below 90% burns quota much faster.
+Check the **Cache hit rate** under **Settings and reference** on the status page. Cache-miss tokens cost about 50× more, so a low rate burns quota much faster.
 
 ## Releases
 
 **Does Orbi release automatically?**
-No, never. You cut a release by typing a version into **Cut a release**, or by opening a Release Issue with the `ai-release` label yourself. See [releases](/releases).
+No, never. You start a release with **Release** in the **Versions** section of the status page, or by opening a Release Issue with the `ai-release` label yourself. See [releases](/releases).
 
 **Does it pick the version number?**
-No. You type it — the next version is a product decision Orbi will not make for you.
+No. You name it — the next version is a product decision Orbi will not make for you.
 
 **Why did my release stop at scope derivation?**
-The scope comes from a milestone titled exactly like the version. Orbi does not create that milestone for you.
+The scope comes from a milestone titled exactly like the version, and it was missing. Use **Create the milestone and continue** on the status page, or create versions with **Create and start delivery**, which makes the milestone for you.
+
+**Do I have to use versions?**
+No. Until you set a delivery scope, every `ai-ready` Issue is picked up. Versions matter once you want to ship in batches. See [releases](/releases#the-delivery-scope).
 
 ## Security and access
 
 **What can Orbi see?**
-Only the repositories in your GitHub App installation, and it works on one connected repository. See [security](/security).
+Only the repositories in your GitHub App installation, and it works only in the repositories you connect. See [security](/security).
 
 **Where does my API key live?**
 Encrypted at rest with AES-256-GCM, shown back to you masked only, never logged.
@@ -100,8 +109,11 @@ No. Deployments cannot restart a delivery that is already executing.
 **Is this the same as self-hosted Orbi?**
 Same delivery engine; the difference is who operates the runner. The engine is open source and self-hosting it is free — [orbi.build](https://orbi.build/?ref=cloud-docs-faq).
 
-**Is it stable?**
-Orbi Cloud is in Private Beta. This documentation describes what currently ships, not a roadmap.
+**Can I show someone what Orbi delivered?**
+Yes. Every merged delivery gets a **Delivery proof** page with **Copy link** and **Share on X**. See [sharing a delivery](/delivery-lifecycle#sharing-a-delivery).
+
+**Is this documentation current?**
+It describes what currently ships, not a roadmap. If a page disagrees with what you see, tell us.
 
 **Where do I get help?**
-The Telegram group, linked with a QR code from the **Technical support** card at the bottom of the status page. See [troubleshooting](/troubleshooting#getting-help).
+The Telegram group — **Join the Telegram group for support** in the account menu, or **Support (Telegram)** in the page footer. Billing questions go to support@orbi.build. See [getting help](/troubleshooting#getting-help).

@@ -13,7 +13,7 @@ description: "关于 Orbi Cloud 怎么用，大家最常问什么?"
 不用。登录、安装 App、连接仓库、开通环境，以及前 **3 次合并的交付**全部免费，不用绑卡。见[计费](/zh/billing)。
 
 **必须配置模型或 API key 吗？**
-不用。订阅本身包含每月 3 亿 tokens，交付默认走平台通道。配置自己的 key 是可选项 —— 见[模型配置](/zh/model-configuration)。
+不用。免费交付和两个付费套餐都包含模型用量，交付默认走平台通道。配置自己的 key 是可选项 —— 见[模型配置](/zh/model-configuration)。
 
 **需要在本地装什么吗？**
 不用。全程在浏览器和 GitHub 里完成。你不会拿到 runner 的 shell，本地也不跑任何东西。
@@ -22,7 +22,13 @@ description: "关于 Orbi Cloud 怎么用，大家最常问什么?"
 可以。GitHub App 在你授权的私有仓库上正常工作。
 
 **能连多个仓库吗？**
-目前不行 —— 同一时间一个生效仓库。没有交付在途时可以随时换。见[连接仓库](/zh/connect-repository)。
+Pro 套餐同时最多连五个。免费和 Solo 同一时间只能连一个，没有交付在途时可以随时换。见[连接仓库](/zh/connect-repository)。
+
+**第一张 Issue 该写什么？**
+写个小的。状态页可以替你建一张入门 Issue：**让 Orbi 先做一张小票 → 试试 →**，它会给你的 README 加一个 CI 徽章。见[第一张 Issue](/zh/first-issue)。
+
+**给它写权限安全吗？**
+App 只能访问你选中的仓库，一开始可以只选一个小仓库；每一处改动都以 PR 的形式到来，合并前经过评审。见[安装 GitHub App](/zh/install-app)和[安全](/zh/security)。
 
 **能用在组织的仓库上吗？**
 可以。把 App 装在组织上，会为这个组织创建一个独立的租户，有自己的订阅和用量。
@@ -30,7 +36,7 @@ description: "关于 Orbi Cloud 怎么用，大家最常问什么?"
 ## 跑交付
 
 **怎么把活交给 Orbi？**
-在连接的仓库里建 Issue 并打上 `ai-ready` 标签 —— 或者用状态页上的**让 Orbi 试这张**。见[派发第一张 Issue](/zh/first-issue)。
+在连接的仓库里建 Issue 并打上 `ai-ready` 标签 —— 或者用状态页上的**试试 →**。见[派发第一张 Issue](/zh/first-issue)。
 
 **多久开始？**
 最长 5 分钟。认领走定时器，不是即时触发。
@@ -56,35 +62,38 @@ description: "关于 Orbi Cloud 怎么用，大家最常问什么?"
 ## 额度与价格
 
 **多少钱？**
-3 次合并的交付免费，之后 79 美元/月，含 3 亿 tokens。没有按 token 的超额计费 —— 额度用完时交付暂停。见[计费](/zh/billing)。
+3 次合并的交付免费，之后可选 Solo（每月 1 亿 tokens，一个仓库）或 Pro（每月 3 亿 tokens，最多五个仓库），按月或按年付费。没有按 token 的超额计费，额度用完时交付暂停。当前价格见[价格页](https://orbi.build/cloud/?ref=cloud-docs-faq)，订阅见[计费](/zh/billing)。
 
 **失败的交付会消耗免费额度吗？**
 不会。落到 `ai-blocked` 或未合并就关闭的交付会把名额退回来。
 
-**3 亿 tokens 能跑多少次交付？**
-大约 85 到 400 次合并的交付，取决于任务大小，前提是你的 provider 支持 prompt caching。
+**额度够跑多少次交付？**
+取决于任务大小、代码库大小和 prompt caching。[价格页](https://orbi.build/cloud/?ref=cloud-docs-faq)上有各套餐当前的实测区间。
 
 **月额度用完会怎样？**
-新打标签的 Issue 会被摘掉 `ai-ready` 并附一条说明评论。在途交付不受影响。等下个月或改用自己的 key，然后**自己重新打标签**。见[额度与限制](/zh/limits-and-quotas)。
+Orbi 暂停认领新的 Issue，它们的标签保留，在途交付照常跑完。每月 1 日（UTC）会自动恢复交付；保存自己的模型 key 或升级套餐则立即恢复。见[额度与限制](/zh/limits-and-quotas)。
 
 **额度掉得很快，为什么？**
-看状态页的缓存命中率。缓存未命中的 token 单价约为命中的 50 倍，低于 90% 会明显更快烧额度。
+看状态页**设置与参考**里的**缓存命中率**。缓存未命中的 token 单价约为命中的 50 倍，命中率低会明显更快烧额度。
 
 ## 发版
 
 **Orbi 会自动发版吗？**
-永远不会。你在**发个版本**里填版本号，或者自己开一张带 `ai-release` 标签的 Release Issue。见[发版](/zh/releases)。
+永远不会。发版由你发起：点状态页**版本**区域里的**发版**，或者自己开一张带 `ai-release` 标签的 Release Issue。见[发版](/zh/releases)。
 
 **版本号是它决定的吗？**
-不是，你填。下一个版本发什么是产品决策，Orbi 不替你做。
+不是，由你来定。下一个版本发什么是产品决策，Orbi 不替你做。
 
 **发版为什么停在 scope 推导？**
-scope 来自标题与版本号完全一致的 milestone。Orbi 不会替你创建这个 milestone。
+scope 来自标题与版本号完全一致的 milestone，而这个 milestone 不存在。用状态页上的**一键创建里程碑并继续**；或者以后用**新建并开始交付**来建版本，它会替你把 milestone 建好。
+
+**必须用版本吗？**
+不必。在你设定交付范围之前，每张 `ai-ready` 的 Issue 都会被认领。想分批发布时，版本才派上用场。见[发版](/zh/releases)。
 
 ## 安全与权限
 
 **Orbi 能看到什么？**
-只有你 GitHub App 安装范围内的仓库，并且只在你连接的那一个仓库里工作。见[安全](/zh/security)。
+只有你 GitHub App 安装范围内的仓库，并且只在你连接的仓库里工作。见[安全](/zh/security)。
 
 **我的 API key 存在哪？**
 以 AES-256-GCM 加密存储，回显只显示掩码，永远不写日志。
@@ -100,8 +109,11 @@ scope 来自标题与版本号完全一致的 milestone。Orbi 不会替你创�
 **这和自托管的 Orbi 是一回事吗？**
 交付引擎是同一套，区别在于谁运维 runner。引擎开源，自托管永久免费 —— [orbi.build](https://orbi.build/?ref=cloud-docs-faq)。
 
-**稳定吗？**
-Orbi Cloud 处于 Private Beta。本文档描述的是当前已上线的形态，不是路线图。
+**能把 Orbi 交付的成果给别人看吗？**
+可以。每次合并的交付都有一个**交付存证**页面，带**复制链接**和**分享到 X**。见[分享一次交付](/zh/delivery-lifecycle)。
+
+**这份文档是最新的吗？**
+它描述的是当前已上线的形态，不是路线图。如果哪一页和你看到的不一致，请告诉我们。
 
 **去哪找人？**
-状态页底部**技术支持**卡片里的 Telegram 群，带二维码。见[问题排查](/zh/troubleshooting)。
+Telegram 群：账户菜单里的**加入 Telegram 群获取技术支持**，或者页脚的**技术支持（Telegram）**。账单问题发邮件到 support@orbi.build。见[获取帮助](/zh/troubleshooting)。

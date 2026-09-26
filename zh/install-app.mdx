@@ -5,19 +5,19 @@ description: "我怎么安装 Orbi GitHub App，它申请的这些权限是干�
 ---
 
 
-Orbi 是通过安装 Orbi GitHub App 拿到仓库权限的，而覆盖哪些仓库完全由你决定。
+Orbi 是通过安装 Orbi GitHub App 拿到仓库权限的，覆盖哪些仓库完全由你决定。
 
 登录只告诉 Orbi 你是谁。App 的安装是另一件事：一次可撤销的授权，让它能读你的 Issue 并提交拉取请求。你在 GitHub 上批准它，在 GitHub 上限定范围，也在 GitHub 上把它移除。
 
 ## 安装
 
-在状态页上点 **连接仓库** (Connect repository)。如果 App 还没装，你会被送到 GitHub 的安装页。
+在状态页上点 **连接仓库** (Connect repository)。如果 App 还没装，你会被送到 GitHub 的安装页。（如果你是从 orbi.build 上的注册按钮进来的，可能一开始就会看到这个页面。）
 
 在那个页面上：
 
 1. 选中拥有目标仓库的**账号或组织**。
 2. 选 **Only select repositories**。
-3. 挑出那个仓库。
+3. 挑出那个仓库。试用 Orbi 有一个小仓库就够了，以后可以再往安装里加。
 
 批准安装。GitHub 会把你送回 Orbi Cloud 的[连接仓库](/zh/connect-repository)页。
 
@@ -43,15 +43,15 @@ Orbi 是通过安装 Orbi GitHub App 拿到仓库权限的，而覆盖哪些仓�
 
 ## 修改覆盖哪些仓库
 
-Orbi **同一时间只在一个绑定的仓库里**工作，但 App 的安装可以授权给多个仓库。如果连接页上没有出现你的目标仓库，说明安装 App 时没把它包进来。
+App 的安装决定 Orbi 能**看到**哪些仓库；连接仓库决定它在哪些仓库里**干活**。同一时间能连接几个仓库取决于你的套餐，见[额度与限制](/zh/limits-and-quotas)。如果连接页上没有出现你的目标仓库，说明安装 App 时没把它包进来。
 
-要修这个问题，打开 GitHub 的 App 设置 —— 连接页上的 **没找到你的仓库？** (Cannot find your repository?) 一节有直达链接 —— 把仓库加进安装范围。然后回到 Orbi Cloud 刷新连接页。
+要修这个问题，打开 GitHub 的 App 设置（连接页上的 **没找到你的仓库？** (Cannot find your repository?) 里有一个 **管理 App 授权** (Manage App authorization) 链接，直达那里），把仓库加进安装范围。然后回到 Orbi Cloud 刷新连接页。
 
 ## 撤销
 
 你随时可以在 GitHub 上卸载 Orbi GitHub App：**Settings → Applications → Installed GitHub Apps → Orbi → Configure → Uninstall**（组织的话，在组织设置下走同样的路径）。
 
-卸载会立即收回 Orbi 对你代码的访问权限。状态页会检测到这件事，告诉你 **GitHub App 已被卸载**，并提供重新安装。
+卸载会立即收回 Orbi 对你代码的访问权限。状态页会检测到这件事，显示 **GitHub App 已被卸载** (The GitHub App was uninstalled)，并提供 **重新安装 Orbi GitHub App** (Reinstall the Orbi GitHub App)。
 
 <Note>
 卸载 App 不会取消订阅。订阅要单独在[账单](/zh/billing)里取消。
@@ -59,4 +59,4 @@ Orbi **同一时间只在一个绑定的仓库里**工作，但 App 的安装可
 
 ## 如果你重新安装
 
-在同一个账号上重新安装 App，会把它接回你原来的租户 —— 你的交付历史和设置都还在。之后你可能需要重新连接一次仓库；需要的时候状态页会告诉你。
+在同一个账号上重新安装 App，会把它接回你原来的租户，你的交付记录和设置都还在。之后你可能需要重新连接一次仓库；需要的时候状态页会告诉你。

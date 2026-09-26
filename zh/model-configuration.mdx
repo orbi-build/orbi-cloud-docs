@@ -1,15 +1,15 @@
 ---
 title: "模型配置"
 sidebarTitle: "模型配置"
-description: "我必须配置模型吗，怎么改成用自己的 API key?"
+description: "我必须配置模型吗，怎么改成用自己的 API key？"
 ---
 
 
-你不需要配置模型 —— 订阅本身就含模型用量 —— 但如果你更愿意直接付钱给 provider，可以用自己的 key。
+你不需要配置模型，免费交付和两档付费套餐都含模型用量。但如果你更愿意直接付钱给 provider，可以用自己的 key。
 
 默认情况下，交付跑在 Orbi 的平台模型通道上，消耗你套餐里包含的 tokens。所以你可以一个 key 都不填就完成安装、连接仓库、走完一次交付。
 
-配置自己的 key —— **BYOK**，bring your own key —— 会替换掉你这个租户的那条通道。你想指定某个模型、你所在组织要求流量走自己的 provider 账号、或者你不想被包含的月度额度卡住，这些情况就用它。
+配置自己的 key，也就是 **BYOK**（bring your own key），会替换掉你这个租户的那条通道。你想指定某个模型、你所在组织要求流量走自己的 provider 账号，或者你不想被包含的月度额度卡住，这些情况就用它。
 
 ## 什么时候该配 key
 
@@ -18,40 +18,40 @@ description: "我必须配置模型吗，怎么改成用自己的 API key?"
 | 你只想让它跑起来 | 什么都不用做，包含的额度会自动使用 |
 | 你想用某个特定模型 | 用那个 provider 和模型配 BYOK |
 | 你的合规要求必须走自己的 provider 账号 | 配 BYOK |
-| 你已经用完月度 token 额度 | 配 BYOK —— BYOK 租户不受额度暂停的限制 |
+| 你已经用完月度 token 额度 | 配 BYOK。保存之后交付立即恢复，你自己的 key 永远不会因为额度被暂停 |
 
 ## 怎么配
 
-在状态页的 **模型配置**（Model configuration）卡片里，点 **配置自己的模型**。
+在 Orbi Cloud 任意页面点右上角的头像，选 **模型配置**。本月额度用完时，状态页上的 **绑定自己的模型 key** 也会链到这里。
 
 <Frame caption="模型配置页面，包含 provider、base URL、model ID 和 API key 字段">
   <img src="/images/zh/model-config.png" alt="模型配置页面，包含 provider、base URL、model ID 和 API key 字段" />
 </Frame>
 
-1. **Provider** —— 从列表里选。选中之后 base URL 会自动填好。
-2. **baseUrl** —— 自动填好，可以改。只有在你用代理或私有网关时才需要改。
-3. **model_id** —— 从该 provider 的已知模型里选，或者用 **手填其他模型** 输入列表里没有的 model ID。
-4. **API key** —— 你在那个 provider 处的 key。
+1. **provider**：从列表里选。选中之后 base URL 会自动填好。
+2. **baseUrl**：自动填好，可以改。只有在你用代理或私有网关时才需要改。
+3. **model_id**：从该 provider 的已知模型里选，或者用 **手填其他模型** 输入列表里没有的 model ID。
+4. **apiKey**：你在那个 provider 处的 API key。
 
-点 **保存模型配置**。
+想先检查这组配置能不能用，就点 **测试连接**：它用你填的内容发一个小请求，结果要么是 **连接成功**，附上模型和耗时，要么是 provider 返回的报错。然后点 **保存模型配置**。
 
-保存之后生效的是后续开始的交付。如果开通之前因为凭据不对失败过，保存一份改好的配置会自动重试。
+页面会提示 **模型配置已保存**。保存之后生效的是后续开始的交付。如果开通之前因为凭据不对失败过，保存一份改好的配置会自动重试。
 
-## 你的 key 存在哪
+## 你的 key 怎么存
 
-你的 API key **静态加密存储**，回显给你时永远是掩码的 —— 页面显示的是类似 `••••1234` 的东西，从不显示 key 本身。它不会写进日志，不会进支持用的证据包，也不会出现在任何可能被分享出去的界面里。
+你的 API key **静态加密存储**，回显给你时永远是掩码，页面显示的是类似 `••••1234` 的东西，从不显示 key 本身。它不会写进日志，不会进支持用的证据包，也不会出现在任何可能被分享出去的界面里。
 
 <Frame caption="模型配置页面显示已保存的配置，key 是掩码的">
   <img src="/images/zh/model-config-set.png" alt="模型配置页面显示已保存的配置，key 是掩码的" />
 </Frame>
 
-不要用邮件发你的 key，也不要粘进 GitHub Issue、pull request 或评论。就在这个页面上填 —— 这是你唯一需要的通道。
+不要用邮件发你的 key，也不要粘进 GitHub Issue、pull request 或评论。就在这个页面上填，你只需要这一个通道。
 
 ## 支持的 provider
 
-选中下面任何一个，它的 base URL 会自动填好。它们在下拉框里显示的名字见 **In the dropdown** 一列。
+选中下面任何一个，它的 base URL 会自动填好。它们在下拉框里的名字见 **下拉框中的名称** 一列。
 
-| Provider | In the dropdown | Base URL |
+| Provider | 下拉框中的名称 | Base URL |
 |---|---|---|
 | OpenAI | OpenAI | `https://api.openai.com/v1` |
 | DeepSeek | DeepSeek | `https://api.deepseek.com/v1` |
@@ -69,11 +69,12 @@ description: "我必须配置模型吗，怎么改成用自己的 API key?"
 | MiniMax（国际） | MiniMax 国际 | `https://api.minimaxi.com/v1` |
 | 硅基流动 SiliconFlow | 硅基流动 | `https://api.siliconflow.cn/v1` |
 | Together | Together | `https://api.together.xyz/v1` |
+| Cerebras | Cerebras | `https://api.cerebras.ai/v1` |
 | 火山引擎方舟 | 火山方舟 | `https://ark.cn-beijing.volces.com/api/v3` |
 | Anthropic（兼容层） | Anthropic（兼容层） | `https://api.anthropic.com/v1` |
 | Google Gemini（兼容层） | Google Gemini（兼容层） | `https://generativelanguage.googleapis.com/v1beta/openai` |
 
-每个 provider 都在 **model_id** 下拉框里给出一份已知 model ID 的列表。这份列表是方便你选，不是限制 —— **手填其他模型** 接受该 provider 提供的任何 model ID。
+每个 provider 都在 **model_id** 下拉框里给出一份已知 model ID 的列表。这份列表是为了方便你选，并不限制你：**手填其他模型** 接受该 provider 提供的任何 model ID。
 
 <Note>
 列在这里的 provider，不等于承诺你的账号在它上面对某个模型有额度、有访问权限或者有足够的速率限制。如果你的 key 拿不到某个模型，交付会带着 provider 自己的报错失败。
@@ -92,8 +93,8 @@ description: "我必须配置模型吗，怎么改成用自己的 API key?"
 | | 平台通道（默认） | 你自己的 key |
 |---|---|---|
 | 谁付 token 的钱 | 套餐里包含 | 你付给你的 provider |
-| 月度 token 额度 | 每月 300,000,000；到顶后交付暂停 | 不适用 —— 用量照样统计，但永不暂停 |
+| 月度 token 额度 | 你套餐的额度（Solo 100,000,000，Pro 300,000,000）；到顶后新的交付暂停 | 不适用：用量照样统计，但永不暂停 |
 | 模型选择 | 由 Orbi 运维 | 你自己定 |
-| 状态页上是否显示用量 | 是 | 是 |
+| 状态页上的用量 | **本月用量**，对照额度显示 | **本月用量（你的 key）**，没有上限 |
 
 额度怎么计，见[额度与限制](/zh/limits-and-quotas)。

@@ -24,28 +24,35 @@ flowchart LR
 
 ## What each label means
 
-| Label | Meaning |
-|---|---|
-| `ai-ready` | You dispatched this Issue to Orbi. It may be claimed on the next tick. |
-| `ai-in-progress` | Claimed and running: a workspace exists and a session is writing code. |
-| `ai-pr-opened` | The pull request is open and verified, awaiting the independent review. |
-| `ai-fix-needed` | The review found something, or the head is not mergeable yet. The next tick resumes the same run, branch and pull request. |
-| `ai-merged` | Success. The reviewed commit was merged and the merge confirmed on your base branch. |
-| `ai-blocked` | Stopped on purpose. Automatic recovery is not safe, and a person has to decide the next step. |
-| `ai-awaiting-merge` | The reviewed pull request is delivered and waiting for a maintainer to approve and merge it. |
+The right-hand column is the chip the status page shows for that label in **Delivery history**.
+
+| Label | Meaning | Status page chip |
+|---|---|---|
+| `ai-ready` | You dispatched this Issue to Orbi. It may be claimed on the next tick. | **Queued** |
+| `ai-in-progress` | Claimed and running: a workspace exists and a session is writing code. | **In progress** |
+| `ai-pr-opened` | The pull request is open and verified, awaiting the independent review. | **PR under review** |
+| `ai-fix-needed` | The review found something, or the head is not mergeable yet. The next tick resumes the same run, branch and pull request. | **Fix needed** |
+| `ai-merged` | Success. The reviewed commit was merged and the merge confirmed on your base branch. | **Merged** |
+| `ai-blocked` | Stopped on purpose. Automatic recovery is not safe, and a person has to decide the next step. | **Blocked** |
+| `ai-awaiting-merge` | The reviewed pull request is delivered and waiting for a maintainer to approve and merge it — usually because branch protection requires an approval. | **Awaiting approval** |
+| `ai-needs-detail` | Orbi could not proceed without more information from you. The comment on the Issue says what is missing; answer it there. | **Needs detail** |
+
+A closed Issue shows **Closed**.
 
 Two labels are set by people, never by Orbi:
 
-| Label | Who sets it |
-|---|---|
-| `ai-release` | You, to start a release. See [releases](/releases). |
-| `ai-human-review` | You, to record that a person confirmed the delivery checklist. Orbi never adds or removes it. |
+| Label | Who sets it | Status page chip |
+|---|---|---|
+| `ai-release` | You, to start a release. See [releases](/releases). | — |
+| `ai-human-review` | You, to record that a person confirmed the delivery checklist. Orbi never adds or removes it. | **Needs your confirmation** |
+
+Anything waiting on you — **Blocked**, **Awaiting approval**, **Needs detail**, **Needs your confirmation** — is also pulled to the top of the status page, under **① Needs you** in the **Next** card.
 
 ## Timing
 
 Orbi works on a timer rather than reacting instantly, so **pickup takes up to five minutes** after you add `ai-ready`. The same tick interval applies to every transition: a delivery that needs a repair round waits for the next tick before resuming.
 
-How long a delivery takes after pickup depends entirely on the size of the task. A small, well-specified change can finish in minutes; a large one takes longer and may go through several repair rounds. The status page shows runtime, model requests and resumption count per work item once a delivery reports usage.
+How long a delivery takes after pickup depends entirely on the size of the task. A small, well-specified change can finish in minutes; a large one takes longer and may go through several repair rounds. The status page shows runtime, model requests, tokens and cache use per work item in **Delivery history** once a delivery reports usage.
 
 ## The independent review
 
@@ -74,6 +81,12 @@ Two limits are worth knowing:
 "Decide the next step" genuinely means any next step: change the code, rewrite the Issue's acceptance criteria, or close the ticket. **Removing the label alone does not restart anything** — fix the underlying problem first, then re-apply `ai-ready` to put the Issue back in the queue.
 
 See [troubleshooting](/troubleshooting#ai-blocked) for how to read a blocked comment.
+
+## Sharing a delivery
+
+When a delivery merges, Orbi comments on the pull request with a **Delivery proof** link — a page at `orbi.build/proof/<owner>/<repo>/<issue>` that shows the Issue, the pull request, the review and, once it ships, the version it was **Released in**.
+
+The page has **Copy link** and **Share on X** buttons. For a public repository anyone with the link can open it; for a private repository it only opens for someone signed in to the owning Orbi account, so sharing the link does not expose private code.
 
 ## Task types
 

@@ -5,7 +5,7 @@ description: "Do I need to configure a model, and how do I use my own API key in
 ---
 
 
-You do not need to configure a model — a subscription includes model usage — but you can bring your own key if you would rather pay your provider directly.
+You do not need to configure a model — the free deliveries and both paid plans include model usage — but you can bring your own key if you would rather pay your provider directly.
 
 By default, deliveries run on Orbi's platform model channel using the tokens included in your plan. That is why you can install, connect and complete a delivery without entering any key at all.
 
@@ -18,11 +18,11 @@ Configuring your own key — **BYOK**, bring your own key — replaces that chan
 | You just want it to work | Nothing. The included quota is used automatically |
 | You want a specific model | Configure BYOK with that provider and model |
 | Your compliance rules require your own provider account | Configure BYOK |
-| You have hit the monthly token quota | Configure BYOK — BYOK tenants are not subject to the quota's pause |
+| You have hit the monthly token quota | Configure BYOK — delivery resumes as soon as you save, and your own key is never paused by the quota |
 
 ## Configure it
 
-From the status page, in the **Model configuration** card, click **Optional: configure your own model**.
+Click your avatar in the top right of any Orbi Cloud page and choose **Model config**. When the monthly quota is exhausted, the status page also links here with **Connect your own model key**.
 
 <Frame caption="The model configuration page with provider, base URL, model ID and API key fields">
   <img src="/images/model-config.png" alt="The model configuration page with provider, base URL, model ID and API key fields" />
@@ -33,9 +33,9 @@ From the status page, in the **Model configuration** card, click **Optional: con
 3. **model_id** — choose from that provider's known models, or use **Enter another model** to type a model ID that is not in the list.
 4. **API key** — your key from that provider.
 
-Click **Save model configuration**.
+Click **Test connection** first if you want to check the combination: it sends a small request with what you entered and reports either **Connection successful** with the model and how long it took, or the provider's error. Then click **Save model configuration**.
 
-Saving takes effect for deliveries that start afterwards. If provisioning had failed because of a bad credential, saving a corrected configuration retries it automatically.
+The page confirms **Model configuration saved**. Saving takes effect for deliveries that start afterwards. If provisioning had failed because of a bad credential, saving a corrected configuration retries it automatically.
 
 ## How your key is stored
 
@@ -93,8 +93,8 @@ Clearing your configuration returns your tenant to the platform channel and the 
 | | Platform channel (default) | Your own key |
 |---|---|---|
 | Who pays for tokens | Included in your plan | You pay your provider |
-| Monthly token quota | 300,000,000 per month; deliveries pause at the cap | Not applied — your usage is measured but never paused |
+| Monthly token allowance | Your plan's allowance (Solo 100,000,000, Pro 300,000,000); new deliveries pause at the cap | Not applied — your usage is measured but never paused |
 | Model choice | Operated by Orbi | Yours |
-| Usage shown on the status page | Yes | Yes |
+| Usage shown on the status page | **Monthly usage**, against the allowance | **Monthly usage (your key)**, with no limit |
 
 See [limits and quotas](/limits-and-quotas) for how the quota is counted.

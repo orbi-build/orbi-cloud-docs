@@ -16,23 +16,30 @@ That label is the execution switch. Nothing else is required — no command, no 
 
 The label already exists — [provisioning](/provisioning) created it along with the rest of the `ai-*` set.
 
-Within about five minutes, `ai-in-progress` appears on the Issue and it shows up under **Doing** on the status page.
+Within about five minutes, `ai-in-progress` appears on the Issue, the status page headline changes to **Orbi is coding**, and the Issue shows up under **In progress** in **Delivery history**.
+
+<Warning>
+The single most common reason nothing happens is a missing label. An Issue without `ai-ready` is never picked up, however long it waits — writing the Issue is not enough on its own.
+</Warning>
 
 <Note>
-Orbi only works on Issues in the repository you connected. An Issue in any other repository is ignored, even if the App is installed there.
+Orbi only works on Issues in the repositories you connected. An Issue in any other repository is ignored, even if the App is installed there.
 </Note>
 
 ### Dispatching from the status page
 
-You do not have to label by hand. When you have open Issues that Orbi has not been given yet, the status page lists them under **Pick one for Orbi to try**, each with a **Let Orbi try this one** button that applies the `ai-ready` label for you.
+You do not have to label by hand. When Orbi is idle, the **Next** card on the status page offers work under **Pick one for Orbi to try**:
 
-<Frame caption="The status page listing untagged Issues with Let Orbi try this one buttons">
-  <img src="/images/status-ready-issues.png" alt="The status page listing untagged Issues with Let Orbi try this one buttons" />
+- **Let Orbi make a starter Issue**, with a **Try →** button. Orbi creates a small, bilingual demo Issue in your repository — add a CI status badge to the top of the README, or a CONTRIBUTING.md link if a badge is already there — with `ai-ready` already applied. It is offered once; afterwards the row becomes **Open the onboarding demo Issue**. Close the Issue whenever you like.
+- **Your own open Issues** that Orbi has not been given yet, each with a **Try →** button that applies the `ai-ready` label for you.
+
+<Frame caption="The Next card offering a starter Issue and unlabelled Issues, each with a Try button">
+  <img src="/images/status-ready-issues.png" alt="The Next card offering a starter Issue and unlabelled Issues, each with a Try button" />
 </Frame>
 
-There is also a **Create an Issue in `owner/repo`** button that opens GitHub's new-Issue form for your connected repository with the label preselected.
+When the page offers a **Create Issue** button, it opens GitHub's new-Issue form for your connected repository with the `ai-ready` label already selected.
 
-An Issue that already carries any `ai-*` label is not offered here — Orbi is already handling it, or has finished with it.
+An Issue that already carries any `ai-*` label is not offered — Orbi is already handling it, or has finished with it.
 
 ## How to write the Issue
 
@@ -52,7 +59,7 @@ The things that consistently matter:
 
 ## Choosing what to start with
 
-Your first Issue is worth choosing deliberately. A well-scoped small change — a bug with a clear reproduction, a missing test, a contained refactor — finishes fast and shows you the whole loop. Save the ambiguous architectural work until you have seen how Orbi handles your codebase.
+Your first Issue is worth choosing deliberately. A well-scoped small change — the starter Issue, a bug with a clear reproduction, a missing test, a contained refactor — finishes fast and shows you the whole loop. Save the ambiguous architectural work until you have seen how Orbi handles your codebase.
 
 Note that **your CI defines what is guaranteed.** The review runs your repository's test suite; the release gate reads your repository's check runs. If your repository has strong tests, Orbi's guarantees are strong. If it has none, both gates pass vacuously and the delivery ships on the review's judgement alone.
 
@@ -74,4 +81,4 @@ Add the **`p0`** label to have an Issue picked up ahead of others. The pickup or
 
 Follow it on the Issue's labels or on [the status page](/status-page). The sequence you are looking for is `ai-in-progress` → `ai-pr-opened` → `ai-merged`; a repair round shows up as `ai-fix-needed` in between, which is normal.
 
-When a pull request is open and waiting for you, the status page says so under **Awaiting**.
+When something needs you — an approval, a confirmation, missing detail, or a blocked Issue — the status page says so at the top of the **Next** card, under **① Needs you**.

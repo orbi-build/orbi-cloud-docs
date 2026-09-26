@@ -13,18 +13,18 @@ The open-source delivery engine lives in [orbi-build/orbi](https://github.com/or
 | Page | Covers |
 |---|---|
 | `index.mdx` | What Orbi Cloud is, the delivery loop, what it costs |
-| `quickstart.mdx` | Sign-in to first merged pull request, in five steps |
-| `sign-in.mdx` | GitHub OAuth, language, sessions, personal vs organization |
+| `quickstart.mdx` | Sign-in to first merged pull request, following the status page's setup steps |
+| `sign-in.mdx` | GitHub OAuth, the account menu, language, sessions, personal vs organization |
 | `install-app.mdx` | The GitHub App, what each permission is for, revoking |
-| `connect-repository.mdx` | Choosing the repository and base branch, branch protection, rebinding |
-| `provisioning.mdx` | What provisioning does, and the four failure classes |
+| `connect-repository.mdx` | Choosing the repository and base branch, branch protection, several repositories, deactivating |
+| `provisioning.mdx` | What provisioning does, and how failures are classified |
 | `model-configuration.mdx` | The included quota, BYOK, the supported providers |
-| `billing.mdx` | Subscribing, the plan, the billing portal, cancelling |
+| `billing.mdx` | The Free, Solo and Pro plans, subscribing, the billing portal, cancelling |
 | `first-issue.mdx` | Dispatching work, and how to write an Issue that succeeds |
-| `delivery-lifecycle.mdx` | The `ai-*` label state machine and the independent review |
-| `status-page.mdx` | How to read every card on the status page |
-| `releases.mdx` | Cutting a release and the gates it passes |
-| `limits-and-quotas.mdx` | The free allowance and the monthly token quota |
+| `delivery-lifecycle.mdx` | The `ai-*` label state machine, the independent review, sharing a delivery |
+| `status-page.mdx` | How to read the status page, top to bottom |
+| `releases.mdx` | Versions, the delivery scope, cutting a release and the gates it passes |
+| `limits-and-quotas.mdx` | The free allowance, the monthly token allowance and the repository limit |
 | `troubleshooting.mdx` | Every failure state and how to recover |
 | `security.mdx` | Access boundaries, key storage, isolation, what CI guarantees |
 | `faq.mdx` | Short answers with links to the detail |
@@ -73,7 +73,7 @@ npx mint@4.2.890 validate
 
 The images in `images/` are captured from the application, not mocked up. They are produced against a local instance seeded with fixture tenants, so no real customer data appears in any of them.
 
-Re-capture them after a user-visible UI change, so the documentation does not drift from the product.
+Re-capture them after a user-visible UI change, so the documentation does not drift from the product. English pages use `images/`, Chinese pages use `images/zh/`, captured with the product's own Chinese interface. The last full re-capture was on 2026-09-26, after the status page redesign (top bar with account menu, **Next** card, delivery history, folded **Settings and reference**).
 
 ## Contributing
 

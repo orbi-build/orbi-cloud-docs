@@ -1,15 +1,23 @@
 ---
-title: "快速开始：五步拿到第一次交付"
+title: "快速开始：第一次交付"
 sidebarTitle: "快速开始"
 description: "怎么让 Orbi Cloud 把我的第一张 GitHub Issue 交付成一个已合并的拉取请求?"
 ---
 
 
-登录，安装 GitHub App，连接一个仓库，给一张 Issue 打上 `ai-ready`，然后评审 Orbi 提交的拉取请求。
+登录，安装 GitHub App，连接一个仓库，然后交给 Orbi 一张打了 `ai-ready` 标签的小 Issue。
 
-这是最短的完整路径。每一步结尾都有一条**成功判据**，你据此判断该继续往下走，还是停下来先修点什么。整条路径都在浏览器和 GitHub 里完成 —— 你不会拿到 runner 上的 shell，也不用在本地装任何东西。
+这是最短的完整路径。每一步结尾都有一条**成功判据**，你据此判断该继续往下走，还是停下来先修点什么。整条路径都在浏览器和 GitHub 里完成：你不会拿到 runner 上的 shell，也不用在本地装任何东西。
 
-**开始之前**你需要一个 GitHub 账号，和一个你能在上面安装 GitHub App 的仓库（你得是它的所有者，或者组织的 owner/admin）。这个仓库必须**开启了 Issues** —— Orbi 靠读 Issue 和给 Issue 打标签工作，关掉了 Issues 的仓库连不上。
+**开始之前**你需要一个 GitHub 账号，和一个你能在上面安装 GitHub App 的仓库（你得是它的所有者，或者组织的 owner/admin）。这个仓库必须**开启了 Issues**。Orbi 靠读 Issue 和给 Issue 打标签工作，关掉了 Issues 的仓库连不上。
+
+<Tip>
+试用不需要一个又大又重要的仓库。装在一个小仓库上就足够看完整个循环，以后还可以再加别的。
+</Tip>
+
+## 一路给你指路的页面
+
+登录之后，Orbi Cloud 的每个页面顶部都有一个**开通进度** (Setup progress) 列表，共七步：**登录** (Sign in)、**安装 App** (Install App)、**连接仓库** (Connect repository)、**开通环境** (Provision environment)、**首个 Issue** (First Issue)、**发一个版本** (Cut a release)、**订阅** (Subscribe)。正在等你的那一步会高亮，并带一个 **看这一步怎么做 ▶** (How to do this step ▶) 链接，点开是这一步的短视频。找不着北的时候，看这个列表就知道自己走到哪了。
 
 ## 1. 用 GitHub 登录
 
@@ -19,80 +27,80 @@ description: "怎么让 Orbi Cloud 把我的第一张 GitHub Issue 交付成一�
   <img src="/images/zh/signin.png" alt="Orbi Cloud 登录页，带「使用 GitHub 登录」按钮" />
 </Frame>
 
-GitHub 会让你授权 Orbi Cloud 的 OAuth app。这一步只确认你是谁，此时还没有把任何仓库的权限给 Orbi。
+GitHub 会让你授权 Orbi Cloud。这一步只确认你是谁，此时还没有把任何仓库的权限给 Orbi。
 
 <Note>
-如果你的浏览器首选语言是中文，页面会以中文打开。用右上角的 🇬🇧 旗标切到英文 —— 这个选择会存在 cookie 里，记一年。
+如果你的浏览器首选语言是中文，页面会以中文打开。在登录页上用 **ZH / EN** 切换，登录后也可以在账户菜单（右上角你的头像）里切换。这个选择会记一年。
 </Note>
 
-**成功判据**：你落到状态页，标题是 **Orbi Cloud 状态** (Orbi Cloud Status)，**账户** (Account) 卡片用你的 GitHub 登录名跟你打招呼。
+**成功判据**：你落到状态页，标题是 **Orbi Cloud 状态** (Orbi Cloud Status)，右上角是你的 GitHub 头像和登录名。
 
 ## 2. 安装 Orbi GitHub App
 
-在状态页上，顶部的提示写着**先连接一个 GitHub 仓库**。点 **连接仓库** (Connect repository)。
+如果你是从 orbi.build 上的按钮进来的，GitHub 可能已经给你看过 App 的安装页了，那就直接跳到第 3 步。否则状态页会写着**先连接一个仓库** (Connect a repository first)：点 **连接仓库** (Connect repository)，如果 App 还没装，你会被送到 GitHub。
 
-如果你还没装 Orbi GitHub App，你会被送到 GitHub 的安装页。选中拥有你那个仓库的账号或组织，选 **Only select repositories**，然后挑出你想让 Orbi 在里面干活的那一个仓库。
+在 GitHub 的安装页上，选中拥有你那个仓库的账号或组织，选 **Only select repositories**，然后挑出你想让 Orbi 在里面干活的那个仓库。
 
-这个 App 需要 Issues、拉取请求和仓库内容的写权限才能干活 —— 它要给 Issue 打标签、提交拉取请求、推送自己工作的那个分支。批准之前你可以在 GitHub 的安装页上逐条看完权限清单，而且随时可以在 GitHub 上撤销整个安装。
+这个 App 需要 Issues、拉取请求和仓库内容的写权限才能干活：它要给 Issue 打标签、提交拉取请求、推送自己工作的那个分支。[安装 GitHub App](/zh/install-app) 逐条解释了每项权限，而且你随时可以在 GitHub 上撤销整个安装。
 
-**成功判据：**GitHub 把你送回 Orbi Cloud，你现在在**连接仓库**页上。
+**成功判据**：GitHub 把你送回 Orbi Cloud，你现在在**连接仓库** (Connect repository) 页上。
 
 ## 3. 连接仓库
 
-在 **Repository** 下拉里选你的仓库，然后选 **Base branch** —— Orbi 提交拉取请求的目标分支，通常是 `main`。
+在 **仓库** (Repository) 列表里选你的仓库，列表很长的话，在上面的搜索框里输入名字筛一下。然后选 **基础分支** (Base branch)，也就是 Orbi 提交拉取请求的目标分支。选中仓库之后，页面会载入它真实的分支列表，并预选默认分支，所以多数情况下你只需要确认一下。点 **连接仓库** (Connect repository)。
 
-<Frame caption="连接仓库页，有一个仓库下拉和一个基础分支下拉">
-  <img src="/images/zh/connect.png" alt="连接仓库页，有一个仓库下拉和一个基础分支下拉" />
+<Frame caption="连接仓库页，有仓库列表和基础分支列表">
+  <img src="/images/zh/connect.png" alt="连接仓库页，有仓库列表和基础分支列表" />
 </Frame>
 
-选中一个仓库之后，页面会载入这个仓库真实的分支列表，并预选它的默认分支，所以多数情况下你只需要确认一下。然后点 **连接仓库**。
-
 <Note>
-如果下拉里没有你的仓库，说明 Orbi 看不到它 —— 安装 App 时没把它包进来。在那个页面上展开 **没找到你的仓库？** (Cannot find your repository?)，里面有指向 GitHub App 设置的链接，你可以在那里把仓库加进安装范围。同一时间只有一个仓库处于生效状态；连接另一个会替换掉当前这个。
+标着 **（Issue 功能已关闭，Orbi 无法正常工作）** ((Issues are turned off — Orbi can't work here)) 的仓库，要先在仓库的 **Settings → Features → Issues** 里开启 Issues。如果列表里压根没有你的仓库，展开 **没找到你的仓库？** (Cannot find your repository?)，里面有链接，可以把它加进 App 的安装范围。
 </Note>
 
-**成功判据**：你回到状态页，**绑定的仓库** (Connected repository) 卡片列出了你的仓库，带一个绿色的 **生效中** (Active) 标记。
+**成功判据**：页面显示 **仓库已连接** (Repository connected)，并开始准备运行环境。
 
 ## 4. 等待开通
 
-连接仓库会触发开通：Orbi 为你的仓库搭一个隔离的运行环境，并把交付用的标签装进去。**通常需要一到两分钟**。这段时间你什么都不用做。
+连接仓库会触发开通：Orbi 为你的仓库搭一个隔离的运行环境，并把交付用的标签装进去。**通常需要一到两分钟**，页面会自己更新，你不用刷新，也不用做任何事。
 
-盯着**绑定的仓库**卡片里的**开通状态** (Provisioning status) 那一列。刷新页面可以更新它。
+**成功判据**：出现 **创建第一个 Issue** (Create your first Issue) 按钮，状态页上的**开通环境** (Provision environment) 标成 **✓ 已完成** (✓ Done)。
 
-**成功判据：开通状态**那一列显示绿色的 **开通成功** (Provisioned) 标记。
+如果开通失败，状态页会在**下一步** (Next) 卡片里告诉你原因和该怎么做。多数失败在平台一侧，会自行恢复，见[开通](/zh/provisioning)。
 
-如果它显示的是**开通失败** (Provisioning failed)，卡片会告诉你原因和下一步。多数失败在平台一侧，会自行恢复 —— 见[开通](/zh/provisioning)。
+## 5. 交给 Orbi 第一张 Issue
 
-## 5. 建一张 Issue，打上 `ai-ready`
+大多数人卡在这一步，所以这里给出最快的走法。状态页现在写着 **Orbi 在等你的第一个 Issue** (Orbi is waiting for your first Issue)，**下一步** (Next) 卡片给你三条路：
 
-在 GitHub 上你绑定的那个仓库里，建一张普通的 Issue，描述你想要的一个改动。就按你写给一位能力不错但没读过你代码库的同事那样写：说清楚要改成什么样，以及你怎么判断它做对了。
+- **让 Orbi 先做一张小票** (Let Orbi make a starter Issue) **→ 试试 →** (Try →)。Orbi 在你的仓库里建一张小的演示 Issue，内容是给 README 加一个 CI 状态徽章，已经打好 `ai-ready` 标签。这是看完整个循环最快的办法，这张票你随时可以关掉。
+- **从你自己打开着的 Issue 里挑一张。** 在 **挑一张让 Orbi 试试** (Pick one for Orbi to try) 下面，每张没打标签的 Issue 都带一个 **试试 →** (Try →) 按钮，替你打上 `ai-ready`。
+- **自己在 GitHub 上写一张新 Issue**，打上 `ai-ready` 标签。页面上出现 **创建 Issue** (Create Issue) 按钮时，点它会打开 GitHub 的新建 Issue 表单，标签已经选好。
 
-然后给这张 Issue 加上 **`ai-ready`** 标签。这个标签已经存在了 —— 开通过程创建了它。
-
-这个标签就是执行开关。Orbi 按定时器检查新打标的 Issue，所以认领**最多需要五分钟**。
-
-<Note>
-手工打标这一步可以省掉。如果你已经有打开着的 Issue，状态页会把它们列在**挑一张让 Orbi 试试**下面，每一张都带一个 **让 Orbi 试这张** (Let Orbi try this one) 按钮，替你把标签打上。
-</Note>
-
-<Frame caption="状态页列出未打标的 Issue，每一张都带「让 Orbi 试这张」按钮">
-  <img src="/images/zh/status-ready-issues.png" alt="状态页列出未打标的 Issue，每一张都带「让 Orbi 试这张」按钮" />
+<Frame caption="等待第一张 Issue 的「下一步」卡片，带小票入口和「试试 →」按钮">
+  <img src="/images/zh/status-ready-issues.png" alt="等待第一张 Issue 的「下一步」卡片，带小票入口和「试试 →」按钮" />
 </Frame>
 
-**成功判据：**大约五分钟内，`ai-in-progress` 标签出现在这张 Issue 上，状态页的**正在发生**卡片把它列在**进行中**下面。
+<Warning>
+**开工靠的是 `ai-ready` 标签**。没有这个标签的 Issue 等多久都不会被认领。如果你是自己在 GitHub 上写的 Issue，离开页面之前记得把标签打上。
+</Warning>
 
-<Frame caption="状态页显示正在进行的工作、用量、绑定的仓库和发版表单">
-  <img src="/images/zh/status-active.png" alt="状态页显示正在进行的工作、用量、绑定的仓库和发版表单" />
+Orbi 按定时器检查新打标的 Issue，所以认领**最多需要五分钟**。
+
+**成功判据**：大约五分钟内，`ai-in-progress` 标签出现在这张 Issue 上，状态页的标题变成 **Orbi 正在写代码** (Orbi is coding)，这张 Issue 出现在 **交付记录** (Delivery history) 的 **进行中** (In progress) 下面。
+
+<Frame caption="有工作在进行的状态页，带仓库概览和交付记录">
+  <img src="/images/zh/status-active.png" alt="有工作在进行的状态页，带仓库概览和交付记录" />
 </Frame>
 
-从这里开始，Orbi 写代码、提交拉取请求、在另一个会话里评审它、修掉评审发现的问题。走到 `ai-pr-opened` 时你会拿到一个待评审的拉取请求；评审过的那个 commit 合并之后，Issue 走到 `ai-merged`。
+从这里开始，Orbi 写代码、提交拉取请求、在另一个会话里评审它、修掉评审发现的问题。评审过的那个 commit 合并之后，Issue 走到 `ai-merged`。
+
+## 跑的时候
+
+你不用干等。如果你发现 Issue 漏写了什么，**直接在 Issue 下面评论**，正在跑的会话通常一分钟内就会接上这条修正。见[交付生命周期](/zh/delivery-lifecycle)里讲转向的部分。
 
 ## 接下来做什么
 
-盯 Issue 的标签，或者盯状态页。**正在发生**卡片上的三个页签 —— **进行中**、**待评审**、**已完成** —— 是最快看清进度的地方。
-
-当你准备把合并了的东西发出去时，**绑定的仓库**卡片里的**发个版本** (Cut a release) 表单会替你建好 release Issue：填一个像 `v1.2.3` 这样的版本号，Orbi 就会改版本号、打 tag、发布 GitHub Release。它需要一个标题完全相同的 milestone —— 见[发版](/zh/releases)。
-
+- 给下一张 Issue 打标签。排队的工作出现在 **交付记录** (Delivery history) 的 **进行中** (In progress) 下面，带一个 **已排队** (Queued) 标记。
+- 合并的东西攒到值得发出去时，在状态页打开 **设置与参考 → 版本** (Settings and reference → Versions) 发起一次发版，见[发版](/zh/releases)。
 - 想搞清楚每个标签的含义、以及什么会让 Issue 在它们之间移动，读[交付生命周期](/zh/delivery-lifecycle)。
-- 想用自己的模型 key 而不是自带额度，读[模型配置](/zh/model-configuration)。
-- 如果 Issue 走到了 `ai-blocked`，读[问题排查](/zh/troubleshooting) —— 这个状态在等你的决定。
+- 如果 Issue 走到了 `ai-blocked`，读[问题排查](/zh/troubleshooting)，这个状态在等你做决定。
+- 五分钟过去了什么都没发生？从[问题排查](/zh/troubleshooting)开始看。
