@@ -36,6 +36,7 @@
             "icon": "compass",
             "pages": [
               "first-issue",
+              "write-a-requirement",
               "delivery-lifecycle",
               "status-page",
               "releases"
@@ -81,6 +82,7 @@
             "icon": "compass",
             "pages": [
               "zh/first-issue",
+              "zh/write-a-requirement",
               "zh/delivery-lifecycle",
               "zh/status-page",
               "zh/releases"

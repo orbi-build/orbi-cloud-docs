@@ -1,0 +1,42 @@
+---
+title: "Write a requirement"
+sidebarTitle: "Write a requirement"
+description: "Describe a change in a sentence or two, and Orbi reads your code and drafts the Issue for you to review."
+---
+
+
+You don't have to write the Issue yourself. On the status page (the page you land on after signing in), click **Write a requirement** and say what you want changed in a sentence or two. Orbi reads the code in your repository and drafts a GitHub Issue, usually within one to two minutes. Nothing is filed until you review the draft and submit it.
+
+## Write and submit
+
+1. On the status page, click **Write a requirement**. The button appears once a repository is [connected](/connect-repository); if you have several, pick the repository from the list on the page.
+2. Describe the change in plain words, for example "the home page is slow, see if it can be faster". One sentence is enough; a longer description is fine too. Then click **Let Orbi write it clearly for me**.
+3. Orbi reads your code and writes the draft. This usually takes one to two minutes. For a repository you have only just connected, Orbi first waits for its environment to finish [setting up](/provisioning), another minute or two; the page shows **Orbi is writing** the whole time, so the first draft can take three to four minutes. You can close the page meanwhile; later, click **Write a requirement** and then **Go back to the last one** to pick it up. Sometimes Orbi also asks you a few questions; see the next section.
+4. Read the draft. It states the request, what your users should see when it is done, what is left out, and the assumptions Orbi made where your words left room.
+5. Click **That's it, start working**. Orbi creates the Issue in your repository with the dispatch label (`ai-ready` by default) already applied, and delivery usually starts within a minute. Two cases where it does not start: you are out of free deliveries (see [Usage](#usage)), or your project has a milestone setting that needs changing first. In the second case the page tells you the request was filed and nothing counts toward your deliveries or quota until delivery starts. It is not something you configured wrong, and you don't need to change anything in your repository: [contact us](/troubleshooting#getting-help), we change the setting, and the Issue is then picked up without you filing it again.
+
+## When Orbi isn't sure
+
+If your request can be read more than one way, Orbi asks you rather than guessing. Each question has a few options, and Orbi has already picked the one it recommends. You will see one of two layouts:
+
+- **A draft with questions under it.** The draft is already written with the recommended answers, so if you agree you can start the work without changing anything. If an answer isn't what you meant, click another option, or choose **None of these, I'll say it myself** and type your own. Then click **Rewrite with my choices**; the draft is updated in about a minute, and you can start the work once it is.
+- **Questions with no draft yet.** Pick your answers the same way, then click **Write it with my choices** to get the draft.
+
+To change anything else, write it in the reply box under the draft and send it. Orbi rewrites the draft, again in about a minute, and keeps what you said before, so you don't have to repeat it.
+
+## What the Issue looks like
+
+The Issue is a normal GitHub Issue in your connected repository. Its first line says it was submitted by you through Orbi; that line is currently always in Chinese (由 @your-login 通过 Orbi 提交). After it comes the draft exactly as you approved it. It gets your repository's dispatch label (`ai-ready` unless your repository's `.github/orbi.toml` sets another) and the milestone of the repository's current delivery scope, if one is set (see [Releases](/releases)).
+
+Each repository has one draft at a time. An unsubmitted draft is kept for 7 days after you last changed it. Starting a new requirement in the same repository replaces it, and the page warns you before that happens. Issues you have submitted stay in your repository either way.
+
+## Usage
+
+- Writing a draft does not count toward your usage, and there is no separate limit on how many drafts you write.
+- The Issue you submit is counted the same way as one you label `ai-ready` by hand.
+- **Free plan:** your free deliveries are granted once when your account is set up and do not reset monthly. Submitting an Issue takes one; if the delivery fails or ends without a merge, it is returned. When you have none left you can still write drafts, but a submitted Issue has its dispatch label (`ai-ready` by default) removed. After you subscribe, add that label to the Issue again to start the delivery.
+- **Paid plans:** when this month's quota is used up and delivery is paused, writing drafts pauses too, and both resume when the quota resets. This applies to paid plans only; on the free plan you can keep writing drafts. See [Limits and quotas](/limits-and-quotas).
+
+## When to write the Issue yourself
+
+If you already know exactly what you want and can list how to check it, [opening the Issue on GitHub](/first-issue) is quicker. Write a requirement helps most when you know the problem but not where it lives in the code.
