@@ -7,7 +7,7 @@ description: "What is Orbi Cloud and what do I get from it?"
 
 Orbi Cloud is a hosted runner that turns a labelled GitHub Issue into a tested, independently reviewed, merged pull request — on infrastructure Orbi operates.
 
-You keep working in GitHub. You file an Issue in your own repository and add the `ai-ready` label; Orbi Cloud claims it, writes the code in an isolated workspace, runs your test suite, opens a pull request, reviews that pull request in a separate session, repairs what the review finds, and merges the exact reviewed commit. The Issues, the pull requests and the release evidence all stay in your repository. There is no second workspace to adopt and no new password.
+You keep working in GitHub. You file an Issue in your own repository and add the `ai-ready` label (or click **Write a request** on the status page, describe the change in a sentence, and hand off the Issue Orbi drafts). Orbi Cloud claims it, writes the code in an isolated workspace, runs your test suite, opens a pull request, reviews that pull request in a separate session, repairs what the review finds, and merges the exact reviewed commit. The Issues, the pull requests and the release evidence all stay in your repository. There is no second workspace to adopt and no new password.
 
 Orbi Cloud runs the same delivery engine as self-hosted [Orbi](https://orbi.build/?ref=cloud-docs-index), which is open source. The difference is who operates the runner: with Cloud, Orbi does.
 
@@ -19,7 +19,7 @@ Everything below the dashed line is automatic. Your part is the four steps of se
 flowchart TD
   subgraph setup["Setup — once"]
     direction LR
-    s1["1 Sign in<br/>with GitHub"] --> s2["2 Install the<br/>GitHub App"] --> s3["3 Connect a<br/>repository"] --> s4["4 Provisioning<br/>~1–2 min"]
+    s1["1 Sign in<br/>with GitHub"] --> s2["2 Install the<br/>GitHub App"] --> s3["3 Connect a<br/>repository"] --> s4["4 Prepare work<br/>environment, a few min"]
   end
 
   subgraph work["Per piece of work — you label, Orbi delivers"]
@@ -52,10 +52,10 @@ The status page walks you through the same path. Its **Setup progress** list has
     You choose which repositories the runner may work in, and you can revoke it from GitHub at any time.
   </Card>
   <Card title="Connect a repository" href="/connect-repository">
-    Pick the repository and its base branch. Orbi provisions a runner for it, usually in one to two minutes.
+    Pick the repository and its base branch. Orbi prepares a work environment for it, which takes a few minutes.
   </Card>
   <Card title="Label an Issue `ai-ready`" href="/first-issue">
-    That label is the execution switch. Not sure what to try first? The status page can create a small starter Issue for you.
+    That label is the execution switch. Before your first delivery, the status page lists your open Issues with a **Let Orbi do this** button that adds it for you, and **Write a request** turns one sentence into an Issue.
   </Card>
 </CardGroup>
 
@@ -80,7 +80,7 @@ Read [the delivery lifecycle](/delivery-lifecycle) for what each label means and
 
 Your first **3 merged deliveries are free** — no card and no subscription. Failed deliveries do not use up that allowance.
 
-After that there are two paid plans, **Solo** and **Pro**. Both include model usage in the price — Solo with 100,000,000 tokens a month and one repository, Pro with 300,000,000 tokens a month and up to five repositories. There is no per-token overage billing: when the month's allowance runs out, new deliveries pause until the next month, or until you add your own model key.
+After that there are two paid plans, **Solo** and **Pro**. Both include model usage in the price: Solo with 400,000,000 tokens a month and one repository, Pro with 1,200,000,000 tokens a month and up to five repositories. There is no per-token overage billing: when the month's allowance runs out, new deliveries pause until the next month, or until you add your own model key.
 
 The current prices, the yearly option and any founding offer are on the [pricing page](https://orbi.build/cloud/?ref=cloud-docs-index). [Billing](/billing) covers how subscribing works, and [limits and quotas](/limits-and-quotas) covers how the allowance is counted.
 

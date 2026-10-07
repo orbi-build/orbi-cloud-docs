@@ -22,10 +22,10 @@ No. Everything happens in your browser and in GitHub. You never get a shell on t
 Yes. The GitHub App works on private repositories you authorize.
 
 **Can I connect more than one repository?**
-On Pro, up to five at once; Free and Solo connect one at a time. On every plan, once you are at the limit you deactivate a repository first, then connect the new one. See [connect a repository](/connect-repository#changing-the-connected-repository).
+On Pro, up to five at once; Free and Solo connect one at a time. On every plan, once you are at the limit you disconnect a repository first, then connect the new one. See [connect a repository](/connect-repository#changing-the-connected-repository).
 
 **What should my first Issue be?**
-Something small. The status page can create a starter Issue for you — **Let Orbi make a starter Issue → Try →** — which adds a CI badge to your README. See [your first Issue](/first-issue).
+Something small. Until your first delivery finishes, the status page lists up to three open Issues from your repository, each with a **Let Orbi do this** button. If none of them fits, click **Write a request**, describe the change in a sentence, and Orbi writes the Issue for you. See [your first Issue](/first-issue) and [write a request](/write-a-requirement).
 
 **Is it safe to give it write access?**
 The App only reaches the repositories you select, you can pick a single small repository to start, and every change arrives as a pull request that is reviewed before it merges. See [install the GitHub App](/install-app#what-the-permissions-are-for) and [security](/security).
@@ -36,10 +36,14 @@ Yes. Install the App on the organization; that creates a separate tenant for the
 ## Running deliveries
 
 **How do I give Orbi work?**
-Create an Issue in your connected repository and add the `ai-ready` label — or use **Try →** on the status page. See [file your first Issue](/first-issue).
+Three ways, all of which end with the `ai-ready` label on an Issue:
+
+- On the status page, click **Write a request** and say what you want changed in a sentence or two. Orbi reads your code and writes a draft Issue; when it looks right, click **Hand off to Orbi**. See [write a request](/write-a-requirement).
+- On the status page, click **Let Orbi do this** (or **Try →**) next to an Issue you already have.
+- On GitHub, create an Issue in your connected repository and add the `ai-ready` label yourself. See [file your first Issue](/first-issue).
 
 **How long until it starts?**
-Up to five minutes. Pickup runs on a timer rather than instantly.
+Usually within a minute. Adding `ai-ready`, on GitHub or from the status page, wakes the runner for that repository. If that signal is lost, the regular five-minute timer picks the Issue up.
 
 **How long does a delivery take?**
 It depends entirely on the size of the task. Small, well-specified changes finish quickly; large or vague ones take longer and go through more repair rounds.
@@ -62,7 +66,7 @@ A deliberate stop meaning a person has to decide the next step, not a crash. Fix
 ## Limits and cost
 
 **What does it cost?**
-3 merged deliveries free, then Solo (100M tokens a month, one repository) or Pro (300M tokens a month, up to five repositories), billed monthly or yearly. No per-token overage — deliveries pause at the cap instead. Current prices are on the [pricing page](https://orbi.build/cloud/?ref=cloud-docs-faq); see [billing](/billing).
+3 merged deliveries free, then Solo (400M tokens a month, one repository) or Pro (1.2B tokens a month, up to five repositories), billed monthly or yearly. No per-token overage — deliveries pause at the cap instead. Current prices are on the [pricing page](https://orbi.build/cloud/?ref=cloud-docs-faq); see [billing](/billing).
 
 **Do failed deliveries use up my free allowance?**
 No. A delivery that ends blocked or is closed without merging refunds its slot.
@@ -74,18 +78,18 @@ It depends on task size, codebase size and prompt caching. The [pricing page](ht
 Orbi pauses claiming new Issues; their labels stay, and in-flight deliveries finish. Delivery resumes automatically on the 1st of the month (UTC), or immediately when you save your own model key or upgrade. See [limits and quotas](/limits-and-quotas#when-the-monthly-quota-runs-out).
 
 **My quota is draining fast. Why?**
-Check the **Cache hit rate** under **Settings and reference** on the status page. Cache-miss tokens cost about 50× more, so a low rate burns quota much faster.
+Open **Usage and settings** on the status page and look at the **Cached** percentage on the **Monthly AI usage** line. Cached tokens count toward the allowance the same as input and output, so the cached share does not change how fast it drains; a fast drain means the tasks themselves use a lot of tokens.
 
 ## Releases
 
 **Does Orbi release automatically?**
-No, never. You start a release with **Release** in the **Versions** section of the status page, or by opening a Release Issue with the `ai-release` label yourself. See [releases](/releases).
+No, never. You start a release with **Create release task** next to the current version, in the **Versions** part of **Usage and settings** on the status page, or by opening a Release Issue with the `ai-release` label yourself. See [releases](/releases).
 
 **Does it pick the version number?**
 No. You name it — the next version is a product decision Orbi will not make for you.
 
 **Why did my release stop at scope derivation?**
-The scope comes from a milestone titled exactly like the version, and it was missing. Use **Create the milestone and continue** on the status page, or create versions with **Create and start delivery**, which makes the milestone for you.
+The scope comes from a milestone titled exactly like the version, and it was missing. Use **Create the milestone and continue** on the status page, or create versions with **Create and switch**, which makes the milestone for you.
 
 **Do I have to use versions?**
 No. Until you set a delivery scope, every `ai-ready` Issue is picked up. Versions matter once you want to ship in batches. See [releases](/releases#the-delivery-scope).
@@ -116,4 +120,4 @@ Yes. Every merged delivery gets a **Delivery proof** page with **Copy link** and
 It describes what currently ships, not a roadmap. If a page disagrees with what you see, tell us.
 
 **Where do I get help?**
-The Telegram group — **Join the Telegram group for support** in the account menu, or **Telegram group** in the page footer. You can also use **Open a GitHub issue** for anything you are happy to ask in public. Billing questions go to support@orbi.build. See [getting help](/troubleshooting#getting-help).
+The Telegram group — **Join the Telegram group for support** in the account menu, or **Telegram group** in the page footer. You can also use **Report a bug (GitHub, public)** for a bug you are happy to report in public. Billing questions go to support@orbi.build, or use **Email us** in the account menu. See [getting help](/troubleshooting#getting-help).

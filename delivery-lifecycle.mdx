@@ -24,7 +24,7 @@ flowchart LR
 
 ## What each label means
 
-The right-hand column is the chip the status page shows for that label in **Delivery history**.
+The right-hand column is the chip the status page shows for that label in **Task history**.
 
 | Label | Meaning | Status page chip |
 |---|---|---|
@@ -32,12 +32,12 @@ The right-hand column is the chip the status page shows for that label in **Deli
 | `ai-in-progress` | Claimed and running: a workspace exists and a session is writing code. | **In progress** |
 | `ai-pr-opened` | The pull request is open and verified, awaiting the independent review. | **PR under review** |
 | `ai-fix-needed` | The review found something, or the head is not mergeable yet. The next tick resumes the same run, branch and pull request. | **Fix needed** |
-| `ai-merged` | Success. The reviewed commit was merged and the merge confirmed on your base branch. | **Merged** |
+| `ai-merged` | Success. The reviewed commit was merged and the merge confirmed on your base branch. | **Done** |
 | `ai-blocked` | Stopped on purpose. Automatic recovery is not safe, and a person has to decide the next step. | **Blocked** |
 | `ai-awaiting-merge` | The reviewed pull request is delivered and waiting for a maintainer to approve and merge it — usually because branch protection requires an approval. | **Awaiting approval** |
-| `ai-needs-detail` | Orbi could not proceed without more information from you. The comment on the Issue says what is missing; answer it there. | **Needs detail** |
+| `ai-needs-detail` | Orbi could not proceed without more information from you. The comment on the Issue says what is missing. Edit the Issue body to answer it and add `ai-ready` again, or click **Add the details** on the status page and answer on the write-a-request page. | **Needs detail** |
 
-A closed Issue shows **Closed**.
+An Issue closed without a merge shows **Closed**.
 
 Two labels are set by people, never by Orbi:
 
@@ -46,13 +46,13 @@ Two labels are set by people, never by Orbi:
 | `ai-release` | You, to start a release. See [releases](/releases). | — |
 | `ai-human-review` | You, to record that a person confirmed the delivery checklist. Orbi never adds or removes it. | **Needs your confirmation** |
 
-Anything waiting on you — **Blocked**, **Awaiting approval**, **Needs detail**, **Needs your confirmation** — is also pulled to the top of the status page, under **① Needs you** in the **Next** card.
+Anything waiting on you — **Blocked**, **Awaiting approval**, **Needs detail**, **Needs your confirmation** — is also pulled to the top of the status page, into the items that need your attention in the **Next** card.
 
 ## Timing
 
-Orbi works on a timer rather than reacting instantly, so **pickup takes up to five minutes** after you add `ai-ready`. The same tick interval applies to every transition: a delivery that needs a repair round waits for the next tick before resuming.
+After you add `ai-ready`, Orbi usually starts within a minute, and within about five minutes at most: the label wakes the repository's runner right away, and a five-minute timer is the fallback. A delivery that needs a repair round resumes on the next timer tick.
 
-How long a delivery takes after pickup depends entirely on the size of the task. A small, well-specified change can finish in minutes; a large one takes longer and may go through several repair rounds. The status page shows runtime, model requests, tokens and cache use per work item in **Delivery history** once a delivery reports usage.
+How long a delivery takes after pickup depends entirely on the size of the task. A small, well-specified change can finish in minutes; a large one takes longer and may go through several repair rounds. The status page shows the time taken, AI calls and tokens (including cache) per task in **Task history** once a delivery reports usage.
 
 ## The independent review
 

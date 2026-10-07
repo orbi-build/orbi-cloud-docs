@@ -11,15 +11,20 @@ Signing in tells Orbi who you are. The App installation is the separate, revocab
 
 ## Install it
 
-Right after your first sign-in, Orbi shows a **Connect repository** page saying you are signed in but Orbi is not installed on any repository yet. Click **Install Orbi on your repository** there — the same page appears whether you open the status page or the connect page — and you are taken to GitHub's installation screen. (If you started from a sign-up button on orbi.build, you may see that screen straight away.)
+Right after your first sign-in, Orbi shows a **Connect repository** page that says **The Orbi GitHub App is not installed yet.** Until the App is installed, the same page appears whether you open the status page or the connect page. The page states what you need to know before installing: installation is free, and Orbi can only change the GitHub repositories you select. Open **All permissions** for the full list. Click **Install the Orbi GitHub App** and you are taken to GitHub's installation screen. (If you started from a sign-up button on orbi.build, you may see that screen straight away.)
 
-On that screen:
+On GitHub's installation screen:
 
 1. Choose the **account or organization** that owns the repository you want Orbi to work in.
 2. Select **Only select repositories**.
-3. Pick the repository. One small repository is enough to try Orbi; you can add more to the installation later.
+3. Tick only the repository you want to hand to Orbi and click **Install**. One small repository is enough to try Orbi; you can add more to the installation later.
 
-Approve the installation. GitHub returns you to Orbi Cloud, on the [Connect repository](/connect-repository) page.
+GitHub then returns you to Orbi Cloud. You may first see **Confirming the GitHub App installation**, which refreshes every 5 seconds; if it is not done after a minute, click **Select repository**. From there you are on the [Connect repository](/connect-repository) page.
+
+The install page also has two folded sections:
+
+- **Cannot find your repository?**: if the repository belongs to an organization, choose that organization on GitHub's installation screen first. If the button reads **Install and request** or **Request**, an organization administrator has to approve the installation.
+- **No repository on GitHub yet?**: use **Create a repository from Orbi's example** to create one, then come back and install. The example repository also counts toward your repository limit.
 
 <Note>
 Installing on an organization creates a separate Orbi tenant for that organization, with its own subscription and usage. Installing on your personal account creates a personal one. They are not shared.
@@ -27,31 +32,33 @@ Installing on an organization creates a separate Orbi tenant for that organizati
 
 ## What the permissions are for
 
-GitHub shows you the full permission list before you approve. Here is what each one is used for:
+GitHub shows you the full permission list before you approve. On Orbi's install page, **All permissions** summarizes it: in the GitHub repositories you select, read/write access to code, Issues, PRs, GitHub Actions workflows and Actions variables; read access to repository settings, check results and Actions run history; no ability to change repository settings; and read access to your GitHub email address. Here is what each one is used for:
 
 | Permission | Access | Why Orbi needs it |
 |---|---|---|
-| Issues | Read and write | To read the Issue you labelled, add the `ai-*` labels, and post progress and failure comments. On GitHub, labels, comments and milestones all fall under this one permission |
-| Pull requests | Read and write | To open the pull request, comment on it, and merge it once the review is clean |
-| Contents | Read and write | To fetch your repository and push the branch the delivery works on |
-| Checks | Read-only | To read the CI result on a commit at the release and merge gates |
-| Workflows | Read and write | So a delivery that changes a file under `.github/workflows/` is not silently rejected by GitHub |
+| Issues | Read and write | To read the Issue handed to it, add the `ai-*` labels, and post progress and failure comments. On GitHub, labels, comments and milestones all fall under this one permission |
+| Pull requests | Read and write | To open the pull request, comment on it, and merge it once the check passes |
+| Contents | Read and write | To fetch your repository and push the branch the task works on |
+| Checks | Read-only | To read the CI result on a commit before merging and releasing |
+| Actions | Read-only | To read the check results on Orbi's pull requests in private repositories, so it merges only after your CI passes. Without it Orbi cannot see the checks and waits on the merge indefinitely |
+| Workflows | Read and write | So a task that changes a file under `.github/workflows/` is not silently rejected by GitHub |
 | Variables | Read and write | To sync the repository variable the triage workflow reads |
-| Administration | Read and write | Used only when registering a deploy key for a brand-new environment; skipped once the environment is keyed |
+| Administration | Read-only | To read repository settings such as branch protection rules, so the connect page can warn you when a rule would block merges. It cannot change repository settings |
+| Email addresses | Read-only | An account-level permission to read your GitHub email address |
 
-These are the permissions that let an agent do the job you are asking it to do: write code on a branch, open a pull request, and merge it after review. If your organization's policy does not permit granting write access to pull requests and contents, Orbi Cloud cannot deliver into that repository.
+These are the permissions that let an agent do the job you are asking it to do: write code on a branch, open a pull request, and merge it after the check. If your organization's policy does not permit granting write access to pull requests and contents, Orbi Cloud cannot deliver into that repository.
 
 ## Changing which repositories are covered
 
-The App installation decides which repositories Orbi can **see**; connecting a repository decides which ones it **works in**. How many you can connect at once depends on your plan — see [limits and quotas](/limits-and-quotas). If your target repository is not offered on the connect page, the App was installed without it.
+The App installation decides which repositories Orbi can **see**; connecting a repository decides which ones it **works in**. How many you can connect at once depends on your plan. See [limits and quotas](/limits-and-quotas). If your target repository is not offered on the connect page, the App was installed without it.
 
-To fix that, open GitHub's App settings — **Cannot find your repository?** on the connect page has a **Manage App authorization** link straight there — and add the repository to the installation. Then return to Orbi Cloud and reload the connect page.
+To fix that, open **Cannot find your repository?** on the connect page and follow its **GitHub App settings** link. Under **Repository access**, add the repository and click **Save**. GitHub does not send you back to Orbi afterwards, so return to Orbi Cloud and refresh the connect page.
 
 ## Revoking
 
-Uninstall the Orbi GitHub App from GitHub at any time: **Settings → Applications → Installed GitHub Apps → Orbi → Configure → Uninstall** (for an organization, the same path under the organization's settings).
+Uninstall the Orbi GitHub App from GitHub at any time: in GitHub's Settings → Applications → Installed GitHub Apps, find Orbi, click Configure, then Uninstall (for an organization, the same path under the organization's settings).
 
-Uninstalling immediately removes Orbi's access to your code. The status page detects it, says **The GitHub App was uninstalled**, and offers **Reinstall the Orbi GitHub App**.
+Uninstalling immediately removes Orbi's access to your code. The status page detects it: the headline becomes **Orbi is stuck and needs you**, the card says **The GitHub App was uninstalled**, and it offers a **Reinstall the Orbi GitHub App** button.
 
 <Note>
 Uninstalling the App does not cancel a subscription. Cancel that separately through [billing](/billing).
@@ -59,4 +66,4 @@ Uninstalling the App does not cancel a subscription. Cancel that separately thro
 
 ## If you reinstall
 
-Reinstalling the App on the same account reconnects it to your existing tenant — your delivery history and settings are still there. You may need to reconnect your repository afterwards; the status page tells you when that is the case.
+Reinstalling the App on the same account reconnects it to your existing tenant. Your task history and settings are still there. You may need to reconnect your repository afterwards; the status page tells you when that is the case.
