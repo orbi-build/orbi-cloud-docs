@@ -73,7 +73,7 @@ npx mint@4.2.890 validate
 
 The images in `images/` are captured from the application, not mocked up. They are produced against a local instance seeded with fixture tenants, so no real customer data appears in any of them.
 
-Re-capture them after a user-visible UI change, so the documentation does not drift from the product. English pages use `images/`, Chinese pages use `images/zh/`, captured with the product's own Chinese interface. The last full re-capture was on 2026-09-26, after the status page redesign (top bar with account menu, **Next** card, delivery history, folded **Settings and reference**).
+Re-capture them after a user-visible UI change, so the documentation does not drift from the product. English pages use `images/`, Chinese pages use `images/zh/`, captured with the product's own Chinese interface. All of them come from `docs-shots.mjs` in orbi-cloud (`node docs-shots.mjs --locale zh --out ../orbi-cloud-docs/images/zh`, then `--locale en`); a picture that is not in that script will be missed on the next re-capture, so add it there rather than capturing it by hand. The last full re-capture was on 2026-10-07, against orbi-cloud v0.7.12 (Write a request, the What's new line, and the renamed status page sections such as **Usage and settings** and **Task history**).
 
 ## Contributing
 

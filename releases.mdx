@@ -13,54 +13,55 @@ A release is not a development task. There is no model session and no pull reque
 
 ## Versions on the status page
 
-Open **Settings and reference** on the status page and find **Versions**. (With several repositories, each repository's own view has its versions.)
+Open **Usage and settings** on the status page and find **Versions**. (With several repositories, each repository's own view has its versions.) Versions are shown on paid plans only.
 
-<Frame caption="Versions: the current delivery scope, unreleased versions and the New version box">
-  <img src="/images/status-versions.png" alt="Versions: the current delivery scope, unreleased versions and the New version box" />
+<Frame caption="Versions: the current version, unreleased versions and the New version box">
+  <img src="/images/status-versions.png" alt="Versions: the current version, unreleased versions and the New version box" />
 </Frame>
 
 A version is a GitHub milestone whose title is the version number, like `v1.2.3`. The section shows:
 
-- **Current delivery scope** — the version Orbi is working towards, or **Not set**. **View on GitHub** opens your repository's milestones.
-- **Unreleased versions** — your open version milestones, with how many open Issues each has and two actions: **Start delivery** and **Release**. The current one is marked **Delivery in progress** and offers **Create release Issue**.
-- **New version** — type a version and click **Create and start delivery**.
-- **Guide** — a short folded explanation of the buttons.
+- **Current version:** the version Orbi is working towards, or **Not set (works on every task handed to Orbi)**. **View on GitHub** opens the milestone, or your repository's milestones when none is set.
+- **Unreleased versions**: your open version milestones, with their **Open Issues** count. Other versions offer **Switch to this version**. The current one is marked **Current version** and offers **Create release task**, or **View release task** once it exists. With no open milestones this reads **No open versions**.
+- **New version**: type a version and click **Create and switch**.
+- **Guide**: a short folded explanation of the buttons.
 
 ### The delivery scope
 
-The delivery scope is how you tell Orbi which version you are working on. While a scope is set, Orbi only picks up `ai-ready` Issues that belong to that version's milestone. An `ai-ready` Issue outside it waits, and the status page says **Orbi is standing by; an Issue is outside the current delivery scope**, offering to move the Issue into the current version or to switch the scope.
+The delivery scope is the version shown as **Current version:**. It is how you tell Orbi which version you are working on. While one is set, Orbi only picks up `ai-ready` Issues that belong to that version's milestone. An `ai-ready` Issue outside it waits, and the status page says **A task is not in the current version and will not start yet**, offering **Move to version** (the current one) or **Switch to version** (the one the Issue belongs to).
 
-While no scope is set, every `ai-ready` Issue is eligible. You do not need versions at all to use Orbi — they only matter once you want to ship in batches.
+While no version is set, every `ai-ready` Issue is eligible. You do not need versions at all to use Orbi; they only matter once you want to ship in batches.
 
 | Button | What it does |
 |---|---|
-| **Create and start delivery** | Creates the milestone for the version you typed on GitHub and switches the delivery scope to it. It does not open a release Issue |
-| **Start delivery** | Switches the delivery scope to that version |
-| **Release** / **Create release Issue** | Opens a **Release vX** Issue in your repository, labelled `ai-ready` and `ai-release`, and switches the delivery scope to that version |
+| **Create and switch** | Creates the milestone for the version you typed on GitHub and makes it the current version. It does not create a release task |
+| **Switch to this version** | Makes that version the current version |
+| **Create release task** | Opens a **Release vX** Issue in your repository, labelled `ai-ready` and `ai-release`, and makes that version the current version |
 
 Version numbers must be a leading `v` followed by dot-separated numbers, such as `v1.2.3`; anything else is rejected before anything is changed on GitHub.
 
 ## Cut a release
 
-When the work for a version is in, click **Release** (or **Create release Issue** on the current version).
+When the work for a version is in, make it the current version with **Switch to this version** if it is not already, then click **Create release task** on its row.
 
-Orbi opens the Release Issue. The release waits until the version's other Issues are finished, then updates the version number, tags, publishes the GitHub Release, and closes the Issue once the release is published.
+Orbi opens the Release Issue. The release waits for the version's in-progress tasks to finish (up to 30 minutes per attempt; past that it stops and says why), then updates the version number, tags, publishes the GitHub Release, and closes the Issue once the release is published. If your repository has a version file, the version change is merged into your project; whether your website changes depends on how it is deployed.
 
 ### The milestone requirement
 
-The release scope comes from **the milestone whose title is exactly the version** — so `v1.2.3` needs a milestone called `v1.2.3`. Creating a version with **Create and start delivery** creates that milestone for you; if you write a release Issue by hand, make sure the milestone exists.
+The release scope comes from the milestone whose title is exactly the version, so `v1.2.3` needs a milestone called `v1.2.3`. **Create and switch** and **Create release task** both create that milestone for you if it does not exist; if you write a release Issue by hand, make sure the milestone exists.
 
 If a release stops because the milestone is missing, the blocked Issue on the status page offers **Create the milestone and continue**.
 
-### If the release request reports an error
+### If creating a release task or switching versions reports an error
 
 | What it says | Cause | Fix |
 |---|---|---|
-| The version is not valid | The version is not `vN.N…` | Retype it, for example `v1.2.3` |
-| The repository is not connected to the current account | The repository was deactivated or belongs to another account | [Connect it](/connect-repository) |
-| The delivery scope was not changed — check the GitHub App's Contents write permission | Orbi could not write to the repository | Check the App's permissions; reinstall it if needed |
-| GitHub error | GitHub could not be reached | Retry |
-| The repository root could not be read right now (GitHub API error), so no Release Issue was created | GitHub did not answer when Orbi checked the repository | Retry later |
+| **That version number is not valid: use a number starting with v, for example v1.2.3.** | The version is not `vN.N…` | Retype it, for example `v1.2.3` |
+| **No connected repository: connect one first, then cut a release.** | No repository is connected to this account | [Connect one](/connect-repository) |
+| **The repository root could not be read right now (GitHub API error), so no Release Issue was created; please retry later.** | GitHub did not answer when Orbi looked for the version file | Retry later |
+| **GitHub did not respond, so the Release Issue was not created; please retry later.** | GitHub could not be reached | Retry later |
+| **This repository is not connected to the current account. The delivery scope was not changed.** | When switching versions: the repository was disconnected or belongs to another account | [Connect it](/connect-repository) |
+| **The repository delivery scope was not changed, and the control plane was not changed either. Check the GitHub App's Contents write permission and try again.** | When switching versions: Orbi could not write to the repository | Check the App's permissions; reinstall it if needed |
 
 ### The version file
 
@@ -91,7 +92,7 @@ The gates run in order, and a gate that cannot be checked counts as failed.
 
 **The base is frozen first.** The release commit is exactly the tip of your base branch at claim time; everything after this is evaluated against that one commit.
 
-**No unfinished work in the release's milestone.** If any Issue in it is still `ai-in-progress`, `ai-pr-opened` or `ai-fix-needed`, the release stops. Open pull requests are deliberately *not* a gate — an open pull request is queue state, not a statement about the release.
+**No unfinished work in the release's milestone.** If any Issue in it is still `ai-in-progress`, `ai-pr-opened` or `ai-fix-needed`, the release waits for it, up to 30 minutes; if it is still unfinished then, the release stops and says why. Open pull requests are deliberately *not* a gate — an open pull request is queue state, not a statement about the release.
 
 **CI must be green on the release commit.** This is the test acceptance, and it is the part worth understanding properly:
 

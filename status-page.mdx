@@ -9,103 +9,118 @@ The status page at **[orbi.build/api/](https://orbi.build/api/)** is where you s
 
 It is ordered by what you need to do, not by feature. From top to bottom:
 
-1. The **top bar** — the Orbi logo and **Orbi Cloud** on the left (it always brings you back here), your avatar and the account menu on the right.
-2. **Next** — what is happening and the one thing you should do now.
-3. The **repository overview** — one row per connected repository.
-4. **Delivery history** — every piece of work, in three tabs.
-5. **Settings and reference** — usage, repositories and versions, folded away until you open it.
-6. The **footer** — where to get help, then service status, privacy, terms and GitHub.
+1. The **top bar**: the Orbi logo and **Orbi Cloud** on the left (it always brings you back here), your avatar and the account menu on the right.
+2. The **title and What’s new**: under the **Orbi Cloud Status** title, a **What’s new** line names the latest feature and links to how to use it.
+3. **Next**: what is happening and the one thing you should do now.
+4. The **project overview**: one row per connected project.
+5. **Task history**: every task, in three tabs.
+6. **Usage and settings**: usage, connected projects and versions, folded away until you open it.
+7. The **footer**: where to get help, then service status, privacy, terms and GitHub.
 
-<Frame caption="The status page for an account with work in progress and one blocked Issue">
-  <img src="/images/status-active.png" alt="The status page for an account with work in progress and one blocked Issue" />
+<Frame caption="The status page for an account with tasks in progress and one stuck task">
+  <img src="/images/status-active.png" alt="The status page for an account with tasks in progress and one stuck task" />
 </Frame>
 
 ## Next
 
 The **Next** card is the part of the page to read first. It holds, in order:
 
-- **Setup progress** — the seven onboarding steps (see below). Once all seven are done it folds into **Setup complete · 7/7**.
-- A **headline** — a one-line summary of your account's state.
-- **① Needs you** or **① Action reminders** — the items waiting on you, each with the button that deals with it. When nothing needs you, this part is absent; that is good news.
-- **Pick one for Orbi to try** — when Orbi is idle, a starter Issue and your unlabelled Issues, each with **Try →**. See [first Issue](/first-issue#dispatching-from-the-status-page).
-- The page's one solid button, when there is an obvious next action — for example **Create Issue** when Orbi has finished and is waiting for more work.
+- **Setup progress**: the seven onboarding steps (see below).
+- A **headline**: a one-line summary of your account's state.
+- The items waiting on you, under a count such as **1 item needs your attention** or **1 reminder**, each with the button that deals with it. When nothing needs you, this part is absent; that is good news.
+- **Your existing Issues**: after you connect a repository and before your first delivery finishes, Orbi lists up to three open Issues from your repository that it has not been given yet, under **Pick an existing Issue to hand to Orbi.**, each with a **Let Orbi do this** button. See [first Issue](/first-issue#dispatching-from-the-status-page).
+- **Write a request**: say what you want changed, Orbi writes it up as a draft, and you click **Hand off to Orbi** when it looks right. See [Write a request](/write-a-requirement). When Orbi has finished and is waiting for more work, **Create an Issue on GitHub** sits next to it.
+- **Pick one for Orbi to try**: once you have had a delivery, this appears while Orbi is idle, listing a small starter task and the Issues you have not handed to Orbi, each with **Try →**.
+
+<Frame caption="An account with no deliveries yet: the Next card lists existing Issues, each with a Let Orbi do this button">
+  <img src="/images/status-ready-issues.png" alt="An account with no deliveries yet: the Next card lists existing Issues, each with a Let Orbi do this button" />
+</Frame>
 
 ### Headlines
 
 | Headline | What it means |
 |---|---|
 | **Connect a repository first** | No repository is connected yet |
-| **Orbi is preparing the environment** | [Provisioning](/provisioning) is running; usually one to two minutes |
-| **Provisioning failed; the platform will retry automatically** | Provisioning failed for a transient reason; Orbi retries on its own |
-| **Provisioning failed; the platform is recovering automatically** | A platform-side failure; no action needed — see [provisioning](/provisioning#when-provisioning-fails) |
-| **Orbi is waiting for your first Issue** | Ready. Label an Issue `ai-ready`, or use **Try →** |
-| **Orbi is coding** | A delivery is in progress |
-| **Orbi is reviewing PR #N and will merge it when it passes** | The independent review is running |
-| **PR #N needs your approval** | Branch protection requires an approval before merge — see [branch protection](/connect-repository#branch-protection-that-blocks-every-merge) |
+| **Orbi is preparing the work environment** | A newly connected repository's [work environment is being prepared](/provisioning); usually a few minutes |
+| **Work environment preparation failed; Orbi will retry automatically** | Preparation failed for a transient reason; Orbi retries on its own |
+| **Work environment preparation failed (on Orbi's side)** | A platform-side failure; no action needed. See [preparing the work environment](/provisioning#when-provisioning-fails) |
+| **Orbi is waiting for your first request** | Ready. Hand over an existing Issue with **Let Orbi do this**, or use **Write a request** |
+| **Orbi is coding** | A task is being worked on |
+| **A task is waiting for other tasks to finish first** | A task is queued behind the Issues it depends on |
+| **A task has been waiting for over 10 minutes** | A task was handed to Orbi more than 10 minutes ago and has not been picked up |
+| **A task is not in the current version and will not start yet** | A task is outside the current version, so Orbi will not start it for now (free accounts see **A task will not start yet**) |
+| **Orbi is checking the change #N and merges it into your project when it passes** | The independent check is running |
+| **You need to approve this change on GitHub** | Branch protection requires an approval before merge. See [branch protection](/connect-repository#branch-protection-that-blocks-every-merge) |
 | **Orbi needs your confirmation** | A result is waiting for a human to confirm it |
-| **Orbi is stuck and needs you** | An Issue is blocked, or something on your side needs fixing; the item under **① Needs you** says which |
-| **Orbi is standing by** | Nothing is running; an Issue may be waiting outside the current delivery scope, or need your attention |
-| **Orbi is idle** | Everything is finished; Orbi is waiting for the next Issue |
-| **Can't reach Orbi right now** | Orbi could not read your delivery state at the moment; the card offers a refresh or a reconnect |
+| **Orbi is stuck and needs you** | A task is stuck, or something on your side needs fixing; the item under it says which |
+| **Orbi is done. Waiting for your next request** | Everything is finished; Orbi is waiting for the next task |
+| **Can't reach Orbi right now** | Orbi could not read your task state at the moment; the card offers **Refresh status page** or **Reconnect repository** |
+| **Monthly AI usage is used up; new tasks are paused** | A paid account has used this month's AI usage; see below |
 
-Two situations replace the headline's usual button with their own way out:
+Two situations put their own way out in the items waiting on you:
 
-- **Your 3 free deliveries are used up** — with a **Subscribe** button. See [billing](/billing).
-- **Monthly quota exhausted** — Orbi pauses claiming new Issues, while deliveries already running finish normally. The card offers **Connect your own model key**, and on Solo also an upgrade to Pro. See [limits and quotas](/limits-and-quotas#when-the-monthly-quota-runs-out).
+- **Free runs used up**: the card has a **Subscribe** button. See [billing](/billing).
+- **A paid account's monthly AI usage used up**: Orbi pauses new tasks, while tasks already running finish normally. The card offers **Use your own API key**, and on Solo also an upgrade to Pro; otherwise usage resets automatically on the 1st of next month at 8:00 Beijing time. See [limits and quotas](/limits-and-quotas#when-the-monthly-quota-runs-out).
 
-<Frame caption="The Next card after the free deliveries are used up">
-  <img src="/images/status-free-exhausted.png" alt="The Next card after the free deliveries are used up" />
+<Frame caption="The Next card after the free runs are used up">
+  <img src="/images/status-free-exhausted.png" alt="The Next card after the free runs are used up, with a Subscribe button" />
 </Frame>
 
 ### Setup progress
 
-Seven steps track onboarding: **Sign in → Install App → Connect repository → Provision environment → First Issue → Cut a release → Subscribe**. Each step is marked **✓ Done**, **Waiting for you**, **System is working** or **Failed**; the current one is highlighted and has a **How to do this step ▶** link that plays a short video of that step. For accounts still on the free deliveries, the last step reads **Subscribe after your 3 free deliveries**, with a folded **Pricing and account** note.
+Seven steps track onboarding: **Sign in** → **Install GitHub App** → **Connect repository** → **Prepare work environment** → **Write your first request** → **Create Release** → **Subscribe**. A finished step is marked **Done**; the current one is highlighted, marked **Waiting for you**, **Orbi is working** or **Failed**, and has a **How to do this step ▶** link that plays a short video of that step. If preparing the work environment fails, that step also shows how to contact us.
+
+When it is the current step, step 6, **Create Release**, is marked **Optional**; skipping it does not affect Orbi's tasks. For accounts still on the free runs, the last step reads **First 3 free**, with a folded **Pricing and account** note. Once the required steps are done and you have had a delivery, the whole list folds into **All done**.
 
 <Frame caption="A brand-new account, waiting for its first repository">
   <img src="/images/status-new-tenant.png" alt="A brand-new account, waiting for its first repository" />
 </Frame>
 
-## Repository overview
+## Project overview
 
-A table headed **Repository N / limit M**, with a **Manage repositories** button that opens the connect page (add or deactivate repositories there), and one row per connected repository: how many of its Issues are **In progress**, **Under review** and **Done**. A row that needs attention carries a chip — **Needs you**, **Retrying automatically** or **Platform recovering**.
+A table headed **Project N / limit M**, with a **Manage projects** button that opens the connect page (add or disconnect projects there), and one row per connected project: how many of its tasks are **In progress**, **Under review** and **Done**. A row that needs attention carries a chip: **Needs you**, **Retrying automatically** or **On Orbi's side**.
 
-With more than one repository, click a row to open that repository's own view: its base branch and current delivery scope, **View on GitHub** and **Create Issue**, what is happening in it now, its delivery history, its versions, and **Deactivate this repository**. See [more than one repository](/connect-repository#more-than-one-repository).
+With more than one project, click a row to open that project's own view: its base branch, **View on GitHub** and **Create an Issue on GitHub**, **Current status**, its **Task history**, and on paid accounts its current version and **Versions**. See [more than one repository](/connect-repository#more-than-one-repository).
 
-## Delivery history
+## Task history
 
-Your work, split across three tabs. Each Issue appears in exactly one of them:
+Your tasks, split across three tabs. Each task appears in exactly one of them:
 
 | Tab | What is in it |
 |---|---|
-| **In progress** | Open work that has no pull request yet — queued, being coded, waiting for detail, or blocked before a pull request was opened |
-| **Under review** | Open work that has a pull request — going through the independent review, being repaired, waiting for your approval, or blocked after its pull request was opened |
-| **Done** | Finished work: merged, or closed |
+| **In progress** | Open tasks that have no pull request yet: queued, being coded, waiting for detail, or stuck before a pull request was opened |
+| **Under review** | Open tasks that have a pull request: going through the independent check, being revised after it, waiting for your approval, or stuck after the pull request was opened |
+| **Done** | Finished tasks: merged, or closed |
 
-Each row shows the Issue (linking to GitHub), a status chip, its pull request and when it was last updated. Under the title you see its usage once the delivery reports it — runtime, model requests, input and output tokens, cache use — and, for queued work, **Queued** or **Waiting for a prerequisite Issue**.
+The columns are **Task**, **Status**, **Change** and **Updated**. The task links to the Issue on GitHub and the change links to its pull request. Once a task reports usage, a line under its title shows **Took**, **AI calls**, the token total (split into input, output and cache) and, if the run was interrupted, how many times it **Resumed**. A queued task also notes that it starts after the current one, or which Issues it is waiting on.
 
-The chips map to the labels described in [the delivery lifecycle](/delivery-lifecycle#what-each-label-means): **Queued**, **In progress**, **PR under review**, **Fix needed**, **Awaiting approval**, **Needs detail**, **Needs your confirmation**, **Blocked**, **Merged**, **Closed**. Open the Issue to see the reason and the next step in Orbi's comment.
+The status chips map to the `ai-*` labels described in [the delivery lifecycle](/delivery-lifecycle#what-each-label-means): **Queued**, **In progress**, **PR under review**, **Fix needed**, **Awaiting approval**, **Needs detail**, **Needs your confirmation**, **Blocked**, **Done**, **Closed**. Open the Issue to see the reason and the next step in Orbi's comment.
 
-## Settings and reference
+## Usage and settings
 
-Folded by default — click **Settings and reference** to open it.
+Folded by default: click **Usage and settings** to open it. It opens by itself when preparing the work environment failed, so the reason is in view.
 
-<Frame caption="Settings and reference, opened: monthly usage, the connected repository and versions">
-  <img src="/images/status-settings.png" alt="Settings and reference, opened: monthly usage, the connected repository and versions" />
+<Frame caption="Usage and settings, opened: monthly AI usage, connected projects and versions">
+  <img src="/images/status-settings.png" alt="Usage and settings, opened: monthly AI usage, connected projects and versions" />
 </Frame>
 
-**Monthly usage.** One line: tokens used this calendar month against your plan's allowance, the percentage used, and the **Cache hit rate**, with a bar that turns amber at 80% and red at 100%. With your own model key it reads **Monthly usage (your key)** and has no limit. A low cache hit rate is worth noticing: cache-miss tokens cost about 50 times more than cache hits, so they use up the allowance much faster. See [limits and quotas](/limits-and-quotas).
+**Monthly AI usage.** The **Monthly AI usage** line shows the tokens used this month and the **Cached** share. Paid accounts also see the plan's allowance, the **Used** percentage and **resets on the 1st at 8:00 Beijing time**, with a bar that turns amber at 80% and red at 100%. Free accounts have no monthly limit and see only what they used. With your own API key configured, usage that ran on your key gets its own line, **Monthly AI usage (your API key)**. Cached tokens count toward the allowance the same as input and output tokens, so the cached share does not change how fast it is used. See [limits and quotas](/limits-and-quotas).
 
-**Connected repository.** Each repository with its **Base branch** and **Provisioning status** — and, when provisioning failed, the reason, the time, a **Request ID** and the next step. Repositories you disconnected are listed under **Historical repositories** with their history intact.
+**Connected projects.** Each project with its **Base branch** and **Preparation status** (**Provisioned**, **Provisioning** or **Provisioning failed**); when preparation failed, it also shows **Reason:**, **Time:**, **Error ID:** and **Next:**. Projects you disconnected are listed in the folded **Disconnected projects** section.
 
-**Versions.** The current delivery scope, your unreleased versions with **Start delivery** and **Release** actions, and a **New version** box. See [releases](/releases).
+<Frame caption="When preparing the work environment fails, Usage and settings opens with the reason, time, error ID and next step under Connected projects">
+  <img src="/images/status-provision-failed.png" alt="When preparing the work environment fails, Usage and settings opens with the reason, time, error ID and next step under Connected projects" />
+</Frame>
 
-For accounts on the free deliveries, a **Founding-member offer** note can also appear here after the first merged delivery.
+**Versions.** Shown here only on paid accounts with one connected project. It holds **Current version:**, **Unreleased versions** (each with **Switch to this version**, and the current one with **Create release task** or **View release task**), a **New version** box with a **Create and switch** button, and a folded **Guide**. See [releases](/releases).
+
+For accounts on the free runs, a **Founding-member offer** note can also appear here after the first merged delivery.
 
 ## The account menu and the footer
 
-Subscription, **Model config**, language, support, these docs and **Sign out** are all in the account menu under your avatar — see [the account menu](/sign-in#the-account-menu).
+Subscription, **AI model settings**, language, support, these docs and **Sign out** are all in the account menu under your avatar. See [the account menu](/sign-in#the-account-menu).
 
-The footer on every page has two lines. The first is **Need help?** followed by the **Telegram group**, **Open a GitHub issue** and support@orbi.build; the second links to **Status** (the service status page), **Privacy**, **Terms** and **GitHub**.
+The footer on every page has two lines. The first is **Need help?** followed by the **Telegram group**, **Report a bug (GitHub, public)** and support@orbi.build; the second links to **Status** (the service status page), **Privacy**, **Terms** and **GitHub**.
 
 ## On a phone
 
@@ -117,6 +132,6 @@ The page is designed to work at phone width; the tables reflow rather than scrol
 
 ## Refreshing
 
-The page refreshes itself while provisioning is running, so you can leave it open during that minute or two. Otherwise reload it to get the current state — it reads GitHub live, so what it shows is the real state of your Issues, not a cached copy.
+The page refreshes itself while the work environment is being prepared, so you can leave it open during those few minutes. Otherwise reload it to get the current state. It reads GitHub live, so what it shows is the real state of your Issues, not a cached copy.
 
-If Orbi cannot reach GitHub at the moment, the page says **Can't reach Orbi right now** or that delivery data is temporarily unavailable, rather than showing you a misleading empty list.
+If Orbi cannot reach GitHub at the moment, the page says **Can't reach Orbi right now** rather than showing you a misleading empty list.

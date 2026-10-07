@@ -6,7 +6,7 @@ description: "Orbi Cloud 是什么，我能从它这里得到什么?"
 
 Orbi Cloud 是一个托管 runner，把打上标签的 GitHub Issue 变成经过测试、独立评审、已合并的拉取请求，跑在 Orbi 运维的基础设施上。
 
-你继续在 GitHub 里工作。你在自己的仓库建一张 Issue、打上 `ai-ready` 标签；Orbi Cloud 认领它，在隔离的工作区写代码，跑你的测试套件，提交拉取请求，再用另一个会话评审这个 PR，修掉评审发现的问题，然后合并**评审过的那个 commit**。Issue、PR 和发版证据全部留在你的仓库里。没有第二套工作台要适应，也没有新密码要记。
+你继续在 GitHub 里工作。你在自己的仓库建一张 Issue、打上 `ai-ready` 标签（也可以在状态页点「写需求」，用一句话说要改什么，Orbi 写好 Issue 草稿后由你交给它）。Orbi Cloud 认领它，在隔离的工作区写代码，跑你的测试套件，提交拉取请求，再用另一个会话评审这个 PR，修掉评审发现的问题，然后合并**评审过的那个 commit**。Issue、PR 和发版证据全部留在你的仓库里。没有第二套工作台要适应，也没有新密码要记。
 
 Orbi Cloud 跑的是和自托管 [Orbi](https://orbi.build/?ref=cloud-docs-index) 同一套交付引擎，引擎是开源的。区别只在于谁来运维 runner：用 Cloud，Orbi 来运维。
 
@@ -16,12 +16,12 @@ Orbi Cloud 跑的是和自托管 [Orbi](https://orbi.build/?ref=cloud-docs-index
 
 ```mermaid
 flowchart TD
-  subgraph setup["开通 —— 只做一次"]
+  subgraph setup["开通（只做一次）"]
     direction LR
-    s1["1 用 GitHub<br/>登录"] --> s2["2 安装<br/>GitHub App"] --> s3["3 连接一个<br/>仓库"] --> s4["4 开通环境<br/>约 1–2 分钟"]
+    s1["1 用 GitHub<br/>登录"] --> s2["2 安装<br/>GitHub App"] --> s3["3 连接一个<br/>仓库"] --> s4["4 准备工作环境<br/>几分钟"]
   end
 
-  subgraph work["每份工作 —— 你打标签，Orbi 交付"]
+  subgraph work["每份工作：你打标签，Orbi 交付"]
     direction LR
     w1["5 你给 Issue<br/>打 ai-ready"] -.-> w2["Orbi 写代码<br/>ai-in-progress"] --> w3["提交 PR<br/>ai-pr-opened"] --> w4{"独立评审"}
     w4 -->|干净| w5["已合并<br/>ai-merged"]
@@ -29,7 +29,7 @@ flowchart TD
     w4 -->|无法安全修复| w7["停下等你<br/>ai-blocked"]
   end
 
-  subgraph rel["发版 —— 只在你发话时"]
+  subgraph rel["发版（只在你发话时）"]
     direction LR
     r1["6 你发起<br/>一次发版"] -.-> r2["过门禁、等 CI<br/>bump、打 tag"] --> r3["发布 Release<br/>关闭 milestone"]
   end
@@ -39,7 +39,7 @@ flowchart TD
 
 两条虚线箭头就是你要扳的两个开关：`ai-ready` 标签，和发版。这两个 Orbi 都不会替你扳。
 
-状态页也按这条路径带你走。它的**开通进度**列表有七步，就是上面六步再加上**订阅**，并标出正在等你的那一步。
+状态页也按这条路径带你走。它的「开通进度」列表有七步，就是上面六步再加上「订阅」，并标出正在等你的那一步。
 
 ## 你实际要做的事
 
@@ -51,10 +51,10 @@ flowchart TD
     你来选 runner 可以在哪些仓库里工作，随时可以在 GitHub 上撤销。
   </Card>
   <Card title="连接一个仓库" href="/zh/connect-repository">
-    选好仓库和基础分支。Orbi 为它开通运行环境，通常一到两分钟。
+    选好仓库和基础分支。Orbi 为它准备工作环境，需要几分钟。
   </Card>
   <Card title="给 Issue 打 `ai-ready`" href="/zh/first-issue">
-    这个标签就是执行开关。不知道先试什么？状态页可以替你建一张小的入门 Issue。
+    这个标签就是执行开关。第一次交付前，状态页会列出你已有的 Issue，点「让 Orbi 做这个」就替你打上；「写需求」能把一句话写成 Issue。
   </Card>
 </CardGroup>
 
@@ -79,9 +79,9 @@ flowchart LR
 
 前 **3 次合并的交付免费**，不用绑卡，也不用订阅。失败的交付不消耗这个额度。
 
-之后有两个付费档：**Solo** 和 **Pro**。两档的价格里都含模型用量：Solo 每月 1 亿（100,000,000）tokens、一个仓库；Pro 每月 3 亿（300,000,000）tokens、最多五个仓库。没有按 token 的超额计费：当月额度用完后，新的交付暂停，直到下个月，或者直到你配上自己的模型 key。
+之后有两个付费档：**Solo** 和 **Pro**。两档的价格里都含模型用量：Solo 每月 4 亿（400,000,000）tokens、一个仓库；Pro 每月 12 亿（1,200,000,000）tokens、最多五个仓库。没有按 token 的超额计费：当月额度用完后，新的交付暂停，直到下个月，或者直到你配上自己的模型 key。
 
-当前价格、按年付费的选项，以及正在进行的创始会员优惠，见[价格页](https://orbi.build/cloud/?ref=cloud-docs-index)。订阅怎么操作见[账单](/zh/billing)，额度怎么计见[额度与限制](/zh/limits-and-quotas)。
+当前价格、按年付费的选项，以及正在进行的创始会员优惠，见[价格页](https://orbi.build/cloud/?ref=cloud-docs-index)。订阅怎么操作见[付费](/zh/billing)，额度怎么计见[额度与限制](/zh/limits-and-quotas)。
 
 ## Orbi Cloud 不做的事
 

@@ -11,13 +11,13 @@ Orbi Cloud 没有自己的密码。你的 GitHub 账号就是你的身份，仓�
 
 ## 登录
 
-打开 **[orbi.build/api/](https://orbi.build/api/)**，点 **使用 GitHub 登录** (Sign in with GitHub)。
+打开 **[orbi.build/api/](https://orbi.build/api/)**，点「使用 GitHub 登录」。
 
-<Frame caption="Orbi Cloud 登录页">
-  <img src="/images/zh/signin.png" alt="Orbi Cloud 登录页" />
+<Frame caption="Orbi Cloud 登录页，带「使用 GitHub 登录」按钮">
+  <img src="/images/zh/signin.png" alt="Orbi Cloud 登录页，带「使用 GitHub 登录」按钮" />
 </Frame>
 
-GitHub 会给你它标准的授权页。批准之后你会回到 Orbi Cloud：回到你本来要去的页面；如果还没装 App，就到一个提供 **把 Orbi 装到你的仓库** (Install Orbi on your repository) 的页面。
+GitHub 会给你它标准的授权页。批准之后你会回到 Orbi Cloud：回到你本来要去的页面；如果还没装 App，就到一个带「安装 Orbi 的 GitHub App」按钮的页面。
 
 登录只申请一个 OAuth scope，`user:email`：你的身份和你的邮箱地址，仅此而已。它不会给出任何仓库的代码或 Issue 的访问权限。那些来自 GitHub App 的安装，单独授权，也单独列出自己的权限。
 
@@ -30,46 +30,47 @@ GitHub 会给你它标准的授权页。批准之后你会回到 Orbi Cloud：�
 登录之后，Orbi Cloud 每个页面的右上角都有你的 GitHub 头像和登录名。点它打开账户菜单：
 
 <Frame caption="从右上角头像打开的账户菜单">
-  <img src="/images/zh/account-menu.png" alt="从右上角头像打开的账户菜单" />
+  <img src="/images/zh/account-menu.png" alt="从右上角头像打开的账户菜单，有语言切换、「管理订阅」「AI 模型设置」和支持入口" />
 </Frame>
 
 | 菜单项 | 作用 |
 |---|---|
-| 你的登录名和套餐 | 显示你以哪个账号登录、它的套餐是什么：**未订阅**、**Solo**、**Pro** 等 |
-| **🇨🇳 ZH** 和 **🇺🇸 EN** | 切换界面语言 |
-| **管理订阅** 或 **订阅 Orbi Cloud** | 打开 Stripe 账单门户，或者开始订阅，见[账单](/zh/billing) |
-| **模型配置** | 你自己的模型 key（如果你用的话），见[模型配置](/zh/model-configuration) |
-| **加入 Telegram 群获取技术支持** | 技术支持群，见[获取帮助](/zh/troubleshooting) |
-| **在 GitHub 提 Issue** | 在 GitHub 上开一个公开的 Issue 提问或报 bug，正文里会提醒你别贴密钥 |
-| **查看使用文档** | 就是这些页面 |
-| **退出登录** | 让这台设备退出登录 |
+| 你的登录名和套餐 | 显示你以哪个账号登录、它的套餐是什么：「未订阅」「Solo」「Pro」等 |
+| 🇨🇳 ZH 和 🇺🇸 EN | 切换界面语言 |
+| 「管理订阅」或「订阅 Orbi Cloud」 | 打开 Stripe 账单门户，或者开始订阅，见[付费](/zh/billing) |
+| 「AI 模型设置」 | 你自己的 API key（如果你用的话），见[模型配置](/zh/model-configuration) |
+| 「加入 Telegram 群获取技术支持」 | 技术支持群，见[获取帮助](/zh/troubleshooting) |
+| 「发邮件给我们」 | 给 support@orbi.build 发邮件，账户、账单这类私事走这里 |
+| 「报告 bug（GitHub，公开）」 | 在 GitHub 上开一个公开的 Issue 报 bug，正文里会提醒你别贴密钥 |
+| 「查看使用文档」 | 就是这些页面 |
+| 「退出登录」 | 让这台设备退出登录 |
 
-如果你管理的安装不止一个，比如个人账号一个、某个组织一个，菜单里还会显示你当前在操作哪个安装，并提供 **切换到 … 的安装** (Switch to the … installation) 按钮。
+如果你管理的安装不止一个，比如个人账号一个、某个组织一个，菜单里还会显示你当前在操作哪个安装（「以 … 身份管理 … 的安装。」），并提供「切换到 … 的安装」按钮。
 
 ## 选择语言
 
 Orbi Cloud 有英文和中文两个版本。首次访问时页面跟随你浏览器的首选语言，所以它可能以中文打开。
 
-在账户菜单里切换，或者用登录页右上角同样的 **🇨🇳 ZH | 🇺🇸 EN** 切换。你的选择存在 cookie 里，在那个浏览器上记一年。
+在账户菜单里切换，或者用登录页右上角同样的 🇨🇳 ZH | 🇺🇸 EN 切换。你的选择存在 cookie 里，在那个浏览器上记一年。
 
 ## 个人账号和组织账号
 
 如果你把 Orbi GitHub App 装在一个**组织**上而不是你的个人账号上，这个组织会拿到自己的 Orbi 租户：它的仓库、它的订阅、它的用量都和你个人的那份分开记。
 
-两种情况下登录方式都一样。当你能访问不止一个安装时，用账户菜单里的 **切换到 … 的安装** 按钮选择要操作的租户。
+两种情况下登录方式都一样。当你能访问不止一个安装时，用账户菜单里的「切换到 … 的安装」按钮选择要操作的租户。
 
 ## 退出登录
 
-打开账户菜单，点 **退出登录** (Sign out)。
+打开账户菜单，点「退出登录」。
 
-<Frame caption="退出登录后的确认页">
-  <img src="/images/zh/signed-out.png" alt="退出登录后的确认页" />
+<Frame caption="退出登录后的页面，顶部显示「你已退出登录」">
+  <img src="/images/zh/signed-out.png" alt="退出登录后的页面，顶部是「你已退出登录」提示，下面是「使用 GitHub 登录」按钮" />
 </Frame>
 
-退出登录只清掉那台设备上的会话。它不会卸载 GitHub App，不会取消订阅，也不会停掉一个已经在跑的交付。
+退出登录只清掉那台设备上的会话。它不会卸载 GitHub App，不会取消订阅，也不会停掉一个已经在跑的任务。
 
 ## 会话过期时
 
-一个会话持续 **7 天**，不会因为你一直在用而延长，所以你大概每周登录一次。如果会话背后的 GitHub 授权已经失效，状态页会显示 **GitHub 登录已失效** (GitHub sign-in has expired)，并给出 **重新登录** (Sign in again) 链接；需要身份的页面会明说，不会默默失败。
+一个会话持续 **7 天**，不会因为你一直在用而延长，所以你大概每周登录一次。如果会话背后的 GitHub 授权已经失效，状态页会显示「GitHub 登录已失效」，并给出「重新登录」按钮；需要身份的页面会明说，不会默默失败。
 
-重新登录之后一切都还在：你的仓库绑定、模型配置和交付记录都存在租户上，不存在浏览器会话上。
+重新登录之后一切都还在：你连接的仓库、模型配置和任务记录都存在租户上，不存在浏览器会话上。

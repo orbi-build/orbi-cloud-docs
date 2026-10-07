@@ -7,18 +7,18 @@ description: "How do I dispatch work to Orbi and how should I write the Issue?"
 
 You dispatch work by creating a normal GitHub Issue in your connected repository and adding the `ai-ready` label.
 
-That label is the execution switch. Nothing else is required — no command, no form, no separate queue. Orbi checks for newly labelled Issues on a timer, so pickup takes **up to five minutes**.
+That label is the execution switch. Nothing else is required — no command, no form, no separate queue. Once the label is on, Orbi usually starts within a minute, and within about five minutes at most.
 
 ## Dispatch an Issue
 
-Don't want to write the Issue yourself? Click **Write a request** on the status page and tell Orbi what you want changed. Orbi writes a draft, and starts once you hand it off. See [Write a request](/write-a-requirement).
+Don't want to write the Issue yourself? Click **Write a request** on the status page and tell Orbi what you want changed. Orbi writes a draft, and starts once you click **Hand off to Orbi**. See [Write a request](/write-a-requirement).
 
 1. In your connected repository on GitHub, create an Issue describing one change.
 2. Add the **`ai-ready`** label.
 
-The label already exists — [provisioning](/provisioning) created it along with the rest of the `ai-*` set.
+The label already exists — [preparing the work environment](/provisioning) created it along with the rest of the `ai-*` set.
 
-Within about five minutes, `ai-in-progress` appears on the Issue, the status page headline changes to **Orbi is coding**, and the Issue shows up under **In progress** in **Delivery history**.
+Usually within a minute (about five at most), `ai-in-progress` appears on the Issue, the status page headline changes to **Orbi is coding**, and the Issue shows up under **In progress** in **Task history**.
 
 <Warning>
 The single most common reason nothing happens is a missing label. An Issue without `ai-ready` is never picked up, however long it waits — writing the Issue is not enough on its own.
@@ -30,18 +30,22 @@ Orbi only works on Issues in the repositories you connected. An Issue in any oth
 
 ### Dispatching from the status page
 
-You do not have to label by hand. When Orbi is idle, the **Next** card on the status page offers work under **Pick one for Orbi to try**:
+You do not have to label by hand. The **Next** card on the status page lists Issues in your repository that Orbi has not been given yet; click a button and Orbi applies `ai-ready` for you.
 
-- **Let Orbi make a starter Issue**, with a **Try →** button. Orbi creates a small, bilingual demo Issue in your repository — add a CI status badge to the top of the README, or a CONTRIBUTING.md link if a badge is already there — with `ai-ready` already applied. It is offered once; afterwards the row becomes **Open the onboarding demo Issue**. Close the Issue whenever you like.
-- **Your own open Issues** that Orbi has not been given yet, each with a **Try →** button that applies the `ai-ready` label for you.
+**Before your first delivery**: once the repository is connected and its work environment is ready, the card reads **Pick an existing Issue to hand to Orbi.** and lists up to three open Issues from your repository, each with a **Let Orbi do this** button. Orbi does not create Issues in your repository when you connect it, so everything listed here is your own. If there is no Issue to hand over, the card reads **No tasks yet.**; use **Write a request** to write the first one.
 
-<Frame caption="The Next card offering a starter Issue and unlabelled Issues, each with a Try button">
-  <img src="/images/status-ready-issues.png" alt="The Next card offering a starter Issue and unlabelled Issues, each with a Try button" />
+<Frame caption="The Next card listing existing Issues, each with a Let Orbi do this button">
+  <img src="/images/status-ready-issues.png" alt="The Next card listing existing Issues, each with a Let Orbi do this button" />
 </Frame>
 
-When the page offers a **Create Issue** button, it opens GitHub's new-Issue form for your connected repository with the `ai-ready` label already selected.
+**After you have had a delivery**: when Orbi is idle, the card offers work under **Pick one for Orbi to try**:
 
-An Issue that already carries any `ai-*` label is not offered — Orbi is already handling it, or has finished with it.
+- **Let Orbi do a small first task: add a short run note to the README**, with a **Try →** button. Only when you click it does Orbi create a small onboarding demo Issue in your repository: add a "Run and test locally" section at the end of README.md listing the commands to install dependencies, run and test the repository, with `ai-ready` already applied. The Issue is written in your current interface language. It is offered once; afterwards the row becomes a **View on GitHub** link. Close the Issue whenever you like.
+- **Your own open Issues** that Orbi has not been given yet, each with a **Try →** button that applies the `ai-ready` label for you.
+
+When Orbi has finished and is waiting for more work, **Create an Issue on GitHub** sits next to **Write a request**. It opens GitHub's new-Issue form for your connected repository with the `ai-ready` label already selected, and the page notes that **An Issue created on GitHub goes straight to Orbi's queue with no confirmation.**
+
+An Issue that already carries any `ai-*` label is not listed: Orbi is already handling it, or has finished with it.
 
 ## How to write the Issue
 
@@ -61,7 +65,7 @@ The things that consistently matter:
 
 ## Choosing what to start with
 
-Your first Issue is worth choosing deliberately. A well-scoped small change — the starter Issue, a bug with a clear reproduction, a missing test, a contained refactor — finishes fast and shows you the whole loop. Save the ambiguous architectural work until you have seen how Orbi handles your codebase.
+Your first Issue is worth choosing deliberately. A well-scoped small change — the starter task, a bug with a clear reproduction, a missing test, a contained refactor — finishes fast and shows you the whole loop. Save the ambiguous architectural work until you have seen how Orbi handles your codebase.
 
 Note that **your CI defines what is guaranteed.** The review runs your repository's test suite; the release gate reads your repository's check runs. If your repository has strong tests, Orbi's guarantees are strong. If it has none, both gates pass vacuously and the delivery ships on the review's judgement alone.
 
@@ -83,4 +87,4 @@ Add the **`p0`** label to have an Issue picked up ahead of others. The pickup or
 
 Follow it on the Issue's labels or on [the status page](/status-page). The sequence you are looking for is `ai-in-progress` → `ai-pr-opened` → `ai-merged`; a repair round shows up as `ai-fix-needed` in between, which is normal.
 
-When something needs you — an approval, a confirmation, missing detail, or a blocked Issue — the status page says so at the top of the **Next** card, under **① Needs you**.
+When something needs you — an approval, a confirmation, missing detail, or a blocked Issue — the status page says so in the **Next** card, in the items that need your attention.

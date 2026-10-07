@@ -5,51 +5,55 @@ description: "Do I need to configure a model, and how do I use my own API key in
 ---
 
 
-You do not need to configure a model — the free deliveries and both paid plans include model usage — but you can bring your own key if you would rather pay your provider directly.
+You do not need to configure a model: the free deliveries and both paid plans include model usage. You can bring your own key if you would rather pay your provider directly, or if you want delivery to continue after a paid plan's monthly allowance runs out.
 
-By default, deliveries run on Orbi's platform model channel using the tokens included in your plan. That is why you can install, connect and complete a delivery without entering any key at all.
+By default, deliveries run on Orbi's platform model channel. That is why you can install, connect and complete a delivery without entering any key at all.
 
-Configuring your own key — **BYOK**, bring your own key — replaces that channel for your tenant. Use it when you want a specific model, when your organization requires the traffic to go through your own provider account, or when you would rather not be limited by the included monthly quota.
+Configuring your own key (**BYOK**, bring your own key) adds your provider account as a model source for your account. Which source a delivery uses depends on your plan:
+
+- **Free plan:** once a key is saved, deliveries run on your key.
+- **Paid plan:** deliveries use the monthly allowance included in your plan first. When that allowance is used up, they switch to your key instead of pausing.
 
 ## When you should configure a key
 
 | Situation | What to do |
 |---|---|
-| You just want it to work | Nothing. The included quota is used automatically |
-| You want a specific model | Configure BYOK with that provider and model |
-| Your compliance rules require your own provider account | Configure BYOK |
-| You have hit the monthly token quota | Configure BYOK — delivery resumes as soon as you save, and your own key is never paused by the quota |
+| You just want it to work | Nothing. The platform channel is used automatically |
+| You want a specific model, or your compliance rules require your own provider account | Configure BYOK. On a paid plan, your key takes over only after the monthly allowance is used up |
+| You have hit the monthly token quota | Configure BYOK. Delivery resumes as soon as you save, and your own key is never paused by the quota |
 
 ## Configure it
 
-Click your avatar in the top right of any Orbi Cloud page and choose **Model config**. When the monthly quota is exhausted, the status page also links here with **Connect your own model key**.
+Click your avatar in the top right of any Orbi Cloud page and choose **AI model settings**. The page is titled **Model config**. When the monthly quota is exhausted, the status page also links here with **Use your own API key**.
 
-<Frame caption="The model configuration page with provider, base URL, model ID and API key fields">
-  <img src="/images/model-config.png" alt="The model configuration page with provider, base URL, model ID and API key fields" />
+<Frame caption="The model configuration page with provider, baseUrl, model_id and API key fields">
+  <img src="/images/model-config.png" alt="The model configuration page with provider, baseUrl, model_id and API key fields" />
 </Frame>
 
-1. **Provider** — pick from the list. Selecting one fills in the base URL for you.
-2. **baseUrl** — filled automatically, and editable. Change it only if you use a proxy or a private gateway.
-3. **model_id** — choose from that provider's known models, or use **Enter another model** to type a model ID that is not in the list.
-4. **API key** — your key from that provider.
+1. **Provider**: pick from the list. Selecting one fills in the base URL for you.
+2. **baseUrl**: filled automatically, and editable. Change it only if you use a proxy or a private gateway.
+3. **model_id**: choose from that provider's known models, or choose **Enter another model** and type a model ID that is not in the list.
+4. **API key**: your key from that provider.
 
-Click **Test connection** first if you want to check the combination: it sends a small request with what you entered and reports either **Connection successful** with the model and how long it took, or the provider's error. Then click **Save model configuration**.
+Click **Test connection** first if you want to check the combination. It sends a small request with what you entered and reports either **Connection successful** with the model and how long it took, or the provider's error. Then click **Save model configuration**.
 
-The page confirms **Model configuration saved**. Saving takes effect for deliveries that start afterwards. If provisioning had failed because of a bad credential, saving a corrected configuration retries it automatically.
+Saving runs the same connection test before anything is stored. If the test fails, nothing is saved: the page shows the error, keeps what you entered and asks you to enter the API key again. A provider outside the built-in list cannot be tested this way and is saved as entered.
+
+After a successful save the page confirms **Model configuration saved**. Saving takes effect for deliveries that start afterwards. If preparing the work environment had failed because of a bad credential, saving a corrected configuration retries it automatically.
 
 ## How your key is stored
 
-Your API key is **encrypted at rest** and is only ever displayed back to you masked — the page shows something like `••••1234`, never the key itself. It is never written to logs, never included in support evidence bundles, and never shown in any interface that could be shared.
+Your API key is encrypted at rest and is only ever displayed back to you masked: the field label shows something like **API key (current: ••••1234)**, never the key itself. It is never written to logs, never included in support evidence bundles, and never shown in any interface that could be shared.
 
-<Frame caption="The model configuration page showing a saved configuration with the key masked">
-  <img src="/images/model-config-set.png" alt="The model configuration page showing a saved configuration with the key masked" />
+<Frame caption="A saved configuration: a provider outside the built-in list kept as entered, the saved model, and the key shown masked">
+  <img src="/images/model-config-set.png" alt="A saved configuration: a provider outside the built-in list kept as entered, the saved model, and the key shown masked" />
 </Frame>
 
-Do not send your key over email or paste it into a GitHub Issue, pull request or comment. Enter it on this page — that is the only channel you need.
+Do not send your key over email or paste it into a GitHub Issue, pull request or comment. Enter it on this page; that is the only channel you need.
 
 ## Supported providers
 
-Selecting one of these fills in its base URL automatically. The **In the dropdown** column is the name the English interface shows; each option also shows its base URL in brackets.
+Selecting one of these fills in its base URL automatically. The "In the dropdown" column is the name the English interface shows; each option also shows its base URL in brackets.
 
 | Provider | In the dropdown | Base URL |
 |---|---|---|
@@ -74,27 +78,30 @@ Selecting one of these fills in its base URL automatically. The **In the dropdow
 | Anthropic (compatibility layer) | Anthropic (compatibility) | `https://api.anthropic.com/v1` |
 | Google Gemini (compatibility layer) | Google Gemini (compatibility) | `https://generativelanguage.googleapis.com/v1beta/openai` |
 
-Each provider offers a list of known model IDs in the **model_id** dropdown. That list is a convenience, not a limit — **Enter another model** accepts any model ID the provider serves.
+Each provider offers a list of known model IDs in the **model_id** dropdown. That list is a convenience, not a limit: **Enter another model** accepts any model ID the provider serves.
 
 <Note>
-A provider being listed is not a promise that your account has quota, access or rate limit for a given model on it. If a model is not available to your key, the delivery fails with the provider's own error.
+A provider being listed is not a promise that your account has quota, access or rate limit for a given model on it. If a model is not available to your key, the connection test fails, or the delivery fails with the provider's own error.
 </Note>
 
 ## Using a provider that is not listed
 
-Choose any provider as a starting point, then edit **baseUrl** to your gateway's URL and type the model ID with **Enter another model**. Any OpenAI-compatible endpoint works. Your configuration is stored as you entered it and shown back to you unchanged.
+Choose any provider as a starting point, then edit **baseUrl** to your gateway's URL and type the model ID with **Enter another model**. Any OpenAI-compatible endpoint works. Saving still tests the connection against the URL you entered. Your configuration is stored as you entered it and shown back to you unchanged.
+
+A saved provider that is not in the built-in list, like the one in the screenshot above, is shown with **(not in the built-in provider list; saved as entered)**, and a saved model that is not in the provider's list is shown with **(saved)**.
 
 ## Removing your key
 
-The model config page has no delete button. To go back to the platform channel and the included allowance, [contact support](/troubleshooting#getting-help) and ask for your key to be removed. To switch to a different key, just save the new one over it.
+The model config page has no delete button. To go back to the platform channel only, [contact support](/troubleshooting#getting-help) and ask for your key to be removed. To switch to a different key, just save the new one over it.
 
 ## What changes when you use BYOK
 
 | | Platform channel (default) | Your own key |
 |---|---|---|
 | Who pays for tokens | Included in your plan | You pay your provider |
-| Monthly token allowance | Your plan's allowance (Solo 100,000,000, Pro 300,000,000); new deliveries pause at the cap | Not applied — your usage is measured but never paused |
+| When it is used | Free plan: when no key is saved. Paid plan: until the monthly allowance is used up | Free plan: every delivery. Paid plan: after the monthly allowance is used up |
+| Monthly token allowance | Paid plans: your plan's allowance (Solo 400,000,000, Pro 1,200,000,000) | Not applied: your usage is measured but never paused |
 | Model choice | Operated by Orbi | Yours |
-| Usage shown on the status page | **Monthly usage**, against the allowance | **Monthly usage (your key)**, with no limit |
+| Usage shown on the status page | **Monthly AI usage**, against the allowance on a paid plan | **Monthly AI usage (your API key)**, on its own line with no limit, once your key has been used |
 
 See [limits and quotas](/limits-and-quotas) for how the quota is counted.

@@ -7,89 +7,93 @@ description: "How do I connect a repository to Orbi Cloud, add more, or change i
 
 Connecting a repository tells Orbi which repository's Issues it may work on, and which branch to open pull requests against.
 
-Connecting is self-service: you pick the repository and the base branch on the connect page, and provisioning starts immediately. How many repositories can be connected at the same time depends on your plan — one on Free and Solo, up to five on Pro — and changing one always means deactivating it first. See [limits and quotas](/limits-and-quotas).
+Connecting is self-service: you pick the repository and the base branch on the connect page, and Orbi starts preparing the work environment right away. Connecting does not create any Issue in your repository. How many repositories can be connected at the same time depends on your plan: one on Free and Solo, up to five on Pro. Changing one always means disconnecting it first. See [limits and quotas](/limits-and-quotas).
 
 ## Connect
 
-From the status page, click **Connect repository** — or, once you already have one, **Manage repositories**, which opens the same page.
+Before you have connected anything, the **Next** card on the status page says **Connect a GitHub repository first**; click **Connect repository**. Once you have a repository, click **Manage projects** in the top right of the project overview on the status page, which opens the same page.
 
-<Frame caption="The Connect repository page, showing the repository and base branch lists">
-  <img src="/images/connect.png" alt="The Connect repository page, showing the repository and base branch lists" />
+<Frame caption="The Connect repository page, with the Repository and Base branch (usually the default) lists">
+  <img src="/images/connect.png" alt="The Connect repository page, showing Used 0 / limit 5 repositories, the Repository and Base branch (usually the default) lists, and the Connect repository button" />
 </Frame>
 
-1. **Repository** — pick from the repositories your GitHub App installation covers. With a long list, type part of the name into the search box to filter it.
-2. **Base branch** — the branch Orbi opens pull requests against. Selecting a repository loads its real branches and preselects its default branch, so usually you just confirm.
+1. **Repository**: pick from the repositories your GitHub App installation covers. With more than 8 repositories, a **Search repositories** box appears; type part of the name to filter the list.
+2. **Base branch (usually the default)**: the branch Orbi opens pull requests against. Selecting a repository loads its real branches and preselects its default branch, so usually you just confirm. If the branch you want is not listed, choose **— Enter manually —** and type it.
 3. Click **Connect repository**. The button changes to **Connecting…** while it works; you do not need to click again.
 
-The page then says **Repository connected** and starts [provisioning](/provisioning). It updates itself, and a **Create your first Issue** button appears when the environment is ready.
+The page title then changes to **Repository connected** and Orbi starts [preparing the work environment](/provisioning). The page updates itself, and a **Write your first request** button appears when the environment is ready; it takes you to the [write a request](/write-a-requirement) page. If you know GitHub, you can also create an Issue in the repository directly and add the `ai-ready` label.
 
 <Note>
-If the repository is empty — no commits at all — the page tells you, and Orbi commits a README as the first commit on the base branch when you connect. Orbi needs a commit to branch from.
+If the repository is empty (no commits at all), the page tells you when you select it. When you connect, Orbi adds a README file as the first commit on the base branch, because Orbi needs a commit to branch from.
 </Note>
+
+If you want to try Orbi out first, paid accounts that are below their repository limit see a **Want to try it out first?** line under the list; **Create a repository from Orbi's example** creates an example repository under your GitHub account. When there is no repository you can select at all, that link becomes the page's main button. The example repository also uses one repository slot.
 
 ## Requirements a repository has to meet
 
 A repository can only be connected if:
 
 - It is **covered by your GitHub App installation**. Orbi only sees repositories you authorized.
-- It has **Issues enabled**. Orbi's entire input channel is Issues, so the list marks such a repository **(Issues are turned off — Orbi can't work here)**, and connecting it is rejected. Turn Issues on under the repository's **Settings → Features → Issues** first.
-- It is **not archived**. Archived repositories are marked **(archived)**.
+- It has **Issues enabled**. Orbi receives tasks through Issues, so the list marks such a repository **(Issues disabled; enable them first)**, selecting it shows a link to the repository settings, and connecting it is rejected. Enable Issues under the repository's Settings → Features first.
+- It is **not archived**. Archived repositories are left out of the list.
 
-These are checked when you submit, not just when the page renders — so a repository that was de-authorized in between is caught.
+Repositories that are already connected are left out of the list too. These requirements are checked again when you submit, not just when the page renders, so a repository that was de-authorized in between is caught.
 
 ## When your repository is not listed
 
-The list only contains repositories your App installation covers. If yours is missing, open **Cannot find your repository?** on the connect page: it explains the cause and has a **Manage App authorization** link to GitHub's App settings, where you can add the repository to the installation.
+The list only contains repositories your App installation covers. If yours is missing, open **Cannot find your repository?** on the connect page:
 
-You can also choose **Enter manually** to type an `OWNER/REPO` value directly. That is useful when the listing is temporarily unavailable, but it does not bypass the authorization check — a repository the App cannot access is still rejected on submit.
+- If you selected only some repositories when installing the App, follow the **GitHub App settings** link, add the repository under **Repository access**, click **Save**, then come back and refresh.
+- If the repository belongs to an organization, choose that organization on the **installation page**; if you are not an organization administrator, ask an administrator to install or approve it.
 
-<Frame caption="The connect page in its degraded state, with manual entry fields and a stated reason">
-  <img src="/images/connect-degraded.png" alt="The connect page in its degraded state, with manual entry fields and a stated reason" />
+If GitHub's repository listing cannot be read at all, the page says **Cannot retrieve the repository list from GitHub. Refresh later, or enter it below.** and switches to two text fields: type the repository as `owner/repository` under **Repository**, and **Base branch** defaults to `main`. This does not bypass the authorization check: a repository the App cannot access is still rejected on submit.
+
+<Frame caption="The connect page when the repository list cannot be read: it states the reason and switches to text fields">
+  <img src="/images/connect-degraded.png" alt="The connect page in its degraded state, saying it cannot retrieve the repository list from GitHub, with Repository and Base branch text fields below" />
 </Frame>
-
-If GitHub's repository listing cannot be read at all, the page degrades to manual entry and tells you why, rather than blocking you.
 
 ## Branch protection that blocks every merge
 
-If your base branch requires approving reviews before merge, the connect page warns you immediately, because this setting stops **every** delivery at the merge step.
+If your base branch requires approving reviews before merge, the page you land on after connecting warns you immediately, because this setting stops **every** task at the merge step.
 
-The reason is identity: Orbi opens the pull request and merges it as the same GitHub App, and GitHub does not let a pull request's author approve their own pull request. With required approvals in force, each delivery gets as far as a reviewed, ready pull request and then cannot merge it. On the status page such a delivery shows **Awaiting approval**, and the headline says the pull request needs your approval.
+The reason is identity: Orbi opens the pull request and merges it as the same GitHub App, and GitHub does not let a pull request's author approve their own pull request. With required approvals in force, each task gets as far as a checked, ready pull request and then cannot merge it. On the status page, the headline then reads **You need to approve this change on GitHub**, and the task's status shows **Awaiting approval**.
 
-Three ways to resolve it — pick whichever suits your policy:
+The warning's **Three ways to fix it** section lists the options. Pick whichever suits your policy:
 
-1. **Approve each delivery yourself.** You or a colleague clicks **Approve** on the pull request, and the merge proceeds. Keeps a human in the loop on every change.
-2. **Let admins bypass.** Under **Settings → Branches → Branch protection rules** (or **Settings → Rules → Rulesets**), enable **Allow admins to bypass**, or add the account to the ruleset's bypass list.
-3. **Set required approvals to 0** in the same setting.
+1. **A person approves each change.** You or a colleague clicks **Approve** on the pull request, and the merge proceeds. Keeps a human in the loop on every change.
+2. **Let admins bypass.** Under GitHub's Settings → Branches → Branch protection rules (or Settings → Rules → Rulesets), tick **Allow admins to bypass**, or add the administrator account to the ruleset's Bypass list.
+3. **Set required approvals to 0** by changing **Required approvals** to 0 in the same setting.
 
-Changing it does not require reconnecting — the next delivery's pull request merges normally.
+The last two need a repository administrator to change settings. Changing it does not require reconnecting; later tasks merge normally.
 
 ## More than one repository
 
-On a plan that allows several repositories, open **Manage repositories** on the status page. The connect page shows how many you have used against your limit (for example **Used 1 / limit 5 repositories**) and lists the connected ones; pick another repository and click **Add repository**. Each repository gets its own environment and its own provisioning.
+On a plan that allows several repositories, click **Manage projects** on the status page. The connect page shows how many you have used against your limit (for example **Used 1 / limit 5 repositories**) and lists the connected ones under **Connected repositories**; pick another repository and click **Add repository**. Adding one does not affect the repositories already connected, and each repository gets its own work environment, prepared separately.
 
-With more than one repository connected, the status page shows an overview with one row per repository. Click a row to open that repository's detail: its base branch, its delivery scope, what is happening now, its delivery history, its versions, and **Deactivate this repository**.
+On the status page, the project overview is headed **Project N / limit M** and has one row per project with its in-progress, under-review and done counts. With more than one repository connected, click a row to open that project's detail: its base branch, **Current status**, **Task history**, and the **View on GitHub** and **Create an Issue on GitHub** buttons; paid accounts also see the current version and **Versions**.
 
 ## Changing the connected repository
 
-There is one rule on every plan: **deactivate the repository you are leaving, then connect the new one.** Connecting never replaces a repository on its own.
+There is one rule on every plan: **disconnect the repository you are leaving, then connect the new one.** Connecting never replaces a repository on its own.
 
-1. Open **Manage repositories**. Under **Connected repositories**, click **Deactivate** next to the repository you are leaving, then **Confirm deactivation**. (In a repository's detail view on the status page, **Deactivate this repository** does the same.)
-2. Pick the new repository and click **Add repository**.
+1. Click **Manage projects**. Under **Connected repositories**, click **Disconnect** on the repository you are leaving, then **Confirm disconnect**.
+2. Pick the new repository and click **Add repository** (with nothing connected, the button reads **Connect repository**).
 
-Deactivating reclaims that repository's environment. It is not deleted from your history — it appears under **Historical repositories** in **Settings and reference** on the status page, with its delivery and usage history. Connecting it again later provisions it afresh, which takes a minute or two like any new repository.
+Disconnecting reclaims that repository's work environment. It does not change the repository on GitHub, and your history and usage are kept: the repository appears under **Disconnected projects** in **Usage and settings** on the status page. Connecting it again later prepares a fresh work environment, which takes a few minutes like any new repository.
 
-If you try to connect a repository while you are already at your plan's limit, the page says **Repository limit reached** and offers **Return to the connection page to deactivate a repository**. On Free and Solo, which connect one repository at a time, it also offers **Upgrade to Pro (up to 5 repositories)**.
+If you try to connect a repository while you are already at your plan's limit, the page says **Repository limit reached** and offers **Disconnect a repository**. On Free and Solo, which connect one repository at a time, it also offers an upgrade-to-Pro button showing the price and repository count.
 
 ## What the errors mean
 
 | What the page says | What happened | What to do |
 |---|---|---|
-| The repository is not authorized for the GitHub App | The repository is outside your installation's scope | Open the GitHub App installation settings, add the repository, reload the connect page |
-| **Cannot connect repository** — GitHub Issues disabled | The repository has the Issues feature turned off | Enable it under the repository's **Settings → Features → Issues**, then retry |
-| **Repository limit reached** | You already have as many repositories as your plan allows | Deactivate one first; on Free and Solo you can also upgrade to Pro |
-| The repository list was temporarily unavailable | GitHub's API could not be reached | Retry; use **Enter manually** if it persists |
-| Invalid repository format | The manually entered value is not `OWNER/REPO` | Re-enter as `owner/repository`, for example `orbi-build/orbi` |
+| Orbi's GitHub App does not have access to the repository, so it cannot connect | The repository is outside your installation's scope | Follow **GitHub App settings** on the page, add the repository under **Repository access**, click **Save**, then come back and click **Back and retry** |
+| **Cannot connect repository**: Issues are disabled in this repository, so Orbi cannot receive tasks | The repository has the Issues feature turned off | Follow the repository settings link, tick Issues under Features, then come back and click **Back and retry** |
+| **Repository limit reached** | You already have as many repositories as your plan allows | Disconnect one first; on Free and Solo you can also upgrade to Pro |
+| **Unable to verify repository authorization** | Orbi could not confirm the repository authorization with GitHub; the repository is not connected | Click **Back and retry** later; contact us if it keeps failing |
+| Cannot retrieve the repository list from GitHub | GitHub's API could not be reached | Refresh later, or type the repository into the text fields below |
+| The repository or branch name is not valid | The manually entered value is not `owner/repository` | Re-enter it as `owner/repository`, for example `orbi-build/orbi` |
 
 ## What happens next
 
-Connecting starts [provisioning](/provisioning) — Orbi builds the isolated environment your deliveries run in and installs the `ai-*` labels into your repository. When **Provision environment** is done, [hand Orbi its first Issue](/first-issue).
+After you connect, Orbi [prepares the work environment](/provisioning): it builds the isolated environment your tasks run in and installs the `ai-*` labels into your repository. When **Prepare work environment** is done, [write your first request](/write-a-requirement), or [hand Orbi one of your existing Issues](/first-issue).

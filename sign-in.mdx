@@ -7,19 +7,19 @@ description: "How do I sign in to Orbi Cloud and what does signing in give it ac
 
 Signing in is a single GitHub OAuth click that establishes who you are, and it grants Orbi no repository access by itself.
 
-Orbi Cloud has no password of its own. Your GitHub account is your identity, and the repository access is a separate, explicit step — [installing the GitHub App](/install-app) — that you control from GitHub.
+Orbi Cloud has no password of its own. Your GitHub account is your identity, and the repository access is a separate, explicit step, [installing the GitHub App](/install-app), that you control from GitHub.
 
 ## Sign in
 
 Open **[orbi.build/api/](https://orbi.build/api/)** and click **Sign in with GitHub**.
 
-<Frame caption="The Orbi Cloud sign-in page">
-  <img src="/images/signin.png" alt="The Orbi Cloud sign-in page" />
+<Frame caption="The Orbi Cloud sign-in page, with the Sign in with GitHub button">
+  <img src="/images/signin.png" alt="The Orbi Cloud sign-in page, with the Sign in with GitHub button" />
 </Frame>
 
-GitHub shows you its standard authorization screen. Approving it returns you to Orbi Cloud — to the page you were on your way to, or, if the App is not installed yet, to a page that offers **Install Orbi on your repository**.
+GitHub shows you its standard authorization screen. Approving it returns you to Orbi Cloud: to the page you were on your way to, or, if the App is not installed yet, to a page with an **Install the Orbi GitHub App** button.
 
-The sign-in requests one OAuth scope, `user:email` — your identity and your email address, nothing more. It does not grant access to any repository's code or Issues. That comes from the GitHub App installation, which is authorized separately and lists its own permissions.
+The sign-in requests one OAuth scope, `user:email`: your identity and your email address, nothing more. It does not grant access to any repository's code or Issues. That comes from the GitHub App installation, which is authorized separately and lists its own permissions.
 
 <Note>
 If you start from a sign-up button on orbi.build and have never installed the App, GitHub may show the App installation screen first and sign you in when it returns. The result is the same: you are signed in, and the App is installed on the repositories you picked.
@@ -30,31 +30,32 @@ If you start from a sign-up button on orbi.build and have never installed the Ap
 Once signed in, your GitHub avatar and login sit in the top-right corner of every Orbi Cloud page. Click it to open the account menu:
 
 <Frame caption="The account menu, opened from the avatar in the top right">
-  <img src="/images/account-menu.png" alt="The account menu, opened from the avatar in the top right" />
+  <img src="/images/account-menu.png" alt="The account menu, opened from the avatar in the top right, with the language switch, Manage subscription, AI model settings and the support links" />
 </Frame>
 
 | Item | What it does |
 |---|---|
-| Your login and plan | Shows which account you are signed in as and its plan — **Not subscribed**, **Solo**, **Pro**, and so on |
-| **🇨🇳 ZH** and **🇺🇸 EN** | Switches the interface language |
-| **Manage subscription** or **Subscribe with Stripe** | Opens the Stripe billing portal, or starts a subscription — see [billing](/billing) |
-| **Model config** | Your own model key, if you use one — see [model configuration](/model-configuration) |
-| **Join the Telegram group for support** | The support group — see [getting help](/troubleshooting#getting-help) |
-| **Open a GitHub issue** | Opens a public issue on GitHub for a question or bug report, with a reminder not to paste secrets |
+| Your login and plan | Shows which account you are signed in as and its plan: **Not subscribed**, **Solo**, **Pro**, and so on |
+| 🇨🇳 ZH and 🇺🇸 EN | Switches the interface language |
+| **Manage subscription** or **Subscribe with Stripe** | Opens the Stripe billing portal, or starts a subscription. See [billing](/billing) |
+| **AI model settings** | Your own API key, if you use one. See [model configuration](/model-configuration) |
+| **Join the Telegram group for support** | The support group. See [getting help](/troubleshooting#getting-help) |
+| **Email us** | Emails support@orbi.build; use it for private matters such as your account or billing |
+| **Report a bug (GitHub, public)** | Opens a public issue on GitHub for a bug report, with a reminder not to paste secrets |
 | **Read the online docs** | These pages |
 | **Sign out** | Signs this device out |
 
-When you manage more than one installation — your personal account and an organization, say — the menu also shows which installation you are acting on and offers **Switch to the … installation** buttons.
+When you manage more than one installation (your personal account and an organization, say), the menu also shows which installation you are acting on (**Signed in as …, managing the … installation.**) and offers **Switch to the … installation** buttons.
 
 ## Choosing your language
 
 Orbi Cloud is available in English and Chinese. The page follows your browser's preferred language on the first visit, so it may open in Chinese.
 
-Switch from the account menu, or with the same **🇨🇳 ZH | 🇺🇸 EN** switch in the top right of the sign-in page. Your choice is stored in a cookie and remembered for a year, on that browser.
+Switch from the account menu, or with the same 🇨🇳 ZH | 🇺🇸 EN switch in the top right of the sign-in page. Your choice is stored in a cookie and remembered for a year, on that browser.
 
 ## Personal and organization accounts
 
-If you install the Orbi GitHub App on an **organization** rather than on your personal account, the organization gets its own Orbi tenant — its repositories, its subscription and its usage are tracked separately from your personal one.
+If you install the Orbi GitHub App on an **organization** rather than on your personal account, the organization gets its own Orbi tenant: its repositories, its subscription and its usage are tracked separately from your personal one.
 
 You sign in the same way either way. When you have access to more than one installation, use the **Switch to the … installation** buttons in the account menu to choose which tenant you are working on.
 
@@ -62,14 +63,14 @@ You sign in the same way either way. When you have access to more than one insta
 
 Open the account menu and click **Sign out**.
 
-<Frame caption="The signed-out confirmation page">
-  <img src="/images/signed-out.png" alt="The signed-out confirmation page" />
+<Frame caption="The page after signing out, with the You are signed out banner at the top">
+  <img src="/images/signed-out.png" alt="The page after signing out, with the You are signed out banner at the top and the Sign in with GitHub button below" />
 </Frame>
 
-Signing out clears the session on that device only. It does not uninstall the GitHub App, cancel a subscription, or stop a delivery that is already running.
+Signing out clears the session on that device only. It does not uninstall the GitHub App, cancel a subscription, or stop a task that is already running.
 
 ## When your session expires
 
-A session lasts **7 days** and is not extended by activity, so you sign in again about once a week. If the GitHub authorization behind your session has lapsed, the status page shows **GitHub sign-in has expired** with a **Sign in again** link; pages that need an identity say so rather than failing silently.
+A session lasts **7 days** and is not extended by activity, so you sign in again about once a week. If the GitHub authorization behind your session has lapsed, the status page shows **GitHub sign-in has expired** with a **Sign in again** button; pages that need an identity say so rather than failing silently.
 
-Signing in again restores everything — your repository connections, your model configuration and your delivery history are stored against your tenant, not against the browser session.
+Signing in again restores everything. Your connected repositories, your model configuration and your task history are stored against your tenant, not against the browser session.
