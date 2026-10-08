@@ -41,10 +41,10 @@ If the **In progress** tab says work environment preparation failed, the reason 
 - A release's milestone does not exist. The status page offers **Create the milestone and continue** for this one.
 - The Issue asks for something the environment cannot do (see below).
 
-**How to recover:** fix the underlying cause first, then re-apply `ai-ready`. Fixing the cause often means editing the Issue — sharpening the acceptance criteria, removing an impossible requirement, or splitting it into smaller Issues.
+**How to recover:** fix the underlying cause first, then swap the label. If the Issue already has a pull request, replace `ai-blocked` with `ai-fix-needed`: Orbi picks up the same pull request again with a fresh review budget. If there is no pull request yet, replace `ai-blocked` with `ai-ready`. Fixing the cause often means editing the Issue — sharpening the acceptance criteria, removing an impossible requirement, or splitting it into smaller Issues.
 
 <Note>
-Removing the `ai-blocked` label on its own does not restart anything, and neither does commenting. Repair the cause, then re-apply `ai-ready` — that is what puts the Issue back in the queue.
+Removing the `ai-blocked` label on its own does not restart anything, and neither does commenting. Repair the cause, then add `ai-fix-needed` (pull request open) or `ai-ready` (no pull request) in its place — that is what puts the Issue back in the queue.
 </Note>
 
 The pull request, branch and workspace are all preserved when an Issue blocks, so nothing you have is lost.
