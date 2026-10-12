@@ -41,7 +41,7 @@ The **Next** card is the part of the page to read first. It holds, in order:
 | Headline | What it means |
 |---|---|
 | **Connect a repository first** | No repository is connected yet |
-| **Orbi is preparing the work environment** | A newly connected repository's [work environment is being prepared](/provisioning); usually a few minutes |
+| **Orbi is preparing the work environment** | A newly connected repository's [work environment is being prepared](/provisioning); usually 10–20 seconds |
 | **Work environment preparation failed; Orbi will retry automatically** | Preparation failed for a transient reason; Orbi retries on its own |
 | **Work environment preparation failed (on Orbi's side)** | A platform-side failure; no action needed. See [preparing the work environment](/provisioning#when-provisioning-fails) |
 | **Orbi is waiting for your first request** | Ready. Hand over an existing Issue with **Let Orbi do this**, or use **Write a request** |
@@ -132,6 +132,6 @@ The page is designed to work at phone width; the tables reflow rather than scrol
 
 ## Refreshing
 
-The page refreshes itself while the work environment is being prepared, so you can leave it open during those few minutes. Otherwise reload it to get the current state. It reads GitHub live, so what it shows is the real state of your Issues, not a cached copy.
+The page refreshes itself while the work environment is being prepared, so you can leave it open while it does. Otherwise reload it to get the current state. It reads GitHub live, so what it shows is the real state of your Issues, not a cached copy.
 
 If Orbi cannot reach GitHub at the moment, the page says **Can't reach Orbi right now** rather than showing you a misleading empty list.

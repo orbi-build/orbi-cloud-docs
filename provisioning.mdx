@@ -7,7 +7,7 @@ description: "What is provisioning (preparing the work environment), how long do
 
 Provisioning, shown on the pages as preparing the work environment, builds the isolated environment your tasks run in, and it starts automatically the moment you connect a repository.
 
-You do not trigger it and you cannot speed it up. It usually takes **a few minutes**, and the page refreshes itself while it runs, so you can leave it open.
+You do not trigger it and you cannot speed it up. It usually takes **10–20 seconds**, and the page refreshes itself while it runs, so you can leave it open.
 
 ## What happens during provisioning
 
@@ -19,13 +19,13 @@ Each environment belongs to exactly one tenant and one repository. Environments 
 
 ## Watching it
 
-While provisioning runs, the status page headline says **Orbi is preparing the work environment**, and in the **Setup progress** list the **Prepare work environment** step shows **Orbi is working** and **A few minutes**. When it finishes, that step turns to **✓ Done**.
+While provisioning runs, the status page headline says **Orbi is preparing the work environment**, and in the **Setup progress** list the **Prepare work environment** step shows **Orbi is working**. The card below lists four steps: **Set up your own workspace**, **Pull your code**, **Install Orbi** and **Start reading your repository**. Each one gets a ✓ and the seconds it took, and the line under the list says **Usually 10–20 seconds**. After 30 seconds it changes to **Taking longer than usual; still preparing…**. When all four are done, the **Prepare work environment** step turns to **✓ Done**.
 
 The same state is listed per repository on the status page under **Usage and settings** → **Connected projects**, in the **Preparation status** column:
 
 | What you see | What it means |
 |---|---|
-| **Provisioning** | Running. Usually a few minutes; the page updates itself when it is ready |
+| **Provisioning** | Running. Usually 10–20 seconds; the page updates itself when it is ready |
 | **Provisioned** | Done. You can [write your first request](/write-a-requirement) |
 | **Provisioning failed** | Stopped. The cell states the reason, the time, an error ID and the next step |
 | — | Provisioning never started, normally because no repository is connected yet |
