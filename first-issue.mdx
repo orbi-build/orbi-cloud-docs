@@ -7,7 +7,7 @@ description: "How do I dispatch work to Orbi and how should I write the Issue?"
 
 You dispatch work by creating a normal GitHub Issue in your connected repository and adding the `ai-ready` label.
 
-That label is the execution switch. Nothing else is required — no command, no form, no separate queue. Once the label is on, Orbi usually starts within a minute, and within about five minutes at most.
+That label is the execution switch. Nothing else is required — no command, no form, no separate queue. When the environment is ready, quota is available and no earlier work or version scope holds it up, Orbi usually starts within a minute of the label being added; the regular pickup runs every five minutes.
 
 ## Dispatch an Issue
 
@@ -18,7 +18,7 @@ Don't want to write the Issue yourself? Click **Write a request** on the status 
 
 The label already exists — [preparing the work environment](/provisioning) created it along with the rest of the `ai-*` set.
 
-Usually within a minute (about five at most), `ai-in-progress` appears on the Issue, the status page headline changes to **Orbi is coding**, and the Issue shows up under **In progress** in **Task history**.
+Once Orbi picks it up, `ai-in-progress` appears on the Issue, the status page headline changes to **Orbi is coding**, and the Issue shows up under **In progress** in **Task history**.
 
 <Warning>
 The single most common reason nothing happens is a missing label. An Issue without `ai-ready` is never picked up, however long it waits — writing the Issue is not enough on its own.
@@ -30,22 +30,20 @@ Orbi only works on Issues in the repositories you connected. An Issue in any oth
 
 ### Dispatching from the status page
 
-You do not have to label by hand. The **Next** card on the status page lists Issues in your repository that Orbi has not been given yet; click a button and Orbi applies `ai-ready` for you.
+After connecting, Orbi reads the repository and suggests work it can do. **Orbi suggests starting with these** contains up to three suggestions per batch:
 
-**Before your first delivery**: once the repository is connected and its work environment is ready, the card reads **Pick an existing Issue to hand to Orbi.** and lists up to three open Issues from your repository, each with a **Let Orbi do this** button. Orbi does not create Issues in your repository when you connect it, so everything listed here is your own. If there is no Issue to hand over, the card reads **No tasks yet.**; use **Write a request** to write the first one.
+- **Existing Issue:** **Let Orbi do this** applies `ai-ready` and dispatches it immediately.
+- **New task:** **Review draft** opens a draft already prepared for you. Ask for changes if needed, then click **Hand off to Orbi** to create and dispatch the Issue.
 
-<Frame caption="The Next card listing existing Issues, each with a Let Orbi do this button">
-  <img src="/images/status-ready-issues.png" alt="The Next card listing existing Issues, each with a Let Orbi do this button" />
+Use **Why this ›** to expand the reason. **Get new suggestions** reads the repository again; with no suggestions available, use **Get suggestions**. Reading usually takes about 2 minutes, and you can leave the page.
+
+<Frame caption="Review a new draft, or dispatch an existing Issue immediately">
+  <img src="/images/status-suggestions.png" alt="Review a new draft, or dispatch an existing Issue immediately" />
 </Frame>
 
-**After you have had a delivery**: when Orbi is idle, the card offers work under **Pick one for Orbi to try**:
+The other entry points remain available: **Write a request**, other existing Issues listed on the page, and GitHub’s new-Issue form. Existing-Issue buttons (**Let Orbi do this** or **Try →**) dispatch immediately. **Create an Issue on GitHub** preselects `ai-ready`, so submitting enters the queue directly. Issues already carrying any `ai-*` label are excluded from the available list.
 
-- **Let Orbi do a small first task: add a short run note to the README**, with a **Try →** button. Only when you click it does Orbi create a small onboarding demo Issue in your repository: add a "Run and test locally" section at the end of README.md listing the commands to install dependencies, run and test the repository, with `ai-ready` already applied. The Issue is written in your current interface language. It is offered once; afterwards the row becomes a **View on GitHub** link. Close the Issue whenever you like.
-- **Your own open Issues** that Orbi has not been given yet, each with a **Try →** button that applies the `ai-ready` label for you.
-
-When Orbi has finished and is waiting for more work, **Create an Issue on GitHub** sits next to **Write a request**. It opens GitHub's new-Issue form for your connected repository with the `ai-ready` label already selected, and the page notes that **An Issue created on GitHub goes straight to Orbi's queue with no confirmation.**
-
-An Issue that already carries any `ai-*` label is not listed: Orbi is already handling it, or has finished with it.
+After a delivery, an idle project may also offer the small README run-note task; it is created and dispatched only when you click **Try →**.
 
 ## How to write the Issue
 

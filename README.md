@@ -73,7 +73,9 @@ npx mint@4.2.890 validate
 
 The images in `images/` are captured from the application, not mocked up. They are produced against a local instance seeded with fixture tenants, so no real customer data appears in any of them.
 
-Re-capture them after a user-visible UI change, so the documentation does not drift from the product. English pages use `images/`, Chinese pages use `images/zh/`, captured with the product's own Chinese interface. All of them come from `docs-shots.mjs` in orbi-cloud (`node docs-shots.mjs --locale zh --out ../orbi-cloud-docs/images/zh`, then `--locale en`); a picture that is not in that script will be missed on the next re-capture, so add it there rather than capturing it by hand. The last full re-capture was on 2026-10-07, against orbi-cloud v0.7.12 (Write a request, the What's new line, and the renamed status page sections such as **Usage and settings** and **Task history**).
+Re-capture them after a user-visible UI change. English pages use `images/`; Chinese pages use `images/zh/`, captured with the product’s Chinese interface. Run the documentation screenshot harness against the same application version as production, with fixture tenants and locale-specific sample data. Capture both languages (`--locale en` and `--locale zh`) and include every scene in the harness so the next run preserves it. Do not replace DOM text or override product fonts for screenshots.
+
+The last full capture was on **2026-10-15**, against **Orbi Cloud v0.7.40**. It includes repository reading, ready suggestions, suggested drafts, multi-project overview/detail, free-account versions, and phone layouts. Environment preparation usually takes 10–20 seconds; reading for suggestions is a separate step of about 2 minutes.
 
 ## Contributing
 
