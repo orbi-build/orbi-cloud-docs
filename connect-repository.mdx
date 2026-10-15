@@ -11,6 +11,8 @@ Connecting is self-service: you pick the repository and the base branch on the c
 
 ## Connect
 
+On first setup, with no repository connected, exactly one authorized, unarchived repository with Issues enabled connects automatically on its default branch. The selection form is skipped. If the selection form appears, use it to choose the repository and base branch.
+
 Before you have connected anything, the **Next** card on the status page says **Connect a GitHub repository first**; click **Connect repository**. Once you have a repository, click **Manage projects** in the top right of the project overview on the status page, which opens the same page.
 
 <Frame caption="The Connect repository page, with the Repository and Base branch (usually the default) lists">
@@ -21,7 +23,7 @@ Before you have connected anything, the **Next** card on the status page says **
 2. **Base branch (usually the default)**: the branch Orbi opens pull requests against. Selecting a repository loads its real branches and preselects its default branch, so usually you just confirm. If the branch you want is not listed, choose **— Enter manually —** and type it.
 3. Click **Connect repository**. The button changes to **Connecting…** while it works; you do not need to click again.
 
-The page title then changes to **Repository connected** and Orbi starts [preparing the work environment](/provisioning). The page updates itself, and a **Write your first request** button appears when the environment is ready; it takes you to the [write a request](/write-a-requirement) page. If you know GitHub, you can also create an Issue in the repository directly and add the `ai-ready` label.
+Connecting opens that project’s status page and starts [preparing the work environment](/provisioning). Once ready, Orbi reads the repository and suggests work. Open **Review draft** for a new task and confirm before handing it off. You can still [write your own request](/write-a-requirement) or create an Issue with `ai-ready` on GitHub.
 
 <Note>
 If the repository is empty (no commits at all), the page tells you when you select it. When you connect, Orbi adds a README file as the first commit on the base branch, because Orbi needs a commit to branch from.
@@ -70,7 +72,7 @@ The last two need a repository administrator to change settings. Changing it doe
 
 On a plan that allows several repositories, click **Manage projects** on the status page. The connect page shows how many you have used against your limit (for example **Used 1 / limit 5 repositories**) and lists the connected ones under **Connected repositories**; pick another repository and click **Add repository**. Adding one does not affect the repositories already connected, and each repository gets its own work environment, prepared separately.
 
-On the status page, the project overview is headed **Project N / limit M** and has one row per project with its in-progress, under-review and done counts. With more than one repository connected, click a row to open that project's detail: its base branch, **Current status**, **Task history**, and the **View on GitHub** and **Create an Issue on GitHub** buttons; paid accounts also see the current version and **Versions**.
+The status page’s **Project** section has one summary row per project; **Manage projects** shows the count and limit. With several projects, the overview does not combine their task tables. Click a row for that project’s base branch, current status, task history and versions. Versions are available on Free too. The suggestion area switches between **All** and individual projects. See [the status page](/status-page).
 
 ## Changing the connected repository
 

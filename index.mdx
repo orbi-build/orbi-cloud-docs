@@ -5,26 +5,26 @@ description: "What is Orbi Cloud and what do I get from it?"
 ---
 
 
-Orbi Cloud is a hosted runner that turns a labelled GitHub Issue into a tested, independently reviewed, merged pull request — on infrastructure Orbi operates.
+Orbi Cloud is the hosted version of Orbi’s **software dark factory**: you define the goal and acceptance criteria, and Orbi takes a GitHub Issue through implementation, tests, independent review, fixes, and merge. Orbi operates the infrastructure.
 
-You keep working in GitHub. You file an Issue in your own repository and add the `ai-ready` label (or click **Write a request** on the status page, describe the change in a sentence, and hand off the Issue Orbi drafts). Orbi Cloud claims it, writes the code in an isolated workspace, runs your test suite, opens a pull request, reviews that pull request in a separate session, repairs what the review finds, and merges the exact reviewed commit. The Issues, the pull requests and the release evidence all stay in your repository. There is no second workspace to adopt and no new password.
+After you connect a repository, Orbi reads it and suggests work it can do. Review a new task’s draft before handing it off, or dispatch an existing Issue with **Let Orbi do this**. You can also **Write a request** yourself or label an Issue `ai-ready` in GitHub. Orbi delivers the work in an isolated workspace and merges the exact reviewed commit. Issues, pull requests and release evidence stay in your repository.
 
 Orbi Cloud runs the same delivery engine as self-hosted [Orbi](https://orbi.build/?ref=cloud-docs-index), which is open source. The difference is who operates the runner: with Cloud, Orbi does.
 
 ## The whole path, end to end
 
-Everything below the dashed line is automatic. Your part is the four steps of setup, then one label per piece of work — and the decision to cut a release.
+Authorize and connect a repository, choose the work, and decide when to release. Preparing the environment and reading for suggestions start automatically. Once you hand off a task, Orbi takes it through development and merge.
 
 ```mermaid
 flowchart TD
   subgraph setup["Setup — once"]
     direction LR
-    s1["1 Sign in<br/>with GitHub"] --> s2["2 Install the<br/>GitHub App"] --> s3["3 Connect a<br/>repository"] --> s4["4 Prepare work<br/>environment, a few min"]
+    s1["1 Sign in<br/>with GitHub"] --> s2["2 Install the<br/>GitHub App"] --> s3["3 Connect a<br/>repository"] --> s4["4 Prepare work<br/>environment, 10–20 sec"] --> s5["Read repository<br/>suggestions, ~2 min"]
   end
 
-  subgraph work["Per piece of work — you label, Orbi delivers"]
+  subgraph work["Per task — you choose, Orbi delivers"]
     direction LR
-    w1["5 You label an<br/>Issue ai-ready"] -.-> w2["Orbi codes<br/>ai-in-progress"] --> w3["PR opened<br/>ai-pr-opened"] --> w4{"Independent<br/>review"}
+    w1["5 You hand off an<br/>Issue ai-ready"] -.-> w2["Orbi codes<br/>ai-in-progress"] --> w3["PR opened<br/>ai-pr-opened"] --> w4{"Independent<br/>review"}
     w4 -->|clean| w5["Merged<br/>ai-merged"]
     w4 -->|finding| w6["Repair<br/>ai-fix-needed"] --> w3
     w4 -->|unsafe to fix| w7["Stops for you<br/>ai-blocked"]
@@ -38,9 +38,9 @@ flowchart TD
   setup --> work --> rel
 ```
 
-The two dotted arrows are the only two switches you throw: the `ai-ready` label, and the release. Orbi never throws either one for you.
+You decide which task starts and when to release. The handoff buttons apply `ai-ready` for you; reading the repository or opening a suggested draft does not dispatch work.
 
-The status page walks you through the same path. Its **Setup progress** list has seven steps — the six above plus **Subscribe** — and marks the one that is waiting on you.
+The status page walks you through the same path. Its **Setup progress** list marks the step waiting on you. Release is optional; the last step shows the free allowance on Free, so subscribing is not required for your first delivery.
 
 ## What you actually do
 
@@ -55,7 +55,7 @@ The status page walks you through the same path. Its **Setup progress** list has
     Pick the repository and its base branch. Orbi prepares a work environment for it, which usually takes 10–20 seconds.
   </Card>
   <Card title="Label an Issue `ai-ready`" href="/first-issue">
-    That label is the execution switch. Before your first delivery, the status page lists your open Issues with a **Let Orbi do this** button that adds it for you, and **Write a request** turns one sentence into an Issue.
+    Review Orbi’s suggested draft, hand over an existing Issue, or write your own request. The handoff applies the label that starts delivery.
   </Card>
 </CardGroup>
 

@@ -2,7 +2,7 @@
 
 中文版见 [/zh](https://github.com/orbi-build/orbi-cloud-docs/tree/main/zh)。
 
-User documentation for [Orbi Cloud](https://orbi.build/cloud/?ref=cloud-docs-readme) — the hosted runner that turns a labelled GitHub Issue into a tested, independently reviewed, merged pull request.
+User documentation for [Orbi Cloud](https://orbi.build/cloud/?ref=cloud-docs-readme), the hosted software dark factory: define the goal and acceptance criteria, then let Orbi implement, test, independently review, fix and merge the change.
 
 These pages cover the whole path a user walks: signing in, installing the GitHub App, connecting a repository, provisioning, dispatching an Issue, reading the status page, cutting a release, and recovering when something goes wrong.
 
@@ -13,16 +13,16 @@ The open-source delivery engine lives in [orbi-build/orbi](https://github.com/or
 | Page | Covers |
 |---|---|
 | `index.mdx` | What Orbi Cloud is, the delivery loop, what it costs |
-| `quickstart.mdx` | Sign-in to first merged pull request, following the status page's setup steps |
+| `quickstart.mdx` | Sign-in, repository suggestions and the first merged pull request |
 | `sign-in.mdx` | GitHub OAuth, the account menu, language, sessions, personal vs organization |
 | `install-app.mdx` | The GitHub App, what each permission is for, revoking |
 | `connect-repository.mdx` | Choosing the repository and base branch, branch protection, several repositories, deactivating |
 | `provisioning.mdx` | What provisioning does, and how failures are classified |
 | `model-configuration.mdx` | The included quota, BYOK, the supported providers |
 | `billing.mdx` | The Free, Solo and Pro plans, subscribing, the billing portal, cancelling |
-| `first-issue.mdx` | Dispatching work, and how to write an Issue that succeeds |
+| `first-issue.mdx` | Suggested tasks, existing Issues, dispatching work and writing acceptance criteria |
 | `delivery-lifecycle.mdx` | The `ai-*` label state machine, the independent review, sharing a delivery |
-| `status-page.mdx` | How to read the status page, top to bottom |
+| `status-page.mdx` | Suggestions, project overview/detail, task history and settings |
 | `releases.mdx` | Versions, the delivery scope, cutting a release and the gates it passes |
 | `limits-and-quotas.mdx` | The free allowance, the monthly token allowance and the repository limit |
 | `troubleshooting.mdx` | Every failure state and how to recover |
@@ -73,7 +73,9 @@ npx mint@4.2.890 validate
 
 The images in `images/` are captured from the application, not mocked up. They are produced against a local instance seeded with fixture tenants, so no real customer data appears in any of them.
 
-Re-capture them after a user-visible UI change, so the documentation does not drift from the product. English pages use `images/`, Chinese pages use `images/zh/`, captured with the product's own Chinese interface. All of them come from `docs-shots.mjs` in orbi-cloud (`node docs-shots.mjs --locale zh --out ../orbi-cloud-docs/images/zh`, then `--locale en`); a picture that is not in that script will be missed on the next re-capture, so add it there rather than capturing it by hand. The last full re-capture was on 2026-10-07, against orbi-cloud v0.7.12 (Write a request, the What's new line, and the renamed status page sections such as **Usage and settings** and **Task history**).
+Re-capture them after a user-visible UI change. English pages use `images/`; Chinese pages use `images/zh/`, captured with the product’s Chinese interface. Run the documentation screenshot harness against the same application version as production, with fixture tenants and locale-specific sample data. Capture both languages (`--locale en` and `--locale zh`) and include every scene in the harness so the next run preserves it. Do not replace DOM text or override product fonts for screenshots.
+
+The last full capture was on **2026-10-15**, against **Orbi Cloud v0.7.40**. It includes repository reading, ready suggestions, suggested drafts, multi-project overview/detail, free-account versions, and phone layouts. Environment preparation usually takes 10–20 seconds; reading for suggestions is a separate step of about 2 minutes.
 
 ## Contributing
 

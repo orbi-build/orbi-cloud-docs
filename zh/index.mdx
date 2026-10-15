@@ -4,26 +4,26 @@ sidebarTitle: "概览"
 description: "Orbi Cloud 是什么，我能从它这里得到什么?"
 ---
 
-Orbi Cloud 是一个托管 runner，把打上标签的 GitHub Issue 变成经过测试、独立评审、已合并的拉取请求，跑在 Orbi 运维的基础设施上。
+Orbi Cloud 是 Orbi 软件暗工厂（software dark factory）的托管版本：你定义目标和验收标准，Orbi 将 GitHub Issue 交付为经过实现、测试、独立评审、修复和合并的改动。基础设施由 Orbi 运维。
 
-你继续在 GitHub 里工作。你在自己的仓库建一张 Issue、打上 `ai-ready` 标签（也可以在状态页点「写需求」，用一句话说要改什么，Orbi 写好 Issue 草稿后由你交给它）。Orbi Cloud 认领它，在隔离的工作区写代码，跑你的测试套件，提交拉取请求，再用另一个会话评审这个 PR，修掉评审发现的问题，然后合并**评审过的那个 commit**。Issue、PR 和发版证据全部留在你的仓库里。没有第二套工作台要适应，也没有新密码要记。
+连接仓库后，Orbi 会读仓库，建议现在能做的事。新任务先「查看需求」，看过草稿再交给它；已有 Issue 可以点「让 Orbi 做这个」直接派发。你也可以自己「写需求」，或者在 GitHub 给 Issue 打上 `ai-ready`。Orbi 在隔离工作区完成交付，只合并评审过的那个 commit。Issue、PR 和发版证据都留在你的仓库里。
 
 Orbi Cloud 跑的是和自托管 [Orbi](https://orbi.build/?ref=cloud-docs-index) 同一套交付引擎，引擎是开源的。区别只在于谁来运维 runner：用 Cloud，Orbi 来运维。
 
 ## 全流程
 
-虚线箭头之后的部分全是自动的。你要做的是四步开通，之后每份工作打一个标签，再加上决定什么时候发版。
+你授权并连接仓库，选择要做的任务，决定什么时候发版。准备工作环境和读仓库生成建议都会自动开始；确认交付后，Orbi 自动完成开发到合并。
 
 ```mermaid
 flowchart TD
   subgraph setup["开通（只做一次）"]
     direction LR
-    s1["1 用 GitHub<br/>登录"] --> s2["2 安装<br/>GitHub App"] --> s3["3 连接一个<br/>仓库"] --> s4["4 准备工作环境<br/>10–20 秒"]
+    s1["1 用 GitHub<br/>登录"] --> s2["2 安装<br/>GitHub App"] --> s3["3 连接一个<br/>仓库"] --> s4["4 准备工作环境<br/>10–20 秒"] --> s5["读仓库、生成建议<br/>约 2 分钟"]
   end
 
-  subgraph work["每份工作：你打标签，Orbi 交付"]
+  subgraph work["每份工作：你选任务，Orbi 交付"]
     direction LR
-    w1["5 你给 Issue<br/>打 ai-ready"] -.-> w2["Orbi 写代码<br/>ai-in-progress"] --> w3["提交 PR<br/>ai-pr-opened"] --> w4{"独立评审"}
+    w1["5 你交付 Issue<br/>ai-ready"] -.-> w2["Orbi 写代码<br/>ai-in-progress"] --> w3["提交 PR<br/>ai-pr-opened"] --> w4{"独立评审"}
     w4 -->|干净| w5["已合并<br/>ai-merged"]
     w4 -->|有问题| w6["修复<br/>ai-fix-needed"] --> w3
     w4 -->|无法安全修复| w7["停下等你<br/>ai-blocked"]
@@ -37,9 +37,9 @@ flowchart TD
   setup --> work --> rel
 ```
 
-两条虚线箭头就是你要扳的两个开关：`ai-ready` 标签，和发版。这两个 Orbi 都不会替你扳。
+由你决定开始哪个任务、什么时候发版。交付按钮会替你打上 `ai-ready`；读仓库或打开建议草稿都不会派发任务。
 
-状态页也按这条路径带你走。它的「开通进度」列表有七步，就是上面六步再加上「订阅」，并标出正在等你的那一步。
+状态页也按这条路径带你走。它的「开通进度」会标出正在等你的那一步。发版可以不做；免费账户最后一项显示免费次数，第一次交付不需要订阅。
 
 ## 你实际要做的事
 
@@ -54,7 +54,7 @@ flowchart TD
     选好仓库和基础分支。Orbi 为它准备工作环境，一般 10–20 秒。
   </Card>
   <Card title="给 Issue 打 `ai-ready`" href="/zh/first-issue">
-    这个标签就是执行开关。第一次交付前，状态页会列出你已有的 Issue，点「让 Orbi 做这个」就替你打上；「写需求」能把一句话写成 Issue。
+    看过 Orbi 的建议草稿再交付、交给它已有的 Issue，或自己写需求。交付按钮会打上这个执行标签。
   </Card>
 </CardGroup>
 

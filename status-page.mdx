@@ -7,15 +7,9 @@ description: "How do I read the Orbi Cloud status page?"
 
 The status page at **[orbi.build/api/](https://orbi.build/api/)** is where you see what Orbi is doing, what needs you, and what you have used.
 
-It is ordered by what you need to do, not by feature. From top to bottom:
+The top of the page contains the account menu, title and What’s new. **Next** shows the current state and what needs you; while delivery is in progress, suggestions may appear in a separate **Orbi also suggested these** card. Project summaries and the folded **Usage and settings** follow.
 
-1. The **top bar**: the Orbi logo and **Orbi Cloud** on the left (it always brings you back here), your avatar and the account menu on the right.
-2. The **title and What’s new**: under the **Orbi Cloud Status** title, a **What’s new** line names the latest feature and links to how to use it.
-3. **Next**: what is happening and the one thing you should do now.
-4. The **project overview**: one row per connected project.
-5. **Task history**: every task, in three tabs.
-6. **Usage and settings**: usage, connected projects and versions, folded away until you open it.
-7. The **footer**: where to get help, then service status, privacy, terms and GitHub.
+With one project, its task history appears directly. With several projects, the overview does not combine task tables; open a project row to see its details. **Next** can be absent from a multi-project overview when there is nothing to act on.
 
 <Frame caption="The status page for an account with tasks in progress and one stuck task">
   <img src="/images/status-active.png" alt="The status page for an account with tasks in progress and one stuck task" />
@@ -23,17 +17,18 @@ It is ordered by what you need to do, not by feature. From top to bottom:
 
 ## Next
 
-The **Next** card is the part of the page to read first. It holds, in order:
+The **Next** card shows setup progress, the current state and actions that need you. Once the environment is ready, the suggestion area moves from reading the repository to **Orbi suggests starting with these**. While reading, it shows recently read files and **About 2 minutes. You can leave this page**.
 
-- **Setup progress**: the seven onboarding steps (see below).
-- A **headline**: a one-line summary of your account's state.
-- The items waiting on you, under a count such as **1 item needs your attention** or **1 reminder**, each with the button that deals with it. When nothing needs you, this part is absent; that is good news.
-- **Your existing Issues**: after you connect a repository and before your first delivery finishes, Orbi lists up to three open Issues from your repository that it has not been given yet, under **Pick an existing Issue to hand to Orbi.**, each with a **Let Orbi do this** button. See [first Issue](/first-issue#dispatching-from-the-status-page).
-- **Write a request**: say what you want changed, Orbi writes it up as a draft, and you click **Hand off to Orbi** when it looks right. See [Write a request](/write-a-requirement). When Orbi has finished and is waiting for more work, **Create an Issue on GitHub** sits next to it.
-- **Pick one for Orbi to try**: once you have had a delivery, this appears while Orbi is idle, listing a small starter task and the Issues you have not handed to Orbi, each with **Try →**.
+For a new task, **Review draft** opens the draft before you confirm. For an existing Issue, **Let Orbi do this** dispatches immediately. **Write a request** and the other existing Issues remain available. See [your first Issue](/first-issue).
 
-<Frame caption="An account with no deliveries yet: the Next card lists existing Issues, each with a Let Orbi do this button">
-  <img src="/images/status-ready-issues.png" alt="An account with no deliveries yet: the Next card lists existing Issues, each with a Let Orbi do this button" />
+<Frame caption="Suggestions ready, with Write a request and existing Issues still available">
+  <img src="/images/status-suggestions.png" alt="Suggestions ready, with Write a request and existing Issues still available" />
+</Frame>
+
+With several projects, switch the suggestions between **All** and project buttons. **All** initially shows one suggestion per ready project; **Show N more** expands the others. Select a project before requesting a new batch.
+
+<Frame caption="Multi-project overview: suggestions across projects and project summaries">
+  <img src="/images/status-projects.png" alt="Multi-project overview: suggestions across projects and project summaries" />
 </Frame>
 
 ### Headlines
@@ -68,7 +63,7 @@ Two situations put their own way out in the items waiting on you:
 
 ### Setup progress
 
-Seven steps track onboarding: **Sign in** → **Install GitHub App** → **Connect repository** → **Prepare work environment** → **Write your first request** → **Create Release** → **Subscribe**. A finished step is marked **Done**; the current one is highlighted, marked **Waiting for you**, **Orbi is working** or **Failed**, and has a **How to do this step ▶** link that plays a short video of that step. If preparing the work environment fails, that step also shows how to contact us.
+Seven steps track onboarding: **Sign in** → **Install GitHub App** → **Connect repository** → **Prepare work environment** → **Write your first request** → **Create Release** → **Subscribe**. A finished step is marked **Done**; the current one is highlighted, marked **Waiting for you**, **Orbi is working** or **Failed**. Only **Install GitHub App**, **Connect repository**, and **Write your first request** have a **How to do this step ▶** video link. If preparing the work environment fails, that step also shows how to contact us.
 
 When it is the current step, step 6, **Create Release**, is marked **Optional**; skipping it does not affect Orbi's tasks. For accounts still on the free runs, the last step reads **First 3 free**, with a folded **Pricing and account** note. Once the required steps are done and you have had a delivery, the whole list folds into **All done**.
 
@@ -78,9 +73,13 @@ When it is the current step, step 6, **Create Release**, is marked **Optional**;
 
 ## Project overview
 
-A table headed **Project N / limit M**, with a **Manage projects** button that opens the connect page (add or disconnect projects there), and one row per connected project: how many of its tasks are **In progress**, **Under review** and **Done**. A row that needs attention carries a chip: **Needs you**, **Retrying automatically** or **On Orbi's side**.
+The **Project** / **Projects** section has one row per connected project, summarizing its current state. **Manage projects** shows the count and limit and opens the page for adding or disconnecting repositories.
 
-With more than one project, click a row to open that project's own view: its base branch, **View on GitHub** and **Create an Issue on GitHub**, **Current status**, its **Task history**, and on paid accounts its current version and **Versions**. See [more than one repository](/connect-repository#more-than-one-repository).
+With several projects, click a row for its base branch, current status, task history, versions, **View on GitHub** and **Create an Issue on GitHub**. Versions are available on Free too. Return to the overview to inspect another project.
+
+<Frame caption="Selected project: current status and task history">
+  <img src="/images/status-project-detail.png" alt="Selected project: current status and task history" />
+</Frame>
 
 ## Task history
 
@@ -104,7 +103,7 @@ Folded by default: click **Usage and settings** to open it. It opens by itself w
   <img src="/images/status-settings.png" alt="Usage and settings, opened: monthly AI usage, connected projects and versions" />
 </Frame>
 
-**Monthly AI usage.** The **Monthly AI usage** line shows the tokens used this month and the **Cached** share. Paid accounts also see the plan's allowance, the **Used** percentage and **resets on the 1st at 8:00 Beijing time**, with a bar that turns amber at 80% and red at 100%. Free accounts have no monthly limit and see only what they used. With your own API key configured, usage that ran on your key gets its own line, **Monthly AI usage (your API key)**. Cached tokens count toward the allowance the same as input and output tokens, so the cached share does not change how fast it is used. See [limits and quotas](/limits-and-quotas).
+**Monthly AI usage.** The **Monthly AI usage** line shows the tokens used this month and the **Cached** share. Paid accounts also see the plan's allowance, the **Used** percentage and **resets on the 1st at 8:00 Beijing time**, with a bar that turns amber at 80% and red at 100%. Free accounts use the one-time allowance of 3 merged deliveries rather than a monthly token allowance; this line shows their actual token usage. With your own API key configured, usage that ran on your key gets its own line, **Monthly AI usage (your API key)**. Cached tokens count toward the allowance the same as input and output tokens, so the cached share does not change how fast it is used. See [limits and quotas](/limits-and-quotas).
 
 **Connected projects.** Each project with its **Base branch** and **Preparation status** (**Provisioned**, **Provisioning** or **Provisioning failed**); when preparation failed, it also shows **Reason:**, **Time:**, **Error ID:** and **Next:**. Projects you disconnected are listed in the folded **Disconnected projects** section.
 
@@ -112,7 +111,7 @@ Folded by default: click **Usage and settings** to open it. It opens by itself w
   <img src="/images/status-provision-failed.png" alt="When preparing the work environment fails, Usage and settings opens with the reason, time, error ID and next step under Connected projects" />
 </Frame>
 
-**Versions.** Shown here only on paid accounts with one connected project. It holds **Current version:**, **Unreleased versions** (each with **Switch to this version**, and the current one with **Create release task** or **View release task**), a **New version** box with a **Create and switch** button, and a folded **Guide**. See [releases](/releases).
+**Versions.** Available on every plan. Open it here for one project, or in that project’s detail view with several projects. You can inspect the current version, create and switch versions, and initiate a release task. This does not remove [free-delivery or plan limits](/limits-and-quotas). See [releases](/releases).
 
 For accounts on the free runs, a **Founding-member offer** note can also appear here after the first merged delivery.
 
@@ -130,8 +129,12 @@ The page is designed to work at phone width; the tables reflow rather than scrol
   <img src="/images/status-active-mobile.png" alt="The status page at phone width" />
 </Frame>
 
+<Frame caption="Multi-project suggestions and summaries at phone width">
+  <img src="/images/status-projects-mobile.png" alt="Multi-project suggestions and summaries at phone width" />
+</Frame>
+
 ## Refreshing
 
-The page refreshes itself while the work environment is being prepared, so you can leave it open while it does. Otherwise reload it to get the current state. It reads GitHub live, so what it shows is the real state of your Issues, not a cached copy.
+The page updates itself during environment preparation and while reading for suggestions; you can leave it. Otherwise reload for the current state. Task status is read live from GitHub.
 
 If Orbi cannot reach GitHub at the moment, the page says **Can't reach Orbi right now** rather than showing you a misleading empty list.
