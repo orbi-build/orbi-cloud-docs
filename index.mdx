@@ -13,18 +13,18 @@ Orbi Cloud runs the same delivery engine as self-hosted [Orbi](https://orbi.buil
 
 ## The whole path, end to end
 
-Everything below the dashed line is automatic. Your part is the four steps of setup, then one label per piece of work — and the decision to cut a release.
+Authorize and connect a repository, choose the work, and decide when to release. Preparing the environment and reading for suggestions start automatically. Once you hand off a task, Orbi takes it through development and merge.
 
 ```mermaid
 flowchart TD
   subgraph setup["Setup — once"]
     direction LR
-    s1["1 Sign in<br/>with GitHub"] --> s2["2 Install the<br/>GitHub App"] --> s3["3 Connect a<br/>repository"] --> s4["4 Prepare work<br/>environment, 10–20 sec"]
+    s1["1 Sign in<br/>with GitHub"] --> s2["2 Install the<br/>GitHub App"] --> s3["3 Connect a<br/>repository"] --> s4["4 Prepare work<br/>environment, 10–20 sec"] --> s5["Read repository<br/>suggestions, ~2 min"]
   end
 
-  subgraph work["Per piece of work — you label, Orbi delivers"]
+  subgraph work["Per task — you choose, Orbi delivers"]
     direction LR
-    w1["5 You label an<br/>Issue ai-ready"] -.-> w2["Orbi codes<br/>ai-in-progress"] --> w3["PR opened<br/>ai-pr-opened"] --> w4{"Independent<br/>review"}
+    w1["5 You hand off an<br/>Issue ai-ready"] -.-> w2["Orbi codes<br/>ai-in-progress"] --> w3["PR opened<br/>ai-pr-opened"] --> w4{"Independent<br/>review"}
     w4 -->|clean| w5["Merged<br/>ai-merged"]
     w4 -->|finding| w6["Repair<br/>ai-fix-needed"] --> w3
     w4 -->|unsafe to fix| w7["Stops for you<br/>ai-blocked"]

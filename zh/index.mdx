@@ -12,18 +12,18 @@ Orbi Cloud 跑的是和自托管 [Orbi](https://orbi.build/?ref=cloud-docs-index
 
 ## 全流程
 
-虚线箭头之后的部分全是自动的。你要做的是四步开通，之后每份工作打一个标签，再加上决定什么时候发版。
+你授权并连接仓库，选择要做的任务，决定什么时候发版。准备工作环境和读仓库生成建议都会自动开始；确认交付后，Orbi 自动完成开发到合并。
 
 ```mermaid
 flowchart TD
   subgraph setup["开通（只做一次）"]
     direction LR
-    s1["1 用 GitHub<br/>登录"] --> s2["2 安装<br/>GitHub App"] --> s3["3 连接一个<br/>仓库"] --> s4["4 准备工作环境<br/>10–20 秒"]
+    s1["1 用 GitHub<br/>登录"] --> s2["2 安装<br/>GitHub App"] --> s3["3 连接一个<br/>仓库"] --> s4["4 准备工作环境<br/>10–20 秒"] --> s5["读仓库、生成建议<br/>约 2 分钟"]
   end
 
-  subgraph work["每份工作：你打标签，Orbi 交付"]
+  subgraph work["每份工作：你选任务，Orbi 交付"]
     direction LR
-    w1["5 你给 Issue<br/>打 ai-ready"] -.-> w2["Orbi 写代码<br/>ai-in-progress"] --> w3["提交 PR<br/>ai-pr-opened"] --> w4{"独立评审"}
+    w1["5 你交付 Issue<br/>ai-ready"] -.-> w2["Orbi 写代码<br/>ai-in-progress"] --> w3["提交 PR<br/>ai-pr-opened"] --> w4{"独立评审"}
     w4 -->|干净| w5["已合并<br/>ai-merged"]
     w4 -->|有问题| w6["修复<br/>ai-fix-needed"] --> w3
     w4 -->|无法安全修复| w7["停下等你<br/>ai-blocked"]
