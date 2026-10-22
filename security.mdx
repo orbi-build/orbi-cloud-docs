@@ -31,7 +31,7 @@ If you [configure your own key](/model-configuration), it is encrypted at rest w
 - **Never written to logs**, and never included in support evidence.
 - Never shown in an interface that could be screen-shared or pasted.
 
-Enter it on the model configuration page and nowhere else. Do not email it, and do not paste it into an Issue, a pull request or a comment — those are public to anyone who can read your repository, and a key in an Issue body stays in the edit history.
+Enter it on **Settings → AI model** and nowhere else. Do not email it, and do not paste it into an Issue, a pull request or a comment — those are public to anyone who can read your repository, and a key in an Issue body stays in the edit history.
 
 ## Isolation between tenants
 
@@ -52,7 +52,7 @@ This is a security property, and also a practical constraint on what you can ask
 
 ## What Orbi writes to your repository
 
-Orbi pushes to the branch it creates for a delivery, and merges the reviewed pull request into your base branch. It does not push directly to your base branch outside that reviewed merge, and it never force-pushes a shared branch or moves an existing tag.
+Ordinary development changes go to a delivery branch and reach your base through the reviewed PR. A release is different: its state machine can commit and push the declared version-file update directly to the base branch, without a PR. Connecting an empty repository can also create its first README commit. Orbi never force-pushes a shared branch or moves an existing tag.
 
 The complete record of everything it did is in your repository: the Issue's labels and comments, the pull request, the review rounds, and — for a release — the tag and the GitHub Release notes carrying the gate evidence.
 
@@ -64,13 +64,11 @@ The connect page warns you about this, and [explains the three ways to resolve i
 
 ## What your CI guarantees
 
-Orbi's merge and release gates read **your repository's** check runs. That means the strength of the guarantee is the strength of your test suite:
+Merge and release gates read the checks your repository reports for the relevant commit. Your CI determines what those checks cover; a green check does not prove behavior that its tests never exercised. Orbi's review follows your repository's own testing and coverage requirements.
 
-- Good unit tests → the merge gate guarantees your code logic.
-- A business-flow end-to-end test → it guarantees the loop closes.
-- No CI at all → both gates pass with explicit "no check runs" evidence, and the change ships on the review's judgement alone.
+A pending check waits, and a failed check prevents merge or release. An ordinary PR with no reported checks can still proceed through review and the other merge conditions, but its test status is not reported as passed. If the human acceptance gate is enabled, missing machine-verifiable evidence belongs in the checklist for a person to confirm.
 
-Running no CI is a choice Orbi permits and records honestly, rather than pretending to a guarantee it cannot make.
+A release with no observed CI can proceed with explicit evidence that there was nothing to gate. When the base already has CI, a new version commit with no checks yet must wait for checks to register. See the engine's [workflow reference](https://docs.orbi.build/workflow).
 
 ## Upgrades never interrupt a delivery
 

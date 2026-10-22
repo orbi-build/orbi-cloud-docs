@@ -1,0 +1,63 @@
+---
+title: "Telegram notifications and message language"
+sidebarTitle: "Notifications"
+description: "Get a Telegram message when a task needs you or an Orbi pull request merges, and choose the language of Orbi's messages."
+---
+
+Open your avatar menu, choose **Settings**, and scroll to **Notifications**. One setup covers every repository under the account shown at the top of the page. Switching between your personal account and an organization switches whose settings you edit.
+
+You supply a Telegram bot and choose one private chat or group. You do not need to install or operate a runner locally.
+
+## When Orbi sends a message
+
+| Event | What the message tells you |
+|---|---|
+| A task stops at `ai-blocked` | Which Issue needs a decision; read Orbi's comment before restarting it |
+| A task needs more detail (`ai-needs-detail`) | Which request needs clarification; [add the missing detail](/troubleshooting#orbi-needs-more-information) |
+| A reviewed PR is waiting for merge (`ai-awaiting-merge`) | Which PR is ready for your approval or merge |
+| A delivery checklist needs your confirmation | That Orbi is waiting for your review; inspect the checklist on the Issue |
+| A PR that Orbi opened is merged | Which change merged, including when a person merged it |
+
+Orbi sends these when it makes the transition; adding a label by hand does not replay a past notification. These are reminders about task results and decisions. Telegram is not a live activity stream, and replying to the bot does not steer a delivery. Put corrections on the [GitHub Issue](/delivery-lifecycle#steering-a-delivery-that-is-already-running).
+
+A notification failure does not fail the task or change its labels. GitHub and the [status page](/status-page) remain the places to inspect the delivery.
+
+## Set it up
+
+1. **Create a bot.** In Telegram, open [@BotFather](https://t.me/BotFather), send `/newbot`, and follow the prompts. Paste the token it returns into **Bot token** in Orbi's settings.
+2. **Say hello to your bot.** Open your new bot and tap **Start** or send `/start`. To use a group, add the bot to that group, allow it to post, and send `/start@yourbot` there, replacing `yourbot` with its username.
+3. **Choose where messages go.** Click **Get Chat ID**, then pick your private chat or group. Orbi fills in **Chat ID**. You can also enter a known ID yourself; keep the minus sign at the start of a group ID.
+4. **Verify and save.** Orbi checks the token and chat with Telegram before saving. If that check fails, your previous settings stay unchanged. After a successful first save, notifications are on and a test message is requested.
+
+Check Telegram for the test message, usually within **1–2 minutes**. A saved configuration alone does not prove the message arrived. Later configuration changes usually take effect within **1–10 minutes**.
+
+Group members can see the task titles and links in the messages. Choose a destination appropriate for the repositories in this account, including private ones. Keep the bot token out of Issues, screenshots and support messages; after saving, Orbi displays only a mask. When editing the Chat ID later, leave **Bot token** empty to keep the saved token.
+
+## Test, pause or remove notifications
+
+After saving, the section shows **On** and the saved destination, or **Off** with the configuration kept.
+
+- **Send test message** requests another test without saving edits to the fields. Notifications must be on.
+- **Turn off notifications** keeps the saved configuration and stops new notifications after the change takes effect. **Turn on notifications** enables it again and requests a test.
+- **Delete configuration** opens a confirmation. Deleting clears the saved notification setup; setting it up again requires the token and Chat ID. This is different from turning it off.
+
+Editing a field does not change the active destination. Click **Verify and save** to apply it. Saving while notifications are off keeps them off; use **Turn on notifications** to start receiving messages again.
+
+## Choose the message language
+
+On the same **Settings** page, open **Orbi message language**, choose **中文** or **English**, and click **Save**. It controls Orbi's own GitHub comments and Telegram messages for this account. The default is English when no choice has been saved.
+
+The website language is separate: change it from the avatar menu. Switching the website to Chinese does not change the language of Orbi's delivery messages. Your Issue text, titles and code are not translated by this setting. A repository's explicit `message_language` policy can override the GitHub comment language in that repository. Telegram still uses the account language; see the engine's [comment-language reference](https://docs.orbi.build/workflow#comment-language).
+
+## When setup or delivery fails
+
+| What you see | What to do |
+|---|---|
+| No chats found | Send `/start` to your own bot, or `/start@yourbot` in the group, then click **Get Chat ID** again |
+| Another service has taken over this bot | Create a dedicated bot, or enter a known Chat ID manually |
+| Invalid bot token | Copy the complete token from BotFather and save again |
+| Telegram cannot find the chat | Check that the bot has received `/start`, is in the group and can post; preserve the group's negative ID |
+| Telegram is rate limiting, unavailable or did not respond | Retry later; the failed validation did not replace your saved settings |
+| Saved, but no test arrived | Allow 1–2 minutes, check the saved Chat ID and the bot's access to the chat, then request another test |
+
+If messages still do not arrive, [contact support](/troubleshooting#getting-help) with the account, repository, Issue link and approximate time. Do not include the bot token.

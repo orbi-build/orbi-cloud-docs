@@ -1,140 +1,87 @@
 ---
 title: "The status page"
 sidebarTitle: "Status page"
-description: "How do I read the Orbi Cloud status page?"
+description: "How do I read progress, tasks, projects and usage in Orbi Cloud?"
 ---
 
-
-The status page at **[orbi.build/api/](https://orbi.build/api/)** is where you see what Orbi is doing, what needs you, and what you have used.
-
-The top of the page contains the account menu, title and What’s new. **Next** shows the current state and what needs you; while delivery is in progress, suggestions may appear in a separate **Orbi also suggested these** card. Project summaries and the folded **Usage and settings** follow.
-
-With one project, its task history appears directly. With several projects, the overview does not combine task tables; open a project row to see its details. **Next** can be absent from a multi-project overview when there is nothing to act on.
-
-<Frame caption="The status page for an account with tasks in progress and one stuck task">
-  <img src="/images/status-active.png" alt="The status page for an account with tasks in progress and one stuck task" />
-</Frame>
+The [status page](https://orbi.build/api/) shows deliveries in progress, items that need you, connected projects and usage. Open your avatar menu for account settings; it contains **AI model**, **Orbi message language** and **Notifications**.
 
 ## Next
 
-The **Next** card shows setup progress, the current state and actions that need you. Once the environment is ready, the suggestion area moves from reading the repository to **Orbi suggests starting with these**. While reading, it shows recently read files and **About 2 minutes. You can leave this page**.
+The main card changes with the work. During setup it shows your current step. During a delivery it names the Issue and shows **Code → Review → Merge**, the latest reported activity and a folded **Latest progress**. The report describes what the session most recently said it was doing; the Issue labels and pull request determine the delivery result.
 
-For a new task, **Review draft** opens the draft before you confirm. For an existing Issue, **Let Orbi do this** dispatches immediately. **Write a request** and the other existing Issues remain available. See [your first Issue](/first-issue).
-
-<Frame caption="Suggestions ready, with Write a request and existing Issues still available">
-  <img src="/images/status-suggestions.png" alt="Suggestions ready, with Write a request and existing Issues still available" />
-</Frame>
-
-With several projects, switch the suggestions between **All** and project buttons. **All** initially shows one suggestion per ready project; **Show N more** expands the others. Select a project before requesting a new batch.
-
-<Frame caption="Multi-project overview: suggestions across projects and project summaries">
-  <img src="/images/status-projects.png" alt="Multi-project overview: suggestions across projects and project summaries" />
-</Frame>
+When something needs you, the main card shows the selected task’s reason and action. With several waiting items, use **N more need you** to move to another without leaving the page. The multi-project overview can also show the total number of items needing attention. Follow the action for the selected Issue: approve its PR, add detail, correct a missing base branch, or read Orbi’s blocked comment. See [troubleshooting](/troubleshooting).
 
 ### Headlines
 
-| Headline | What it means |
+| Situation | What to do |
 |---|---|
-| **Connect a repository first** | No repository is connected yet |
-| **Orbi is preparing the work environment** | A newly connected repository's [work environment is being prepared](/provisioning); usually 10–20 seconds |
-| **Work environment preparation failed; Orbi will retry automatically** | Preparation failed for a transient reason; Orbi retries on its own |
-| **Work environment preparation failed (on Orbi's side)** | A platform-side failure; no action needed. See [preparing the work environment](/provisioning#when-provisioning-fails) |
-| **Orbi is waiting for your first request** | Ready. Hand over an existing Issue with **Let Orbi do this**, or use **Write a request** |
-| **Orbi is coding** | A task is being worked on |
-| **A task is waiting for other tasks to finish first** | A task is queued behind the Issues it depends on |
-| **A task has been waiting for over 10 minutes** | A task was handed to Orbi more than 10 minutes ago and has not been picked up |
-| **A task is not in the current version and will not start yet** | A task is outside the current version, so Orbi will not start it for now (free accounts see **A task will not start yet**) |
-| **Orbi is checking the change #N and merges it into your project when it passes** | The independent check is running |
-| **You need to approve this change on GitHub** | Branch protection requires an approval before merge. See [branch protection](/connect-repository#branch-protection-that-blocks-every-merge) |
-| **Orbi needs your confirmation** | A result is waiting for a human to confirm it |
-| **Orbi is stuck and needs you** | A task is stuck, or something on your side needs fixing; the item under it says which |
-| **Orbi is done. Waiting for your next request** | Everything is finished; Orbi is waiting for the next task |
-| **Can't reach Orbi right now** | Orbi could not read your task state at the moment; the card offers **Refresh status page** or **Reconnect repository** |
-| **Monthly AI usage is used up; new tasks are paused** | A paid account has used this month's AI usage; see below |
+| Work environment is being prepared | Wait; usually 10–20 seconds. If it takes longer or fails, use the reason and help link on the page |
+| Orbi is reading the repository | Wait for suggestions, usually about 2 minutes, or write your own request |
+| Orbi is waiting for the first request | Review a suggestion, dispatch an existing Issue, or use **Write a request** |
+| A delivery is running | Read its Issue and progress; another request queues behind it |
+| A task needs detail | Use **Add the details** to update the original request |
+| A change needs approval | Open its PR on GitHub and review it |
+| A task is blocked | Read the explanation and repair the cause before [restarting it](/troubleshooting#ai-blocked) |
+| Free deliveries or monthly usage are used up | Follow [limits and quotas](/limits-and-quotas); running tasks are not interrupted |
+| Task state cannot be read | Follow the refresh or sign-in instruction; an unreadable state is not an empty queue |
 
-Two situations put their own way out in the items waiting on you:
+Suggestions can appear in the main card while a project is idle, or in a separate **Orbi also suggested these** card while work is running. **Review draft** opens a new task for you to check; **Let Orbi do this** dispatches an existing Issue immediately. **Why this** expands the reason for a suggestion.
 
-- **Free runs used up**: the card has a **Subscribe** button. See [billing](/billing).
-- **A paid account's monthly AI usage used up**: Orbi pauses new tasks, while tasks already running finish normally. The card offers **Use your own API key**, and on Solo also an upgrade to Pro; otherwise usage resets automatically on the 1st of next month at 8:00 Beijing time. See [limits and quotas](/limits-and-quotas#when-the-monthly-quota-runs-out).
-
-<Frame caption="The Next card after the free runs are used up">
-  <img src="/images/status-free-exhausted.png" alt="The Next card after the free runs are used up, with a Subscribe button" />
-</Frame>
+With several projects, use **All** or a project selector. **All** starts with one suggestion per ready project; expand the remaining suggestions to see more. Choose a project before requesting a new batch. See [your first Issue](/first-issue).
 
 ### Setup progress
 
-Seven steps track onboarding: **Sign in** → **Install GitHub App** → **Connect repository** → **Prepare work environment** → **Write your first request** → **Create Release** → **Subscribe**. A finished step is marked **Done**; the current one is highlighted, marked **Waiting for you**, **Orbi is working** or **Failed**. Only **Install GitHub App**, **Connect repository**, and **Write your first request** have a **How to do this step ▶** video link. If preparing the work environment fails, that step also shows how to contact us.
+There are **five** steps: **Sign in → Install GitHub App → Connect repository → Prepare work environment → Write your first request**. The last step is complete once you hand over the first task; it does not wait for a merge. Release creation and subscription are separate actions, not extra setup steps.
 
-When it is the current step, step 6, **Create Release**, is marked **Optional**; skipping it does not affect Orbi's tasks. For accounts still on the free runs, the last step reads **First 3 free**, with a folded **Pricing and account** note. Once the required steps are done and you have had a delivery, the whole list folds into **All done**.
-
-<Frame caption="A brand-new account, waiting for its first repository">
-  <img src="/images/status-new-tenant.png" alt="A brand-new account, waiting for its first repository" />
-</Frame>
+The installation, connection and first-request steps have short how-to videos. The environment step updates automatically while Orbi prepares it.
 
 ## Project overview
 
-The **Project** / **Projects** section has one row per connected project, summarizing its current state. **Manage projects** shows the count and limit and opens the page for adding or disconnecting repositories.
+The **Project** / **Projects** area summarizes each connected project's current work, including the Issue number and title when work is running. **Manage projects** opens repository management and shows the used allowance and plan limit. An official example copy is listed separately and does not use a real-project slot.
 
-With several projects, click a row for its base branch, current status, task history, versions, **View on GitHub** and **Create an Issue on GitHub**. Versions are available on Free too. Return to the overview to inspect another project.
+With one project, its current state and task history appear directly. With several, open a project row for its base branch, current version, progress, task history and **Versions**. The multi-project overview does not merge every project's task table into one.
 
-<Frame caption="Selected project: current status and task history">
-  <img src="/images/status-project-detail.png" alt="Selected project: current status and task history" />
-</Frame>
+For a public project, expand **README badge** to preview its delivery badge and copy Markdown into your README. After the first merge, **View badge** highlights that entry. The count updates automatically, with a cache of about an hour; clicking the badge opens the project's delivery records. The status page offers this entry for public real projects, not private repositories or example copies.
+
+To change the base branch, open **Manage projects → Change base branch**, choose an existing branch and save. See [connecting a repository](/connect-repository#changing-the-base-branch).
 
 ## Task history
 
-Your tasks, split across three tabs. Each task appears in exactly one of them:
+For a single project, **Task history** is a list showing the Issue, status and update time. It starts with the three most recently updated tasks; **Show all (N)** expands the rest and **Hide** folds them again. Times use your browser's local time zone.
+
+In the selected-project details of a multi-project account, history still uses three tabs:
 
 | Tab | What is in it |
 |---|---|
-| **In progress** | Open tasks that have no pull request yet: queued, being coded, waiting for detail, or stuck before a pull request was opened |
-| **Under review** | Open tasks that have a pull request: going through the independent check, being revised after it, waiting for your approval, or stuck after the pull request was opened |
-| **Done** | Finished tasks: merged, or closed |
+| **In progress** | Open tasks without a PR: queued, coding, needing detail, or blocked before a PR |
+| **Under review** | Open tasks with a PR: checking, fixing, waiting for approval, or blocked after a PR |
+| **Done** | Merged or closed tasks |
 
-The columns are **Task**, **Status**, **Change** and **Updated**. The task links to the Issue on GitHub and the change links to its pull request. Once a task reports usage, a line under its title shows **Took**, **AI calls**, the token total (split into input, output and cache) and, if the run was interrupted, how many times it **Resumed**. A queued task also notes that it starts after the current one, or which Issues it is waiting on.
+A queued task says what it is waiting for, including unresolved Issue dependencies. **View progress** selects that task's progress. When usage has been reported, the task also shows elapsed time, AI calls and tokens split into input, output and cache; an interrupted run can show its resume count. Usage that has not been reported is not counted as zero.
 
-The status chips map to the `ai-*` labels described in [the delivery lifecycle](/delivery-lifecycle#what-each-label-means): **Queued**, **In progress**, **PR under review**, **Fix needed**, **Awaiting approval**, **Needs detail**, **Needs your confirmation**, **Blocked**, **Done**, **Closed**. Open the Issue to see the reason and the next step in Orbi's comment.
+The [delivery lifecycle](/delivery-lifecycle#what-each-label-means) explains each status. Open the Issue for Orbi's explanation and the PR for the change. If the history cannot be read, that area says so; this does not mean there have been no tasks.
 
 ## Usage and settings
 
-Folded by default: click **Usage and settings** to open it. It opens by itself when preparing the work environment failed, so the reason is in view.
+Open the folded **Usage and settings** area for monthly usage, connected-project preparation state and disconnected projects. A preparation failure opens it so you can see the reason, time, error ID and repair step.
 
-<Frame caption="Usage and settings, opened: monthly AI usage, connected projects and versions">
-  <img src="/images/status-settings.png" alt="Usage and settings, opened: monthly AI usage, connected projects and versions" />
-</Frame>
+**Monthly AI usage** shows platform tokens and the cached share. Paid plans also show their allowance, percentage used and reset time: the 1st at 08:00 Beijing time (00:00 UTC). The bar turns amber at 80% and red at 100%. Free accounts have a one-time delivery allowance, not a monthly token allowance. Usage on your key has a separate **Monthly AI usage (your API key)** line. Cached tokens count toward the allowance too. See [limits and quotas](/limits-and-quotas).
 
-**Monthly AI usage.** The **Monthly AI usage** line shows the tokens used this month and the **Cached** share. Paid accounts also see the plan's allowance, the **Used** percentage and **resets on the 1st at 8:00 Beijing time**, with a bar that turns amber at 80% and red at 100%. Free accounts use the one-time allowance of 3 merged deliveries rather than a monthly token allowance; this line shows their actual token usage. With your own API key configured, usage that ran on your key gets its own line, **Monthly AI usage (your API key)**. Cached tokens count toward the allowance the same as input and output tokens, so the cached share does not change how fast it is used. See [limits and quotas](/limits-and-quotas).
-
-**Connected projects.** Each project with its **Base branch** and **Preparation status** (**Provisioned**, **Provisioning** or **Provisioning failed**); when preparation failed, it also shows **Reason:**, **Time:**, **Error ID:** and **Next:**. Projects you disconnected are listed in the folded **Disconnected projects** section.
-
-<Frame caption="When preparing the work environment fails, Usage and settings opens with the reason, time, error ID and next step under Connected projects">
-  <img src="/images/status-provision-failed.png" alt="When preparing the work environment fails, Usage and settings opens with the reason, time, error ID and next step under Connected projects" />
-</Frame>
-
-**Versions.** Available on every plan. Open it here for one project, or in that project’s detail view with several projects. You can inspect the current version, create and switch versions, and initiate a release task. This does not remove [free-delivery or plan limits](/limits-and-quotas). See [releases](/releases).
-
-For accounts on the free runs, a **Founding-member offer** note can also appear here after the first merged delivery.
+**Versions** is available on every plan: under **Usage and settings** for a single project, or in the selected project's details when there are several. It lets you create and switch versions and initiate a release task. See [releases](/releases).
 
 ## The account menu and the footer
 
-Subscription, **AI model settings**, language, support, these docs and **Sign out** are all in the account menu under your avatar. See [the account menu](/sign-in#the-account-menu).
+Use **Settings** in the avatar menu for your model key, Orbi's message language and [Telegram notifications](/notifications). The menu also contains subscription, website-language, support, documentation and sign-out actions. Available items depend on the account and subscription.
 
-The footer on every page has two lines. The first is **Need help?** followed by the **Telegram group**, **Report a bug (GitHub, public)** and support@orbi.build; the second links to **Status** (the service status page), **Privacy**, **Terms** and **GitHub**.
+The footer offers the Telegram support group, support email and a link to book 15 minutes with the founder, plus service status, privacy, terms and GitHub. Support links do not configure your bot notifications.
 
 ## On a phone
 
-The page is designed to work at phone width; the tables reflow rather than scrolling sideways.
-
-<Frame caption="The status page at phone width">
-  <img src="/images/status-active-mobile.png" alt="The status page at phone width" />
-</Frame>
-
-<Frame caption="Multi-project suggestions and summaries at phone width">
-  <img src="/images/status-projects-mobile.png" alt="Multi-project suggestions and summaries at phone width" />
-</Frame>
+The same actions are available on a phone. Expand progress, task history and settings as needed; the selected task and its available action remain together.
 
 ## Refreshing
 
-The page updates itself during environment preparation and while reading for suggestions; you can leave it. Otherwise reload for the current state. Task status is read live from GitHub.
+The page observes delivery state about every **15 seconds** while visible. It pauses observation in a hidden browser tab and refreshes when you return. Environment preparation and repository reading also update without a manual reload.
 
-If Orbi cannot reach GitHub at the moment, the page says **Can't reach Orbi right now** rather than showing you a misleading empty list.
+A permission error or rate limit pauses progress observation and offers **Refresh progress**. If sign-in expires, sign in again. A report that has stopped arriving is not proof of success or failure: inspect the Issue and PR for the current result.

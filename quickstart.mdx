@@ -17,15 +17,11 @@ You do not need a big or important repository to try it. Installing on a single 
 
 ## The page that guides you
 
-**Setup progress** shows where you are: sign in, install the App, connect a repository, prepare the environment, write the first request, create a release, and subscription or the free allowance. Videos are available for **Install GitHub App**, **Connect repository**, and **Write your first request**. **Create Release** is optional; after the required steps and a delivery, the list folds into **All done**.
+**Setup progress** has five steps: sign in, install the App, connect a repository, prepare the environment and hand over the first request. The fifth step finishes when the request is handed off, without waiting for a merge. Installation, connection and the first request have how-to videos. Release creation and subscription are separate from setup.
 
 ## 1. Sign in with GitHub
 
 Open **[orbi.build/api/](https://orbi.build/api/)** and click **Sign in with GitHub**.
-
-<Frame caption="The Orbi Cloud sign-in page, with the Sign in with GitHub button">
-  <img src="/images/signin.png" alt="The Orbi Cloud sign-in page, with the Sign in with GitHub button" />
-</Frame>
 
 GitHub asks you to authorize Orbi Cloud. This step only establishes who you are; it does not give Orbi access to any repository yet.
 
@@ -37,7 +33,7 @@ The page opens in Chinese if your browser prefers Chinese. Switch with 🇨🇳 
 
 ## 2. Install the Orbi GitHub App
 
-If you started from a button on orbi.build, GitHub may already have shown you the App installation screen. In that case skip ahead to step 3. Otherwise click **Install the Orbi GitHub App** on the page you landed on, and you are sent to GitHub.
+If you started from a button on orbi.build, If you already completed the App installation on GitHub and returned to Orbi, skip ahead to step 3. Seeing the installation form without completing it is not enough. Otherwise click **Install the Orbi GitHub App** on the page you landed on, and you are sent to GitHub.
 
 On GitHub's installation screen, choose the account or organization that owns your repository, select **Only select repositories**, tick the repository you want Orbi to work in, and click **Install**.
 
@@ -51,10 +47,6 @@ Already connected and on the status page? Skip to step 4. If the selection form 
 
 Pick your repository from the **Repository** list (with more than 8 repositories, a **Search repositories** box appears above it; type part of the name to filter). Then check **Base branch (usually the default)**, the branch Orbi opens its pull requests against. Selecting a repository loads its real branches and preselects the default one, so usually you just confirm. Click **Connect repository**.
 
-<Frame caption="The Connect repository page, with the Repository and Base branch (usually the default) lists">
-  <img src="/images/connect.png" alt="The Connect repository page, with the Repository and Base branch (usually the default) lists and the Connect repository button" />
-</Frame>
-
 <Note>
 A repository marked **(Issues disabled; enable them first)** has to have Issues enabled first, under the repository's Settings → Features. If your repository is missing from the list entirely, open **Cannot find your repository?** for the link to add it to the App installation.
 </Note>
@@ -67,7 +59,7 @@ After you connect a repository, Orbi builds an isolated work environment for it 
 
 **Success:** **Prepare work environment** is marked **✓ Done**. Orbi then says it is reading the repository to pick things it can do right away, and shows recently read files. Suggestions usually take about 2 minutes; you can leave the page. Environment preparation and reading for suggestions are separate steps.
 
-If preparation fails instead, the status page says so in the **Next** card, and **View failure reasons and repair steps** shows the reason and what to do. Most failures are platform-side and recover on their own. See [provisioning](/provisioning#when-provisioning-fails).
+If preparation fails instead, the status page says so in the main status card, and **View failure reasons and repair steps** shows the reason and what to do. Most failures are platform-side and recover on their own. See [provisioning](/provisioning#when-provisioning-fails).
 
 ## 5. Give Orbi its first task
 
@@ -77,11 +69,7 @@ When suggestions are ready, the status page shows **Orbi suggests starting with 
 - **Existing Issue:** click **Let Orbi do this** to apply `ai-ready` and dispatch it immediately.
 - **Your own task:** use **Write a request**, pick another existing Issue shown on the page, or create an Issue on GitHub and add `ai-ready`.
 
-Use **Get new suggestions** for another batch, or **Get suggestions** when none are available. You can write your own request at any point.
-
-<Frame caption="Suggestions ready: review a new draft, or dispatch an existing Issue">
-  <img src="/images/status-suggestions.png" alt="Suggestions ready: review a new draft, or dispatch an existing Issue" />
-</Frame>
+Use **Show others** for another batch, or **Get suggestions** when none are available. You can write your own request at any point.
 
 <Warning>
 **The `ai-ready` label is what starts the work.** **Hand off to Orbi** and **Let Orbi do this** add it for you; if you write the Issue yourself on GitHub, add it yourself. An Issue without it is never picked up, however long it waits.
@@ -89,13 +77,17 @@ Use **Get new suggestions** for another batch, or **Get suggestions** when none 
 
 With the environment ready and quota available, a task normally starts within about a minute; queued work and version scope can make it wait. The regular pickup runs every five minutes.
 
-**Success:** within a few minutes the label `ai-in-progress` appears on the Issue, the headline changes to **Orbi is coding**, and the task shows up under **In progress** in **Task history**.
-
-<Frame caption="The status page with tasks: the project overview and the task history, with one stuck task in the Next card">
-  <img src="/images/status-active.png" alt="The status page with a stuck task in the Next card, the project summary and the Task history below" />
-</Frame>
+**Success:** within a few minutes the label `ai-in-progress` appears on the Issue, the page shows the active Issue and its progress, and the task appears in **Task history**.
 
 From here Orbi writes the code, opens a pull request, checks it in a separate session and repairs what the check finds. The Issue reaches `ai-merged` once the checked commit is merged.
+
+## Try the official example
+
+On the connect page, use the link to create a repository from Orbi’s official example, then authorize and connect that copy. Every plan can connect one verified example copy alongside its real projects. Example deliveries do not use your three free deliveries, and the copy does not use a repository slot.
+
+The example offers three ready-made tasks: add a **Clear completed** button, show how many items remain, or keep the list after a refresh. Picking one creates and dispatches an Issue immediately. After it merges, follow **Open your page ↗** when a preview is available, or expand **Run your own latest copy** and follow the commands for your copy. Merging code does not update files you previously downloaded or a page you are already running locally. **View the Issue, PR and check results** shows the delivery evidence.
+
+Use **Connect your own project** to move on to your repository. A normal repository does not receive the example exemption merely because it has a similar name.
 
 ## While it runs
 
@@ -103,8 +95,8 @@ You do not have to wait silently. If you realise the Issue was missing something
 
 ## What to do next
 
-- Hand Orbi the next task. Queued tasks show up under **In progress** in **Task history** with the status **Queued**.
-- When enough merged work has piled up to be worth a version, see [releases](/releases). Step 6 of **Setup progress**, **Create Release**, is optional.
+- Hand Orbi the next task. Queued tasks appear in **Task history** with the status **Queued**.
+- When enough merged work has piled up to be worth a version, see [releases](/releases). Releasing is optional and is not a setup step.
 - To understand each label and what moves between them, read [the delivery lifecycle](/delivery-lifecycle).
 - If the Issue reaches `ai-blocked`, read [troubleshooting](/troubleshooting#ai-blocked). That state is waiting on a decision from you.
 - Nothing happened after five minutes? Start at [troubleshooting](/troubleshooting#nothing-happens-after-i-label-an-issue).

@@ -22,7 +22,7 @@ No. Everything happens in your browser and in GitHub. You never get a shell on t
 Yes. The GitHub App works on private repositories you authorize.
 
 **Can I connect more than one repository?**
-On Pro, up to five at once; Free and Solo connect one at a time. On every plan, once you are at the limit you disconnect a repository first, then connect the new one. See [connect a repository](/connect-repository#changing-the-connected-repository).
+On Pro, up to five at once; Free and Solo connect one real project at a time. On every plan, once you are at the limit you disconnect a repository first, then connect the new one. See [connect a repository](/connect-repository#changing-the-connected-repository).
 
 **What should my first Issue be?**
 Start with Orbi’s suggestions after it reads your repository. **Review draft** lets you check a new task before handing it off; **Let Orbi do this** dispatches an existing Issue immediately. You can also write a request or create an Issue on GitHub. Pick a small task with clear acceptance criteria. See [your first Issue](/first-issue) and [write a request](/write-a-requirement).
@@ -61,7 +61,13 @@ The review runs in a separate session that did not write the code, and it repair
 Yes, when the review verdict is clean and the merge gate passes — that is the point of an unattended loop. If you want a human approval on every delivery, set your branch protection to require one; see [security](/security#branch-protection).
 
 **What is `ai-blocked`?**
-A deliberate stop meaning a person has to decide the next step, not a crash. Fix the cause, then re-apply `ai-ready`. See [troubleshooting](/troubleshooting#ai-blocked).
+A deliberate stop meaning a person has to decide the next step, not a crash. Fix the cause, then replace `ai-blocked` with `ai-fix-needed` if the PR is still open, or `ai-ready` if there is no PR. See [troubleshooting](/troubleshooting#ai-blocked).
+
+**Can I get a Telegram reminder instead of keeping the page open?**
+Yes. Open **Settings → Notifications** and configure your bot and Chat ID. One setup covers this account’s repositories. **Orbi message language** controls the messages separately from the website language. See [notifications](/notifications).
+
+**Does trying the official example use my free deliveries?**
+No. One verified official example copy is exempt from both the repository-slot limit and the free-delivery count. See [trying the example](/quickstart#try-the-official-example).
 
 ## Limits and cost
 
@@ -83,7 +89,7 @@ Open **Usage and settings** on the status page and look at the **Cached** percen
 ## Releases
 
 **Does Orbi release automatically?**
-No, never. You start a release with **Create release task** next to the current version, in the **Versions** part of **Usage and settings** on the status page, or by opening a Release Issue with the `ai-release` label yourself. See [releases](/releases).
+You choose the version and release policy. Use **Create release task** in **Versions**, or create an `ai-ready` + `ai-release` Issue. An enabled milestone workflow can also create the release task after a confirmed version decision. See [releases](/releases).
 
 **Does it pick the version number?**
 No. You name it — the next version is a product decision Orbi will not make for you.
@@ -120,4 +126,4 @@ Yes. Every merged delivery gets a **Delivery proof** page with **Copy link** and
 It describes what currently ships, not a roadmap. If a page disagrees with what you see, tell us.
 
 **Where do I get help?**
-The Telegram group — **Join the Telegram group for support** in the account menu, or **Telegram group** in the page footer. You can also use **Report a bug (GitHub, public)** for a bug you are happy to report in public. Billing questions go to support@orbi.build, or use **Email us** in the account menu. See [getting help](/troubleshooting#getting-help).
+Use **Get support on Telegram** in the avatar menu or footer. For private account or billing questions, email support@orbi.build; the help line also offers **Book 15 min with the founder ↗**. See [getting help](/troubleshooting#getting-help).

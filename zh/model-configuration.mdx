@@ -24,11 +24,7 @@ description: "我必须配置模型吗，怎么改成用自己的 API key？"
 
 ## 怎么配
 
-在 Orbi Cloud 任意页面点右上角的头像，选「AI 模型设置」，打开的页面标题是「模型配置」。本月额度用完时，状态页上的「改用自己的 API key」也会链到这里。
-
-<Frame caption="模型配置页面，包含 provider、baseUrl、model_id 和 apiKey 字段">
-  <img src="/images/zh/model-config.png" alt="模型配置页面，包含 provider、baseUrl、model_id 和 apiKey 字段" />
-</Frame>
+点右上角头像，进「设置」里的「AI 模型」。同页还包含消息语言和通知。本月额度用完时，状态页的「改用自己的 API key」也指向这一段。
 
 1. 「provider」：从列表里选。选中之后 base URL 会自动填好。
 2. 「baseUrl」：自动填好，可以改。只有在你用代理或私有网关时才需要改。
@@ -44,10 +40,6 @@ description: "我必须配置模型吗，怎么改成用自己的 API key？"
 ## 你的 key 怎么存
 
 你的 API key 静态加密存储，回显给你时永远是掩码，字段标签显示的是类似「apiKey（当前：••••1234）」的样子，从不显示 key 本身。它不会写进日志，不会进支持用的证据包，也不会出现在任何可能被分享出去的界面里。
-
-<Frame caption="已保存的配置：不在内置列表里的 provider 按原值保留，已保存的模型，key 以掩码显示">
-  <img src="/images/zh/model-config-set.png" alt="已保存的配置：不在内置列表里的 provider 按原值保留，已保存的模型，key 以掩码显示" />
-</Frame>
 
 不要用邮件发你的 key，也不要粘进 GitHub Issue、pull request 或评论。就在这个页面上填，你只需要这一个通道。
 
@@ -76,7 +68,9 @@ description: "我必须配置模型吗，怎么改成用自己的 API key？"
 | Cerebras | Cerebras | `https://api.cerebras.ai/v1` |
 | 火山引擎方舟 | 火山方舟 | `https://ark.cn-beijing.volces.com/api/v3` |
 | Anthropic（兼容层） | Anthropic（兼容层） | `https://api.anthropic.com/v1` |
-| Google Gemini（兼容层） | Google Gemini（兼容层） | `https://generativelanguage.googleapis.com/v1beta/openai` |
+| Google Gemini | Google Gemini | `https://generativelanguage.googleapis.com/v1beta` |
+
+Google Gemini 使用原生 API。以前保存过的 Gemini 官方兼容地址会自动适配，不需要重新保存。Anthropic 仍是兼容选项。
 
 每个 provider 都在「model_id」下拉框里给出一份已知 model ID 的列表。这份列表是为了方便你选，并不限制你：「手填其他模型」接受该 provider 提供的任何 model ID。
 
@@ -88,11 +82,11 @@ description: "我必须配置模型吗，怎么改成用自己的 API key？"
 
 随便选一个 provider 当起点，然后把「baseUrl」改成你网关的 URL，用「手填其他模型」输入 model ID。任何 OpenAI 兼容的端点都能用。保存时照样会对你填的 URL 跑连接测试。你的配置按你填的原样存下来，回显时也不做改动。
 
-已保存的 provider 如果不在内置列表里，会像上面截图那样带着「（不在内置 provider 列表，按原值保存）」显示；已保存的模型如果不在该 provider 的列表里，会带着「（已保存）」显示。
+已保存的 provider 如果不在内置列表里，会带着「（不在内置 provider 列表，按原值保存）」显示；已保存的模型如果不在该 provider 的列表里，会带着「（已保存）」显示。
 
 ## 移除你的 key
 
-模型配置页上没有删除按钮。想只用平台通道，请[联系我们](/zh/troubleshooting)移除你的 key。想换一个 key，直接保存新的覆盖旧的就行。
+「AI 模型」这一段没有删除按钮。想只用平台通道，请[联系我们](/zh/troubleshooting)移除你的 key。想换一个 key，直接保存新的覆盖旧的就行。
 
 ## 用 BYOK 之后有什么变化
 

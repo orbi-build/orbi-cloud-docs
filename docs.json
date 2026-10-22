@@ -28,6 +28,7 @@
               "connect-repository",
               "provisioning",
               "model-configuration",
+              "notifications",
               "billing"
             ]
           },
@@ -74,6 +75,7 @@
               "zh/connect-repository",
               "zh/provisioning",
               "zh/model-configuration",
+              "zh/notifications",
               "zh/billing"
             ]
           },

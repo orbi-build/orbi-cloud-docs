@@ -38,10 +38,6 @@ If Orbi's AI model service is temporarily unavailable and you have not set your 
 
 A failure is never a dead end. The **Next** card on the status page says **Work environment preparation failed:** and tells you which of three situations you are in; **View failure reasons and repair steps** jumps to that repository's cell in the **Connected projects** table, with the reason and the next step.
 
-<Frame caption="A failed provisioning that is on Orbi's side, with no action needed from you">
-  <img src="/images/status-provision-failed.png" alt="The status page with the Prepare work environment step marked Failed, a Next card saying work environment preparation failed on Orbi's side, and Provisioning failed with an error ID in the Connected projects table" />
-</Frame>
-
 | Status page headline | Whose move it is |
 |---|---|
 | **Orbi is stuck and needs you** | Yours. The cause is on your side, and the next step says what to change |
@@ -62,13 +58,13 @@ The reason reads **Orbi's GitHub App installation or authorization is no longer 
 
 The reason reads **The API key was rejected**. Your own API key was rejected by the provider.
 
-**What to do:** open **AI model settings** from the account menu and correct the key. See [model configuration](/model-configuration). Saving retries provisioning automatically; you do not need to reconnect the repository.
+**What to do:** open **Settings → AI model** from the account menu and correct the key. See [model configuration](/model-configuration). Saving retries provisioning automatically; you do not need to reconnect the repository.
 
 ### The AI model service could not be reached
 
 The reason reads **Unable to reach the AI model service (the API key or baseUrl may be wrong)**. The key or the baseUrl may be wrong, or the provider is unreachable.
 
-**What to do:** check the baseUrl and key in **AI model settings**, and use **Test connection** before saving. As above, saving retries provisioning automatically.
+**What to do:** check the baseUrl and key in **Settings → AI model**, and use **Test connection** before saving. As above, saving retries provisioning automatically.
 
 ### A platform-side failure
 
@@ -85,9 +81,5 @@ When the cause is on your side, fixing the cause retries it: saving corrected AI
 ## After provisioning succeeds
 
 The environment stays in place for later tasks. Orbi then reads the repository and suggests work it can do, usually in about 2 minutes. This is separate from preparing the environment. You can leave and return to review a suggested draft, or [write your own request](/write-a-requirement).
-
-<Frame caption="The environment is ready; Orbi is reading the repository for suggestions">
-  <img src="/images/status-reading.png" alt="The environment is ready; Orbi is reading the repository for suggestions" />
-</Frame>
 
 Connecting another repository provisions a fresh environment for it, and disconnecting a repository reclaims its environment.

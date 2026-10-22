@@ -7,21 +7,13 @@ description: "怎么发一个版本，Orbi 在打 tag 之前会检查什么？"
 
 你在状态页上把一次发版规划成一个版本，等它的工作做完再开始发版；之后 Orbi 按确定的流程把它发出去。
 
-发版永远不是自动的。Orbi 不会替你判断这些工作能不能发，也永远不会替你递增版本号，下一个版本是什么是产品决策。你把版本号定下来之后，Orbi 每次都做一样的事：过门禁，逐条核验 scope，bump 版本号，等 CI，打 tag，发布，关闭 milestone。
+你在状态页或 GitHub 决定版本并发起发布任务。之后 Orbi 核验范围和检查，按需更新指定版本文件，发布 tag 与 GitHub Release，再关闭 milestone。引擎的里程碑推进流程也可以在版本决策确认后创建发布任务，不会替你决定版本号。
 
 发版不是一次开发交付。没有模型会话，也没有 pull request，它跑的是一个固定的状态机。
 
 ## 状态页上的版本
 
 所有套餐都能使用版本。单项目时在状态页展开「用量与设置」→「版本」；多个项目时先进入该项目详情。版本管理和发版入口可见，不会增加免费交付次数或解除套餐额度。发版仍由你发起。
-
-<Frame caption="版本：当前版本、未发布的版本和新建版本输入框">
-  <img src="/images/zh/status-versions.png" alt="版本：当前版本、未发布的版本和新建版本输入框" />
-</Frame>
-
-<Frame caption="免费账户也可查看和管理版本">
-  <img src="/images/zh/status-free-versions.png" alt="免费账户也可查看和管理版本" />
-</Frame>
 
 免费次数用完后，仍可新建版本和 Release 任务，但新的 Release 任务不能开始。订阅后在该 Issue 上重新加 `ai-ready` 才会派发。发版本身没有 PR，不计入前 3 次成功合并的交付；开始时仍需要可用名额。
 
@@ -34,7 +26,7 @@ description: "怎么发一个版本，Orbi 在打 tag 之前会检查什么？"
 
 ### 当前版本
 
-当前版本是你告诉 Orbi 正在做哪个版本的方式。设置了当前版本时，Orbi 只认领属于这个版本 milestone 的 `ai-ready` Issue。不在这个版本里的 `ai-ready` Issue 会等着，状态页显示「有任务不在当前版本里，暂时不会做」，并提供「移到版本」（移进当前版本）或「切换到版本」（切到这张 Issue 所属的版本）。
+开放的「当前版本」限定新认领的 `ai-ready` Issue，只做这个 milestone 里的票；其他票等待，页面可提供「移到版本」或「切换到版本」。当前 milestone 已关闭且没有更新的开放 milestone 时，新认领不按里程碑过滤，配置值仍保留。有更新的开放 milestone 时，自动推进还是开版本确认票，由仓库的 `auto_next_milestone` 决定。已有交付的接续不受新票认领范围限制。
 
 没有设置当前版本时，所有 `ai-ready` Issue 都可以被认领。用 Orbi 完全可以不用版本，只有当你想分批发布时它才有意义。
 
@@ -50,7 +42,7 @@ description: "怎么发一个版本，Orbi 在打 tag 之前会检查什么？"
 
 一个版本的工作都进去了之后，如果它还不是当前版本，先点「切换到这个版本」，再在它那一行点「创建 Release 任务」。
 
-Orbi 会开出 Release Issue。发版会等这个版本里进行中的任务做完（单次最多等 30 分钟，超时就停下并说明原因），然后更新版本号、打 tag、发布 GitHub Release，发布成功后关闭这张 Issue。仓库里有版本号文件的话，改版本号的提交会合并到项目；网站会不会跟着变，取决于你的部署方式。
+Orbi 会开出 Release Issue。同一个 milestone 还有其他开放 Issue 时，发布票保持 `ai-ready` 排队，不会开始累计 30 分钟发布超时。范围就绪后，Orbi 执行发布，按需更新版本文件，打 tag，发布 GitHub Release 并关闭发布票。版本文件更新后，网站何时变化仍由你的发布或部署方式决定。
 
 ### milestone 是必需的
 
@@ -75,7 +67,7 @@ Orbi 会探测你的项目用什么声明版本号，按这个顺序找：
 
 `pyproject.toml`、`package.json`、`pom.xml`、`build.gradle`、`build.gradle.kts`、`gradle.properties`、`Cargo.toml`、`composer.json`、`pubspec.yaml`
 
-一个都没有时，这次发版是**只打 tag**：不 bump 版本号，只有 tag 和 GitHub Release。Orbi 不会猜。与其默认回退到 `pyproject.toml` 然后改错文件，它宁可报告探测失败。
+一个都没有时是**只打 tag**：不修改版本文件，只生成 tag 和 GitHub Release。读不出仓库目录是需要重试的错误；成功读取后确实没有支持的版本文件，则是正常的 tag-only 结果。
 
 ## 自己手写 Release Issue
 
@@ -96,13 +88,13 @@ Orbi 会探测你的项目用什么声明版本号，按这个顺序找：
 
 门禁按顺序执行，查不了的门禁算没过。
 
-**先冻结 base。** 发版 commit 就是认领那一刻你基础分支的 tip，此后所有判断都针对这一个 commit。
+**先冻结起始 base**：发布从基础分支的一个确定提交开始。需要改版本号时，会生成要发布的版本提交；检查和 tag 必须对应实际发布的那个提交。
 
-**这个版本的 milestone 里不能有未完成的工作。** 里面还有 Issue 处于 `ai-in-progress`、`ai-pr-opened` 或 `ai-fix-needed` 时，发版先等它们，最多 30 分钟；到时还没做完，发版就停下并说明原因。开着的 PR 故意*不*算门禁：一个开着的 PR 是队列状态，不代表这个版本的任何结论。
+**先检查 milestone，再认领发布票**：有其他开放 Issue 就继续排队。认领后出现同 milestone 的 `ai-in-progress`、`ai-pr-opened` 或 `ai-fix-needed` 交付时，执行中的门禁才等待这些任务，默认上限 30 分钟。单独的 `ai-ready` 不属于这层等待。仅有开放 PR 本身不构成发布门禁。
 
 **发版 commit 上的 CI 必须是绿的。** 这就是测试验收，也是这里最值得搞明白的一条：
 
-> **你的 CI 决定了 Orbi 保证什么。** 门禁读的是你仓库在发版 commit 上的 GitHub Actions check runs。你把单元测试放进去，发版就保证你的代码逻辑；你把业务流程 e2e 放进去，它就保证这条流程能走通。完全不跑 CI 时，门禁带着没有 check run 的明确证据通过，版本照样发出去，只是少了它唯一的测试验收。
+仓库上报的检查决定有哪些自动验收证据。从未观察到 CI 时，发布可以带着无检查证据通过，但这不证明测试通过。基础分支已有 CI 时，新推送的版本提交暂时没有检查，需要等检查注册；待完成或失败的检查不会当作通过。
 
 pending 的 check 不算失败：门禁会等最终结论，默认最多等 30 分钟，等待期间持续上报进度。等待超时会如实报成超时，绝不会伪装成 CI 失败。
 
@@ -110,7 +102,7 @@ pending 的 check 不算失败：门禁会等最终结论，默认最多等 30 �
 
 ## 产出什么
 
-- 在发版 commit 上创建一个**带注释的 tag**，用普通 push 推上去，永远不用 `--force`。如果 tag 已存在，它必须恰好指向这个 commit，否则发版失败，不会去移动它。
+- 在发版 commit 上创建一个**带注释的 tag**，用普通 push 推上去，永远不用 `--force`。已有 tag 不会移动；真正的 tag 冲突会让发布停下。恢复发布时，可以沿用已经位于基础分支历史中的既有 tag 提交。
 - 发布一个 **GitHub Release**，release notes 里带完整证据：版本号、tag、发版 commit、逐条 scope 证据、门禁证据和测试证据。
 - **关闭 milestone**。
 
@@ -124,7 +116,7 @@ CI 红了或超时会走正常的失败路径，Issue 被标记 `ai-blocked` 并
 
 ## 为什么发版保持手动
 
-release 标签是 Orbi 唯一不会自己打的开关。循环里其他环节可以自动，是因为错了能收回来：坏 PR 关掉就是了，受阻的 Issue 重新派发就是了。已经发布的 tag 和 GitHub Release 是公开的，收回来代价大得多，所以这个决定留给人。
+版本和发布策略由你决定。可以在页面手动发起，或建带 `ai-ready` 与 `ai-release` 的 Issue；也可以在确认版本后，按已启用的里程碑流程创建发布任务。发布状态机负责检查和发布，不会独立决定产品范围。
 
 <Note>
 发版状态机属于引擎，不属于 Cloud。它的完整参考，包括每一道门禁、接续行为和写下的证据，在 [docs.orbi.build/zh/workflow](https://docs.orbi.build/zh/workflow)。
