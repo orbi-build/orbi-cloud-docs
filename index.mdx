@@ -7,7 +7,7 @@ description: "What is Orbi Cloud and what do I get from it?"
 
 Orbi Cloud is the hosted version of Orbi’s **software dark factory**: you define the goal and acceptance criteria, and Orbi takes a GitHub Issue through implementation, tests, independent review, fixes, and merge. Orbi operates the infrastructure.
 
-After you connect a repository, Orbi reads it and suggests work it can do. Review a new task’s draft before handing it off, or dispatch an existing Issue with **Let Orbi do this**. You can also **Write a request** yourself or label an Issue `ai-ready` in GitHub. Orbi delivers the work in an isolated workspace and merges the exact reviewed commit. Issues, pull requests and release evidence stay in your repository.
+After you connect a repository, Orbi reads it and suggests work it can do. Review a new task’s draft before handing it off, or dispatch an existing Issue with **Let Orbi do this**. You can also **Write a request** yourself or label an Issue `ai-ready` in GitHub. Orbi delivers the work in an isolated workspace and merges the reviewed change after its merge checks pass. Issues, pull requests and release evidence stay in your repository.
 
 Orbi Cloud runs the same delivery engine as self-hosted [Orbi](https://orbi.build/?ref=cloud-docs-index), which is open source. The difference is who operates the runner: with Cloud, Orbi does.
 
@@ -40,7 +40,7 @@ flowchart TD
 
 You decide which task starts and when to release. The handoff buttons apply `ai-ready` for you; reading the repository or opening a suggested draft does not dispatch work.
 
-The status page walks you through the same path. Its **Setup progress** list marks the step waiting on you. Release is optional; the last step shows the free allowance on Free, so subscribing is not required for your first delivery.
+The status page guides you through five setup steps, ending when you hand over the first request. Releasing is optional, and subscribing is not required for the first three merged deliveries. You can also [try the official example](/quickstart#try-the-official-example) without using those free deliveries.
 
 ## What you actually do
 
@@ -86,9 +86,11 @@ The current prices, the yearly option and any founding offer are on the [pricing
 
 ## What Orbi Cloud does not do
 
-It does not discover repositories on its own — it only ever works in the repositories you connect. It does not start a release on its own; the release Issue carries the `ai-release` label, which only a human can set. It does not push to your protected branches outside of the reviewed merge, and it does not touch a delivery that is already running when the platform is upgraded.
+It does not discover repositories on its own — it only ever works in the repositories you connect. A release follows your version decision and release policy; it runs through an Issue carrying `ai-ready` and `ai-release`. Ordinary code changes reach the base through reviewed PRs; release version updates and empty-repository initialization have the [documented direct-write paths](/security#what-orbi-writes-to-your-repository), and it does not touch a delivery that is already running when the platform is upgraded.
 
 Read [security](/security) for the full boundary list, including where your model key is stored and what the runner can reach.
+
+Use **Settings** in your avatar menu to configure [Telegram notifications and Orbi’s message language](/notifications), independently of the website language.
 
 ## Where to go next
 

@@ -19,6 +19,7 @@ The open-source delivery engine lives in [orbi-build/orbi](https://github.com/or
 | `connect-repository.mdx` | Choosing the repository and base branch, branch protection, several repositories, deactivating |
 | `provisioning.mdx` | What provisioning does, and how failures are classified |
 | `model-configuration.mdx` | The included quota, BYOK, the supported providers |
+| `notifications.mdx` | Account-wide Telegram setup, message language, testing, pausing and recovery |
 | `billing.mdx` | The Free, Solo and Pro plans, subscribing, the billing portal, cancelling |
 | `first-issue.mdx` | Suggested tasks, existing Issues, dispatching work and writing acceptance criteria |
 | `delivery-lifecycle.mdx` | The `ai-*` label state machine, the independent review, sharing a delivery |
@@ -37,7 +38,7 @@ generator — including the Mintlify GitHub App's authoring bot — at this repo
 
 - **The Chinese pages under `zh/`.** These are translations maintained against
   the English pages, not machine output regenerated on demand. A generator that
-  only knows about the English pages deletes all sixteen of them.
+  only knows about the English pages deletes the Chinese page set.
 - **The `mermaid` diagrams.** Four pages carry flow diagrams —
   `index.mdx` (the end-to-end path and the delivery loop), `delivery-lifecycle.mdx`,
   and their `zh/` counterparts. They encode the actual label state machine.
@@ -75,7 +76,7 @@ The images in `images/` are captured from the application, not mocked up. They a
 
 Re-capture them after a user-visible UI change. English pages use `images/`; Chinese pages use `images/zh/`, captured with the product’s Chinese interface. Run the documentation screenshot harness against the same application version as production, with fixture tenants and locale-specific sample data. Capture both languages (`--locale en` and `--locale zh`) and include every scene in the harness so the next run preserves it. Do not replace DOM text or override product fonts for screenshots.
 
-The last full capture was on **2026-10-15**, against **Orbi Cloud v0.7.40**. It includes repository reading, ready suggestions, suggested drafts, multi-project overview/detail, free-account versions, and phone layouts. Environment preparation usually takes 10–20 seconds; reading for suggestions is a separate step of about 2 minutes.
+The archived image set was captured on **2026-10-15**, against **Orbi Cloud v0.7.40**. The 2026-10-22 update removes references to screenshots of the retired seven-step setup, standalone model page and old status layouts. The pages no longer embed this archived image set; descriptions and the hand-written diagrams describe the current product. Re-capture a scene against the current product before reintroducing it.
 
 ## Contributing
 

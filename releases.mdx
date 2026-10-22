@@ -7,21 +7,13 @@ description: "How do I cut a release, and what does Orbi check before it tags on
 
 You plan a release as a version on the status page, and when its work is done you start the release; Orbi runs it deterministically from there.
 
-Releases are never automatic. Orbi does not decide that your work is ready to ship, and it never increments a version for you — the next version is a product decision. What Orbi does, once you have named the version, is run the release the same way every time: check the gates, verify the scope item by item, bump the version, wait for CI, tag, publish, and close the milestone.
+You choose the version and initiate a release task, from the status page or GitHub. Orbi then verifies its scope and checks, updates the declared version file when needed, publishes the tag and GitHub Release, and closes the milestone. Enabling the engine’s milestone-advance workflow can also create a release task after a confirmed version decision; it does not choose a version on your behalf.
 
 A release is not a development task. There is no model session and no pull request; it runs a fixed state machine.
 
 ## Versions on the status page
 
 Versions are available on every plan. For one project, open **Usage and settings** → **Versions**; with several projects, open the project’s detail view first. Version management and the release entry point do not add free deliveries or remove plan limits. You still decide when to release.
-
-<Frame caption="Versions: the current version, unreleased versions and the New version box">
-  <img src="/images/status-versions.png" alt="Versions: the current version, unreleased versions and the New version box" />
-</Frame>
-
-<Frame caption="A free account can also view and manage versions">
-  <img src="/images/status-free-versions.png" alt="A free account can also view and manage versions" />
-</Frame>
 
 After the free allowance is used up, you can still create versions and release tasks, but a new release task cannot start. Subscribe, then reapply `ai-ready` to that Issue to dispatch it. A release has no PR and does not count as one of the first 3 merged deliveries; it still needs an available slot to start.
 
@@ -34,7 +26,7 @@ A version is a GitHub milestone whose title is the version number, like `v1.2.3`
 
 ### The delivery scope
 
-The delivery scope is the version shown as **Current version:**. It is how you tell Orbi which version you are working on. While one is set, Orbi only picks up `ai-ready` Issues that belong to that version's milestone. An `ai-ready` Issue outside it waits, and the status page says **A task is not in the current version and will not start yet**, offering **Move to version** (the current one) or **Switch to version** (the one the Issue belongs to).
+An open **Current version** limits fresh `ai-ready` pickup to that milestone; Issues outside it wait. The status page can offer **Move to version** or **Switch to version**. If the current milestone is closed and there is no newer open milestone, pickup runs without a milestone filter while keeping the configured value. If a newer open milestone exists, automatic advancement or a version-confirmation Issue depends on the repository’s `auto_next_milestone` policy. Existing deliveries resume independently of the fresh-pickup scope.
 
 While no version is set, every `ai-ready` Issue is eligible. You do not need versions at all to use Orbi; they only matter once you want to ship in batches.
 
@@ -50,7 +42,7 @@ Version numbers must be a leading `v` followed by dot-separated numbers, such as
 
 When the work for a version is in, make it the current version with **Switch to this version** if it is not already, then click **Create release task** on its row.
 
-Orbi opens the Release Issue. The release waits for the version's in-progress tasks to finish (up to 30 minutes per attempt; past that it stops and says why), then updates the version number, tags, publishes the GitHub Release, and closes the Issue once the release is published. If your repository has a version file, the version change is merged into your project; whether your website changes depends on how it is deployed.
+Orbi opens the Release Issue. While any other Issue in that milestone is still open, it leaves the release queued at `ai-ready`; this wait does not consume a 30-minute release timeout. After the milestone is ready, Orbi runs the release, updates the version file when applicable, tags and publishes the GitHub Release, and closes the Issue. Updating the version file affects your site only through your own release or deployment process.
 
 ### The milestone requirement
 
@@ -75,7 +67,7 @@ Orbi detects how your project declares its version, checking in this order:
 
 `pyproject.toml`, `package.json`, `pom.xml`, `build.gradle`, `build.gradle.kts`, `gradle.properties`, `Cargo.toml`, `composer.json`, `pubspec.yaml`
 
-If none is present, the release is **tag-only** — no version bump, just the tag and the GitHub Release. Orbi refuses to guess: rather than defaulting to `pyproject.toml` and bumping the wrong file, it reports that the probe failed.
+If none is present, the release is **tag-only**: no version-file update, just the tag and GitHub Release. A failure to read the repository tree is an error to retry; a successful read finding no supported file is a valid tag-only result.
 
 ## Writing the Release Issue yourself
 
@@ -96,13 +88,13 @@ The section is parsed strictly: a missing, duplicated or unknown field fails imm
 
 The gates run in order, and a gate that cannot be checked counts as failed.
 
-**The base is frozen first.** The release commit is exactly the tip of your base branch at claim time; everything after this is evaluated against that one commit.
+**The starting base is frozen first.** The release starts from a specific base-branch commit. When a version bump is needed, that produces the version commit to be released; the checks and tag must refer to the actual release commit.
 
-**No unfinished work in the release's milestone.** If any Issue in it is still `ai-in-progress`, `ai-pr-opened` or `ai-fix-needed`, the release waits for it, up to 30 minutes; if it is still unfinished then, the release stops and says why. Open pull requests are deliberately *not* a gate — an open pull request is queue state, not a statement about the release.
+**Milestone admission comes before execution.** Another open Issue in the milestone keeps the release unclaimed. If a delivery appears after admission, the in-run gate waits for same-milestone `ai-in-progress`, `ai-pr-opened` or `ai-fix-needed` work, with its own default 30-minute bound. A bare `ai-ready` label is not an in-run delivery wait. Open PRs alone are not a release gate.
 
 **CI must be green on the release commit.** This is the test acceptance, and it is the part worth understanding properly:
 
-> **Your CI decides what Orbi guarantees.** The gate reads your repository's GitHub Actions check runs on the release commit. Put unit tests there and the release guarantees your code logic. Put a business-flow end-to-end test there and it guarantees the loop closes. Run no CI at all and the gate passes with explicit "no check runs" evidence — the release still ships, without its only test acceptance.
+Your repository’s checks determine the automated evidence available. With no observed CI, the release can proceed with explicit no-checks evidence; that does not prove tests passed. Once CI has been observed on the base, a newly pushed version commit with no checks yet must wait for them to register. Checks that are pending or failed cannot be treated as passed.
 
 A pending check is not a failure: the gate waits for the final conclusion, up to 30 minutes by default, reporting progress while it waits. A timeout is reported as a timeout, never disguised as a CI failure.
 
@@ -110,7 +102,7 @@ A pending check is not a failure: the gate waits for the final conclusion, up to
 
 ## What it produces
 
-- An **annotated tag** at the release commit, pushed normally — never with `--force`. If the tag already exists it must point at exactly that commit, or the release fails rather than moving it.
+- An **annotated tag** at the release commit, pushed normally — never with `--force`. An existing tag is never moved; a conflicting tag stops the release. A resumed release can use its existing tag commit when that commit is already in the base branch’s history.
 - A **GitHub Release** whose notes carry the full evidence: version, tag, release commit, per-item scope evidence, gate evidence and test evidence.
 - The **milestone closed**.
 
@@ -124,7 +116,7 @@ The version bump may already be on your base branch at that point, which is an a
 
 ## Why releases stay manual
 
-The release label is the one switch Orbi never flips itself. Everything else in the loop is automatic because a mistake is recoverable — a bad pull request is closed, a blocked Issue re-dispatched. A published tag and a GitHub Release are public and much harder to take back, so that decision stays with a person.
+You decide the version and release policy. Start a release manually with the page action or an `ai-ready` + `ai-release` Issue, or use the engine’s configured milestone workflow after confirming its version decision. The release state machine then performs the checks and publication; it does not independently decide product scope.
 
 <Note>
 The release state machine is the engine's, not Cloud's. Its full reference — every gate, the resume behaviour and the evidence it writes — is at [docs.orbi.build/workflow](https://docs.orbi.build/workflow).

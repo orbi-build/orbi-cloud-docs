@@ -16,9 +16,11 @@ Don't want to write the Issue yourself? Click **Write a request** on the status 
 1. In your connected repository on GitHub, create an Issue describing one change.
 2. Add the **`ai-ready`** label.
 
+For a new bug report, add `bug` alongside `ai-ready`. Use `ai-fix-needed` only to resume a delivery that already has a PR, not to classify a new bug.
+
 The label already exists — [preparing the work environment](/provisioning) created it along with the rest of the `ai-*` set.
 
-Once Orbi picks it up, `ai-in-progress` appears on the Issue, the status page headline changes to **Orbi is coding**, and the Issue shows up under **In progress** in **Task history**.
+Once Orbi picks it up, `ai-in-progress` appears on the Issue, the status page shows the active Issue and its progress, and the Issue appears in **Task history**.
 
 <Warning>
 The single most common reason nothing happens is a missing label. An Issue without `ai-ready` is never picked up, however long it waits — writing the Issue is not enough on its own.
@@ -35,11 +37,7 @@ After connecting, Orbi reads the repository and suggests work it can do. **Orbi 
 - **Existing Issue:** **Let Orbi do this** applies `ai-ready` and dispatches it immediately.
 - **New task:** **Review draft** opens a draft already prepared for you. Ask for changes if needed, then click **Hand off to Orbi** to create and dispatch the Issue.
 
-Use **Why this ›** to expand the reason. **Get new suggestions** reads the repository again; with no suggestions available, use **Get suggestions**. Reading usually takes about 2 minutes, and you can leave the page.
-
-<Frame caption="Review a new draft, or dispatch an existing Issue immediately">
-  <img src="/images/status-suggestions.png" alt="Review a new draft, or dispatch an existing Issue immediately" />
-</Frame>
+Use **Why this ›** to expand the reason. **Show others** reads the repository again; with no suggestions available, use **Get suggestions**. Reading usually takes about 2 minutes, and you can leave the page.
 
 The other entry points remain available: **Write a request**, other existing Issues listed on the page, and GitHub’s new-Issue form. Existing-Issue buttons (**Let Orbi do this** or **Try →**) dispatch immediately. **Create an Issue on GitHub** preselects `ai-ready`, so submitting enters the queue directly. Issues already carrying any `ai-*` label are excluded from the available list.
 
@@ -65,13 +63,13 @@ The things that consistently matter:
 
 Your first Issue is worth choosing deliberately. A well-scoped small change — the starter task, a bug with a clear reproduction, a missing test, a contained refactor — finishes fast and shows you the whole loop. Save the ambiguous architectural work until you have seen how Orbi handles your codebase.
 
-Note that **your CI defines what is guaranteed.** The review runs your repository's test suite; the release gate reads your repository's check runs. If your repository has strong tests, Orbi's guarantees are strong. If it has none, both gates pass vacuously and the delivery ships on the review's judgement alone.
+Your CI determines which automated checks the merge and release gates can enforce. The independent review follows the tests and coverage requirements declared by your repository. With no CI, the absence of reported checks does not prove tests passed; the review and the remaining merge conditions still apply. A pending or failed check is not treated as a pass. See [security](/security#what-your-ci-guarantees).
 
 ## Steering a delivery in flight
 
 You do not have to wait for the result to correct course. While an Issue is `ai-in-progress`, add a comment with the new decision or edit the Issue body — the running session picks the correction up and restarts with it, usually within a minute.
 
-A delivery accepts 3 such restarts, and only comments from the repository's owner, maintainers, members or collaborators can steer it. See [steering a delivery](/delivery-lifecycle#steering-a-delivery-that-is-already-running).
+A delivery accepts 3 such restarts, and only comments from people with write permission in the repository can steer it. See [steering a delivery](/delivery-lifecycle#steering-a-delivery-that-is-already-running).
 
 ## Priority
 
@@ -85,4 +83,4 @@ Add the **`p0`** label to have an Issue picked up ahead of others. The pickup or
 
 Follow it on the Issue's labels or on [the status page](/status-page). The sequence you are looking for is `ai-in-progress` → `ai-pr-opened` → `ai-merged`; a repair round shows up as `ai-fix-needed` in between, which is normal.
 
-When something needs you — an approval, a confirmation, missing detail, or a blocked Issue — the status page says so in the **Next** card, in the items that need your attention.
+When something needs you — an approval, a confirmation, missing detail, or a blocked Issue — the status page says so in the main status card, in the items that need your attention.

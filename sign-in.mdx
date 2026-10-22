@@ -13,10 +13,6 @@ Orbi Cloud has no password of its own. Your GitHub account is your identity, and
 
 Open **[orbi.build/api/](https://orbi.build/api/)** and click **Sign in with GitHub**.
 
-<Frame caption="The Orbi Cloud sign-in page, with the Sign in with GitHub button">
-  <img src="/images/signin.png" alt="The Orbi Cloud sign-in page, with the Sign in with GitHub button" />
-</Frame>
-
 GitHub shows you its standard authorization screen. Approving it returns you to Orbi Cloud: to the page you were on your way to, or, if the App is not installed yet, to a page with an **Install the Orbi GitHub App** button.
 
 The sign-in requests one OAuth scope, `user:email`: your identity and your email address, nothing more. It does not grant access to any repository's code or Issues. That comes from the GitHub App installation, which is authorized separately and lists its own permissions.
@@ -27,31 +23,23 @@ If you start from a sign-up button on orbi.build and have never installed the Ap
 
 ## The account menu
 
-Once signed in, your GitHub avatar and login sit in the top-right corner of every Orbi Cloud page. Click it to open the account menu:
+Click your GitHub avatar in the top right of any Cloud page. The menu offers website language, subscription actions when applicable, **Settings**, support, online docs and **Sign out**.
 
-<Frame caption="The account menu, opened from the avatar in the top right">
-  <img src="/images/account-menu.png" alt="The account menu, opened from the avatar in the top right, with the language switch, Manage subscription, AI model settings and the support links" />
-</Frame>
+**Settings** opens one page for the currently selected account:
 
-| Item | What it does |
+| Section | What it controls |
 |---|---|
-| Your login and plan | Shows which account you are signed in as and its plan: **Not subscribed**, **Solo**, **Pro**, and so on |
-| 🇨🇳 ZH and 🇺🇸 EN | Switches the interface language |
-| **Manage subscription** or **Subscribe with Stripe** | Opens the Stripe billing portal, or starts a subscription. See [billing](/billing) |
-| **AI model settings** | Your own API key, if you use one. See [model configuration](/model-configuration) |
-| **Join the Telegram group for support** | The support group. See [getting help](/troubleshooting#getting-help) |
-| **Email us** | Emails support@orbi.build; use it for private matters such as your account or billing |
-| **Report a bug (GitHub, public)** | Opens a public issue on GitHub for a bug report, with a reminder not to paste secrets |
-| **Read the online docs** | These pages |
-| **Sign out** | Signs this device out |
+| **AI model** | Your provider, model and API key. See [model configuration](/model-configuration) |
+| **Orbi message language** | The language of Orbi's GitHub comments and Telegram messages |
+| **Notifications** | The Telegram bot and destination shared by this account's repositories. See [notifications](/notifications) |
 
-When you manage more than one installation (your personal account and an organization, say), the menu also shows which installation you are acting on (**Signed in as …, managing the … installation.**) and offers **Switch to the … installation** buttons.
+If you can manage several installations, the menu shows which installation you are acting on and offers a switch to the others. Settings and usage belong to that account, so check the account name before editing.
 
 ## Choosing your language
 
 Orbi Cloud is available in English and Chinese. The page follows your browser's preferred language on the first visit, so it may open in Chinese.
 
-Switch from the account menu, or with the same 🇨🇳 ZH | 🇺🇸 EN switch in the top right of the sign-in page. Your choice is stored in a cookie and remembered for a year, on that browser.
+Switch from the account menu, or with the same 🇨🇳 ZH | 🇺🇸 EN switch in the top right of the sign-in page. Your choice is stored in a cookie and remembered for a year, on that browser. It changes the website only. To change Orbi’s GitHub comments and Telegram messages, use **Settings → Orbi message language**; see [notifications and message language](/notifications#choose-the-message-language).
 
 ## Personal and organization accounts
 
@@ -62,10 +50,6 @@ You sign in the same way either way. When you have access to more than one insta
 ## Signing out
 
 Open the account menu and click **Sign out**.
-
-<Frame caption="The page after signing out, with the You are signed out banner at the top">
-  <img src="/images/signed-out.png" alt="The page after signing out, with the You are signed out banner at the top and the Sign in with GitHub button below" />
-</Frame>
 
 Signing out clears the session on that device only. It does not uninstall the GitHub App, cancel a subscription, or stop a task that is already running.
 

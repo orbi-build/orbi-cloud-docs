@@ -27,15 +27,13 @@ A slot is taken when you label an Issue `ai-ready`, and it is refunded if that d
 
 Counting is per Issue and idempotent: re-labelling the same Issue does not consume another slot. Re-delivering the same Issue after a refund takes a slot again.
 
-Orbi keeps you informed as you go. The merge comment on a free delivery says how many free deliveries remain. On the status page, the **Next** card shows **Free: N left (of 3).**, and the last step of **Setup progress** reads **First 3 free**; hovering over it explains how a task is counted.
+The status page shows the remaining free allowance in its usage summary. Setup has five steps and finishes when you hand over the first request; it does not end with a subscription step.
+
+A verified official example copy is separate: its deliveries do not consume your three free deliveries, and one connected copy does not use a repository slot. This exemption applies to the official template copy, not to an arbitrary repository name.
 
 ### When the allowance runs out
 
 The next Issue you label `ai-ready` has that label removed and gets a comment saying the free deliveries are used up, with a link to subscribe. The status page says **Free 3 used up:** **subscribe to keep delivering →** with a **Subscribe** button.
-
-<Frame caption="The status page after the free deliveries are used up: the Subscribe button and the founding code">
-  <img src="/images/status-free-exhausted.png" alt="The status page after the free deliveries are used up: the Subscribe button and the founding code" />
-</Frame>
 
 To resume, subscribe, then re-apply the `ai-ready` label to the Issue. The label is not restored automatically. Deliveries already in flight when the allowance ran out finish normally.
 
@@ -46,6 +44,8 @@ A paid subscription includes model usage: 400,000,000 tokens a month on Solo, 1,
 Usage counts input tokens, output tokens and cache-read tokens, all at the same weight. Re-delivering the same Issue accumulates: each delivery is a separate run.
 
 How many deliveries that buys depends on how large the tasks and the codebase are, and on prompt caching. The [pricing page](https://orbi.build/cloud/?ref=cloud-docs-limits) gives current measured ranges.
+
+Model usage includes deliveries, drafting requests and generating suggestions. For each, input, output and cache-read tokens count toward usage. Platform usage and usage on your own key are recorded separately.
 
 ### Watching your usage
 

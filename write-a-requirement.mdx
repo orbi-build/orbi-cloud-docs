@@ -11,17 +11,9 @@ You don't have to write the Issue yourself. On the status page (the page you lan
 
 **Review draft** on the status page opens a suggested draft that is already written. Read it, then **Hand off to Orbi**, or tell Orbi below what to change and review the revision first. Opening a suggestion does not create a GitHub Issue.
 
-<Frame caption="A suggested draft: the Issue is created only after you hand it off">
-  <img src="/images/draft-suggestion.png" alt="A suggested draft: the Issue is created only after you hand it off" />
-</Frame>
-
 If the page says you have another draft waiting, **Keep writing that one** returns to it. Suggested drafts are kept separately from the request you wrote yourself.
 
 ## Write and hand off
-
-<Frame caption="The write-a-request page: describe the change in a sentence, or pick an example">
-  <img src="/images/draft-entry.png" alt="The write-a-request page with a text box, the Draft the request button and three examples" />
-</Frame>
 
 1. On the status page, click **Write a request**. The button appears once a GitHub repository is [connected](/connect-repository). If you have connected several, use **Switch project** on the page to pick one.
 2. Under **What would you like to change?**, describe it in plain words: a new feature, a bug fix, a text change. One sentence is enough; a longer description is fine too. Then click **Draft the request**.
@@ -35,18 +27,20 @@ Two cases where the work does not start right away: you are out of free runs (se
 
 If your request can be read more than one way, Orbi asks you rather than guessing. The questions and their options are listed under **Orbi chose these for you**, and Orbi has already picked the option it recommends for each. You will see one of two layouts:
 
-<Frame caption="A draft with Orbi's question under it, the recommended answer already picked">
-  <img src="/images/draft-question.png" alt="A draft followed by Orbi chose these for you and the Hand off to Orbi button" />
-</Frame>
-
 - **A draft with questions under it.** The draft already uses the recommended answers, so if you agree you can hand it off without changing anything. If an answer isn't what you meant, pick another option, or choose **Other (write your own)** and type your own. Then click **Rewrite the draft**; it takes about a minute, and you can hand it off once the new draft is ready. Changed your mind? Click **undo your changes**.
 - **Questions with no draft yet.** Pick your answers the same way, then click **Write the draft**.
 
 To change anything else, write it in the box under the draft and click **Send**. Orbi rewrites the draft, again in about a minute, and keeps what you said before, so you don't have to repeat it.
 
+## Add detail to an existing request
+
+For an Issue at `ai-needs-detail`, click **Add the details** on the status page. **Add detail to a request** shows the original Issue number, **Orbi says it still needs these**, **What was written before**, and a **What to add** box. This page is tied to that Issue and has no project selector.
+
+Write the missing detail and review the revised draft. Handing it off appends the confirmed detail to the original Issue, removes `ai-needs-detail` and adds `ai-ready`; it does not create another Issue. **Write another request** returns to the ordinary request page for a separate task.
+
 ## What gets created
 
-When you hand off, Orbi creates a normal GitHub Issue in your connected repository. Its first line says it was submitted by you through Orbi; that line is currently always in Chinese (由 @your-login 通过 Orbi 提交). After it comes the draft exactly as you approved it. On the status page it appears as a task, showing the Issue title.
+When you hand off, Orbi creates a normal GitHub Issue in your connected repository. Its first line is `Submitted by @your-login via Orbi`, followed by the approved draft. On the status page it appears as a task, showing the Issue title.
 
 The ordinary **Write a request** entry opens the project’s latest ordinary draft. Starting another request makes the new draft the one shown there. Suggested drafts have their own entry points. Unsubmitted drafts are kept for 7 days after their last change; Issues already handed off stay in GitHub.
 
