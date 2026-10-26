@@ -104,6 +104,12 @@ Issue 被 block 的一个高频原因，是要求了交付环境里不可能存�
 
 完整说明见[连接仓库](/zh/connect-repository)。
 
+## GitHub 提示批准新权限
+
+Orbi 的 GitHub App 新增权限后，GitHub 不会自动给已有安装授予，要账号所有者批准。批准前，Orbi 读不到仓库的部分状态（比如 CI 检查结果），PR 可能一直开着、合并不了。
+
+批准方法：在 GitHub 打开 **Settings → Applications → Installed GitHub Apps**，点 Orbi 旁边的 **Configure**，接受页面上待批准的权限请求。组织账号由组织所有者在组织的 **Settings → Third-party Access → GitHub Apps** 里操作。GitHub 也会通知所有者（[GitHub 文档](https://docs.github.com/zh/apps/using-github-apps/approving-updated-permissions-for-a-github-app)）。批准后 PR 还是不动，按本页最后一节「怎么找人」联系我们。
+
 ## GitHub App 被卸载了
 
 状态页会检测到并提示「Orbi 的 GitHub App 已被卸载，重新安装后才能继续。」，给出「重新安装 GitHub App」。在同一个账号下重新安装会接回你原来的租户，历史和配置都还在。之后可能需要重新连接一次仓库。
