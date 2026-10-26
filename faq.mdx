@@ -24,6 +24,9 @@ Yes. The GitHub App works on private repositories you authorize.
 **Can I connect more than one repository?**
 On Pro, up to five at once; Free and Solo connect one real project at a time. On every plan, once you are at the limit you disconnect a repository first, then connect the new one. See [connect a repository](/connect-repository#changing-the-connected-repository).
 
+**Which languages and frameworks does Orbi support?**
+There is no fixed list: Orbi has no language- or framework-specific rules, and relies on your repository's own tests and CI instead. Orbi works with your repository's code and test suite in an isolated environment. It runs the tests, reviews against your testing and coverage requirements, and reads your reported CI checks at the merge gate. What CI guarantees depends on what those tests cover. See [your first Issue](/first-issue#choosing-what-to-start-with) and [what your CI guarantees](/security#what-your-ci-guarantees).
+
 **What should my first Issue be?**
 Start with Orbi’s suggestions after it reads your repository. **Review draft** lets you check a new task before handing it off; **Let Orbi do this** dispatches an existing Issue immediately. You can also write a request or create an Issue on GitHub. Pick a small task with clear acceptance criteria. See [your first Issue](/first-issue) and [write a request](/write-a-requirement).
 
@@ -48,6 +51,9 @@ Usually within a minute. Adding `ai-ready`, on GitHub or from the status page, w
 **How long does a delivery take?**
 It depends entirely on the size of the task. Small, well-specified changes finish quickly; large or vague ones take longer and go through more repair rounds.
 
+**How long until a request is merged?**
+With the environment ready, quota available and no earlier work or version scope holding it up, Orbi usually starts within a minute of adding `ai-ready`; the fallback pickup runs every five minutes. Measurements across Orbi's own three repositories (`orbi`, `orbi-cloud`, `orbi-website`), covering 239 deliveries and calibrated on 2026-09-26, put the median time from Issue creation to merge at about 23 minutes for changes under 100 lines, 60 minutes for the 100–500-line band, and 91 minutes for the 500–2,000-line band (lines added plus deleted). That interval starts at Issue creation, which may precede handoff to Orbi. Queueing and waiting for people to handle blocked deliveries were the main causes of slower deliveries; coding time was not the main cause. These are measurements from Orbi's own repositories, not a delivery-time promise. See [the delivery lifecycle](/delivery-lifecycle) and [troubleshooting](/troubleshooting).
+
 **Can I change my mind while it is working?**
 Yes. Comment on the Issue or edit its body — the running session restarts with your correction. It accepts 3 such restarts, and only trusted repository roles can steer. See [steering a delivery](/delivery-lifecycle#steering-a-delivery-that-is-already-running).
 
@@ -59,6 +65,9 @@ The review runs in a separate session that did not write the code, and it repair
 
 **Does it merge without my approval?**
 Yes, when the review verdict is clean and the merge gate passes — that is the point of an unattended loop. If you want a human approval on every delivery, set your branch protection to require one; see [security](/security#branch-protection).
+
+**My base branch is already failing CI. Can Orbi still merge?**
+When a check fails on both the reviewed PR and its base branch, Orbi pauses the delivery. Its comment says the PR is ready but waiting on the base checks, and lists each failing check with its run link and first error lines. With write permission, reply `/orbi fix-base` on the original delivery Issue to create or reuse an open repair Issue for each failing check, labelled `ai-ready` + `p0` (highest priority). Once all base checks recorded for this pause turn green, the original PR can resume for another review and merge if the merge gate passes. See [the engine's recovery workflow](https://docs.orbi.build/workflow).
 
 **What is `ai-blocked`?**
 A deliberate stop meaning a person has to decide the next step, not a crash. Fix the cause, then replace `ai-blocked` with `ai-fix-needed` if the PR is still open, or `ai-ready` if there is no PR. See [troubleshooting](/troubleshooting#ai-blocked).
