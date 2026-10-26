@@ -104,6 +104,12 @@ Quote the **Error ID** if you contact support. The support email link next to it
 
 Full detail is on [connect a repository](/connect-repository#what-the-errors-mean).
 
+## GitHub asks me to approve new permissions
+
+When Orbi's GitHub App adds a permission, GitHub does not grant it to existing installations until the account owner approves it. Until then, Orbi cannot read some of your repository's state (for example the status of CI checks), so pull requests can stay open without merging.
+
+To approve: on GitHub open **Settings → Applications → Installed GitHub Apps**, click **Configure** next to Orbi, and accept the pending permission request shown there. For an organization, an owner does this under the organization's **Settings → Third-party Access → GitHub Apps**. GitHub also notifies the owner about the request ([GitHub docs](https://docs.github.com/en/apps/using-github-apps/approving-updated-permissions-for-a-github-app)). If a pull request still does not move afterwards, see [getting help](#getting-help).
+
 ## The GitHub App was uninstalled
 
 The status page detects this and says **Orbi's GitHub App was uninstalled. Reinstall it to continue.**, offering **Reinstall the Orbi GitHub App**. Reinstalling on the same account reconnects to your existing tenant — your history and settings are intact. You may need to reconnect the repository afterwards.
