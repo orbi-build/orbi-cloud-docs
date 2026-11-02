@@ -23,7 +23,7 @@ Prices and the yearly option are on the [pricing page](https://orbi.build/cloud/
 
 Your first 3 merged deliveries are free. No card, no subscription.
 
-A slot is taken when you label an Issue `ai-ready`, and it is refunded if that delivery does not end in a merge: an Issue that ends `ai-blocked`, or that you close without merging, gives its slot back. That is why the allowance is described as three *merged* deliveries rather than three attempts. The count does not reset monthly.
+A slot is taken when you label an Issue `ai-ready`, and it is refunded if that delivery does not end in a merge: an Issue that ends `ai-blocked`, that Orbi sends back as needing more detail (`ai-needs-detail`) before starting, or that you close without merging, gives its slot back. That is why the allowance is described as three *merged* deliveries rather than three attempts. The count does not reset monthly.
 
 Counting is per Issue and idempotent: re-labelling the same Issue does not consume another slot. Re-delivering the same Issue after a refund takes a slot again.
 
@@ -33,7 +33,7 @@ A verified official example copy is separate: its deliveries do not consume your
 
 ### When the allowance runs out
 
-The next Issue you label `ai-ready` has that label removed and gets a comment saying the free deliveries are used up, with a link to subscribe. The status page says **Free 3 used up:** **subscribe to keep delivering →** with a **Subscribe** button.
+The next Issue you label `ai-ready` has that label removed and gets a comment saying the free deliveries are used up, with a link to subscribe. The status page says **Your 3 free deliveries are used up:** **subscribe to keep delivering →** with a **Subscribe** button.
 
 To resume, subscribe, then re-apply the `ai-ready` label to the Issue. The label is not restored automatically. Deliveries already in flight when the allowance ran out finish normally.
 
@@ -57,7 +57,7 @@ Open **Usage and settings** on the status page. On a paid plan the **Monthly AI 
 
 Orbi pauses claiming new Issues. Your `ai-ready` labels stay where they are, and deliveries already running finish normally.
 
-The **Next** card says **Monthly AI usage is used up: Orbi has paused new tasks; in-progress ones will finish normally.** and offers the ways out:
+The main status card says **Monthly AI usage is used up: Orbi has paused new tasks; in-progress ones will finish normally.** and offers the ways out:
 
 - **Use your own API key**. Saving a key in the model configuration resumes delivery immediately, does not count against this month, and is billed by your AI model provider. See [model configuration](/model-configuration).
 - **Upgrade to Pro** (shown on Solo), for 1,200,000,000 tokens a month.

@@ -28,7 +28,7 @@ This is the real control, and it lives on GitHub rather than in Orbi's own inter
 If you [configure your own key](/model-configuration), it is encrypted at rest with **AES-256-GCM** and stored encrypted. It is:
 
 - Displayed back to you **masked only** — `••••1234`, never in full.
-- **Never written to logs**, and never included in support evidence.
+- **Never written to logs**.
 - Never shown in an interface that could be screen-shared or pasted.
 
 Enter it on **Settings → AI model** and nowhere else. Do not email it, and do not paste it into an Issue, a pull request or a comment — those are public to anyone who can read your repository, and a key in an Issue body stays in the edit history.
@@ -60,7 +60,7 @@ The complete record of everything it did is in your repository: the Issue's labe
 
 Branch protection interacts with Orbi in a specific way worth knowing: if your base branch requires approving reviews, every delivery stops at the merge step, because Orbi authors and merges as the same App identity and GitHub forbids self-approval.
 
-The connect page warns you about this, and [explains the three ways to resolve it](/connect-repository#branch-protection-that-blocks-every-merge). Requiring a human approval on every delivery is a legitimate choice — you just have to know you are making it.
+The write-a-request page tells you before you hand off a request, and [connect a repository explains the three ways to resolve it](/connect-repository#branch-protection-that-blocks-every-merge). Requiring a human approval on every delivery is a legitimate choice — you just have to know you are making it.
 
 ## What your CI guarantees
 

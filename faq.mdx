@@ -67,7 +67,7 @@ The review runs in a separate session that did not write the code, and it repair
 Yes, when the review verdict is clean and the merge gate passes — that is the point of an unattended loop. If you want a human approval on every delivery, set your branch protection to require one; see [security](/security#branch-protection).
 
 **My base branch is already failing CI. Can Orbi still merge?**
-When a check fails on both the reviewed PR and its base branch, Orbi pauses the delivery. Its comment says the PR is ready but waiting on the base checks, and lists each failing check with its run link and first error lines. With write permission, reply `/orbi fix-base` on the original delivery Issue to create or reuse an open repair Issue for each failing check, labelled `ai-ready` + `p0` (highest priority). Once all base checks recorded for this pause turn green, the original PR can resume for another review and merge if the merge gate passes. See [the engine's recovery workflow](https://docs.orbi.build/workflow).
+When a check fails on both the reviewed PR and its base branch, Orbi pauses the delivery. Its comment says the PR is ready but waiting on the base checks, and lists each failing check with its run link and first error lines. With write permission, reply `/orbi fix-base` on the original delivery Issue to create or reuse an open repair Issue for each failing check, labelled `ai-ready` + `p0` (highest priority). On the status page, **Have Orbi file the fix tickets** posts that command for you. Once all base checks recorded for this pause turn green, the original PR can resume for another review and merge if the merge gate passes. See [troubleshooting](/troubleshooting#checks-on-the-base-branch-itself-are-failing) and [the engine's recovery workflow](https://docs.orbi.build/workflow).
 
 **What is `ai-blocked`?**
 A deliberate stop meaning a person has to decide the next step, not a crash. Fix the cause, then replace `ai-blocked` with `ai-fix-needed` if the PR is still open, or `ai-ready` if there is no PR. See [troubleshooting](/troubleshooting#ai-blocked).
@@ -84,7 +84,7 @@ No. One verified official example copy is exempt from both the repository-slot l
 3 merged deliveries free, then Solo (400M tokens a month, one repository) or Pro (1.2B tokens a month, up to five repositories), billed monthly or yearly. No per-token overage — deliveries pause at the cap instead. Current prices are on the [pricing page](https://orbi.build/cloud/?ref=cloud-docs-faq); see [billing](/billing).
 
 **Do failed deliveries use up my free allowance?**
-No. A delivery that ends blocked or is closed without merging refunds its slot.
+No. A delivery that ends blocked or is closed without merging refunds its slot, and so does a request Orbi sends back as needing more detail (`ai-needs-detail`) before starting.
 
 **How many deliveries does the allowance cover?**
 It depends on task size, codebase size and prompt caching. The [pricing page](https://orbi.build/cloud/?ref=cloud-docs-faq) gives current measured ranges for each plan.
@@ -104,7 +104,7 @@ You choose the version and release policy. Use **Create release task** in **Vers
 No. You name it — the next version is a product decision Orbi will not make for you.
 
 **Why did my release stop at scope derivation?**
-The scope comes from a milestone titled exactly like the version, and it was missing. Use **Create the milestone and continue** on the status page, or create versions with **Create and switch**, which makes the milestone for you.
+The scope comes from a milestone titled exactly like the version, and it was missing. Use **Create the version and continue** on the status page, or create versions with **Create and switch**, which makes the milestone for you.
 
 **Do I have to use versions?**
 No. Until you set a delivery scope, every `ai-ready` Issue is picked up. Versions matter once you want to ship in batches. See [releases](/releases#the-delivery-scope).

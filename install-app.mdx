@@ -11,7 +11,7 @@ Signing in tells Orbi who you are. The App installation is the separate, revocab
 
 ## Install it
 
-Right after your first sign-in, Orbi shows a **Connect repository** page that says **The Orbi GitHub App is not installed yet.** Until the App is installed, the same page appears whether you open the status page or the connect page. The page states what you need to know before installing: installation is free, and Orbi can only change the GitHub repositories you select. Open **All permissions** for the full list. Click **Install the Orbi GitHub App** and you are taken to GitHub's installation screen. (If you started from a sign-up button on orbi.build, you may see that screen straight away.)
+Right after your first sign-in, Orbi shows a **Connect repository** page that says **The Orbi GitHub App is not installed yet.** Until the App is installed, the same page appears whether you open the status page or the connect page. The page states what you need to know before installing: installation is free, and Orbi can only change the GitHub repositories you select. Open **All permissions** for the full list. Click **Install the Orbi GitHub App** and you are taken to GitHub's installation screen.
 
 On GitHub's installation screen:
 
@@ -43,7 +43,9 @@ GitHub shows you the full permission list before you approve. On Orbi's install 
 | Actions | Read-only | To read the check results on Orbi's pull requests in private repositories, so it merges only after your CI passes. Without it Orbi cannot see the checks and waits on the merge indefinitely |
 | Workflows | Read and write | So a task that changes a file under `.github/workflows/` is not silently rejected by GitHub |
 | Variables | Read and write | To sync the repository variable the triage workflow reads |
-| Administration | Read-only | To read repository settings such as branch protection rules, so the connect page can warn you when a rule would block merges. It cannot change repository settings |
+| Administration | Read-only | To read repository settings such as branch protection rules, so Orbi can tell you before handing off, and on the status page, when a rule requires an approval before merge. It cannot change repository settings |
+| Commit statuses | Read-only | To read the status results on Orbi's pull requests before merging. Without it Orbi stops the delivery and asks you to approve the permission |
+| Metadata | Read-only | To read basic repository information, such as the repository list and default branch |
 | Email addresses | Read-only | An account-level permission to read your GitHub email address |
 
 These are the permissions that let an agent do the job you are asking it to do: write code on a branch, open a pull request, and merge it after the check. If your organization's policy does not permit granting write access to pull requests and contents, Orbi Cloud cannot deliver into that repository.
@@ -52,7 +54,7 @@ These are the permissions that let an agent do the job you are asking it to do: 
 
 The App installation decides which repositories Orbi can **see**; connecting a repository decides which ones it **works in**. How many you can connect at once depends on your plan. See [limits and quotas](/limits-and-quotas). If your target repository is not offered on the connect page, the App was installed without it.
 
-To fix that, open **Cannot find your repository?** on the connect page and follow its **GitHub App settings** link. Under **Repository access**, add the repository and click **Save**. GitHub does not send you back to Orbi afterwards, so return to Orbi Cloud and refresh the connect page.
+To fix that, open **Don't see your repository?** on the connect page and follow its **GitHub App settings** link. Under **Repository access**, add the repository and click **Save**. GitHub does not send you back to Orbi afterwards, so return to Orbi Cloud and refresh the connect page.
 
 ## Revoking
 

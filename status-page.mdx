@@ -10,9 +10,9 @@ You can also get here from GitHub: every comment Orbi posts on an Issue has a **
 
 ## Next
 
-The main card changes with the work. During setup it shows your current step. During a delivery it names the Issue and shows **Code → Review → Merge**, the latest reported activity and a folded **Latest progress**. The report describes what the session most recently said it was doing; the Issue labels and pull request determine the delivery result.
+The main card changes with the work. During setup it shows your current step. During a delivery it names the Issue and shows its three steps, **Writing code → Checking → Merging**, the latest reported activity and a folded **Latest progress**. The report describes what the session most recently said it was doing; the Issue labels and pull request determine the delivery result.
 
-When something needs you, the main card shows the selected task’s reason and action. With several waiting items, use **N more need you** to move to another without leaving the page. The multi-project overview can also show the total number of items needing attention. Follow the action for the selected Issue: approve its PR, add detail, correct a missing base branch, or read Orbi’s blocked comment. See [troubleshooting](/troubleshooting).
+When something needs you, the main card shows the selected task’s reason and action. With several waiting items, use **N more need you** to move to another without leaving the page. The multi-project overview can also show the total number of items needing attention. Follow the action for the selected Issue: approve its PR, add detail or confirm Orbi’s proposal, correct a missing base branch, have Orbi file fix tickets for a failing base branch, or read Orbi’s blocked comment. See [troubleshooting](/troubleshooting).
 
 ### Headlines
 
@@ -23,12 +23,14 @@ When something needs you, the main card shows the selected task’s reason and a
 | Orbi is waiting for the first request | Review a suggestion, dispatch an existing Issue, or use **Write a request** |
 | A delivery is running | Read its Issue and progress; another request queues behind it |
 | A task needs detail | Use **Add the details** to update the original request |
+| Orbi proposes a split or acceptance criteria | Check the proposal, **Edit** it if needed, then **Split it like this** or **Start with these**. See [troubleshooting](/troubleshooting#when-orbi-has-already-proposed-a-fix) |
 | A change needs approval | Open its PR on GitHub and review it |
 | A task is blocked | Read the explanation and repair the cause before [restarting it](/troubleshooting#ai-blocked) |
+| A task is blocked because the base branch's own checks fail | **Have Orbi file the fix tickets**, or fix the base branch yourself. See [troubleshooting](/troubleshooting#checks-on-the-base-branch-itself-are-failing) |
 | Free deliveries or monthly usage are used up | Follow [limits and quotas](/limits-and-quotas); running tasks are not interrupted |
 | Task state cannot be read | Follow the refresh or sign-in instruction; an unreadable state is not an empty queue |
 
-Suggestions can appear in the main card while a project is idle, or in a separate **Orbi also suggested these** card while work is running. **Review draft** opens a new task for you to check; **Let Orbi do this** dispatches an existing Issue immediately. **Why this** expands the reason for a suggestion.
+Suggestions can appear in the main card while a project is idle, or in a separate **Orbi also suggested these** card while work is running. **Review draft** opens a new task for you to check; **Let Orbi do this** dispatches an existing Issue immediately, or opens checkout once your free deliveries are used up. **Why this** expands the reason for a suggestion.
 
 With several projects, use **All** or a project selector. **All** starts with one suggestion per ready project; expand the remaining suggestions to see more. Choose a project before requesting a new batch. See [your first Issue](/first-issue).
 
@@ -76,7 +78,7 @@ Open the folded **Usage and settings** area for monthly usage, connected-project
 
 Use **Settings** in the avatar menu for your model key, Orbi's message language and [Telegram notifications](/notifications). The menu also contains subscription, website-language, support, documentation and sign-out actions. Available items depend on the account and subscription.
 
-The footer offers the Telegram support group, support email and a link to book 15 minutes with the founder, plus service status, privacy, terms and GitHub. Support links do not configure your bot notifications.
+The footer offers the Telegram support group, support email and a link to book 15 minutes with the founder, plus service status, privacy, terms and GitHub. A support chat window sits in the bottom-right corner of the page. Support links do not configure your bot notifications.
 
 ## On a phone
 
