@@ -11,7 +11,7 @@ Almost every failure state in Orbi Cloud is self-describing. This page covers wh
 
 ## I do not know what to do next
 
-Look at **Setup progress** for the step waiting on you. Videos are available for installing the App, connecting a repository and writing the first request. The [quickstart](/quickstart) covers the complete path in writing.
+Look at the setup checklist on the status page for the step waiting on you. Videos are available for installing the App, connecting a repository and writing the first request. The [quickstart](/quickstart) covers the complete path in writing.
 
 Once the environment is ready, Orbi reads the repository for suggestions, usually in about 2 minutes. You can leave while it reads. For a new task, **Review draft** and confirm before handing it off; for an existing Issue, **Let Orbi do this** dispatches immediately. With no suggestions, use **Get suggestions**, or **Write a request** directly. See [your first Issue](/first-issue) and [write a request](/write-a-requirement).
 
@@ -21,7 +21,7 @@ Work through this list, in order:
 
 1. **Does the Issue actually carry `ai-ready`?** This is the most common cause. Writing the Issue is not enough; the label is what starts the work. Check the Issue's labels on GitHub. The status page's **Let Orbi do this** button and the write-a-request page's **Hand off to Orbi** add the label for you.
 2. **Is it in a connected repository?** Orbi only reads Issues in the repositories you connected. Check the project overview on the status page.
-3. **Is the work environment ready?** **Prepare work environment** in **Setup progress** must show **Done**. Until then there is nothing to run the delivery.
+3. **Is the work environment ready?** **Prepare work environment** in the setup checklist must show **Done**. Until then there is nothing to run the delivery.
 4. **Has five minutes passed?** Adding the label usually wakes Orbi within a minute; the five-minute timer is the fallback.
 5. **Did the label come back off, with a comment?** Your free deliveries are used up — see [limits and quotas](/limits-and-quotas#when-the-allowance-runs-out). Subscribe, then re-apply the label.
 6. **Does the page say Monthly AI usage is used up; new tasks are paused?** New Issues wait until the allowance resets, or until you add your own model key. The labels stay. See [limits and quotas](/limits-and-quotas#when-the-monthly-quota-runs-out).
@@ -38,7 +38,7 @@ If work environment preparation failed, read the main card and **Usage and setti
 
 - The repair loop ran its rounds without reaching a clean review verdict.
 - An external precondition is missing — something the delivery cannot safely judge or fix on its own.
-- A release's milestone does not exist. The status page offers **Create the milestone and continue** for this one.
+- A release's milestone does not exist. The status page offers **Create the version and continue** for this one.
 - The Issue asks for something the environment cannot do (see below).
 
 **How to recover:** fix the underlying cause first, then swap the label. If the Issue already has a pull request, replace `ai-blocked` with `ai-fix-needed`: Orbi picks up the same pull request again with a fresh review budget. If there is no pull request yet, replace `ai-blocked` with `ai-ready`. Fixing the cause often means editing the Issue — sharpening the acceptance criteria, removing an impossible requirement, or splitting it into smaller Issues.
@@ -57,13 +57,28 @@ An Issue whose acceptance requires "deploy to production and confirm", "log in t
 
 ## Orbi needs more information
 
-The task shows **Needs detail** (`ai-needs-detail`), and the status page shows a card saying the Issue needs more detail. Click **See Orbi’s explanation** to read what is missing, then **Add the details**. That opens the write-a-request page; what you settle there is added to the Issue body, and the Issue goes back to `ai-ready` on its own.
+The task shows **Needs detail** (`ai-needs-detail`), and the status page shows a card saying the request is missing information: what users will see change once it is done, how to tell it is done, and one change per request. Click **Add the details**. That opens the write-a-request page; what you settle there is added to the Issue body, and the Issue goes back to `ai-ready` on its own.
 
-You can also do it on GitHub: answer the question by editing the Issue body, then re-apply `ai-ready`. Orbi re-reads the Issue body when it picks the Issue up again, so a reply in a comment alone is not enough.
+You can also do it on GitHub: add what is missing to the Issue body, then re-apply `ai-ready`. Orbi re-reads the Issue body when it picks the Issue up again, so a reply in a comment alone is not enough.
+
+### When Orbi has already proposed a fix
+
+Sometimes Orbi's comment already contains a proposal, and the card on the status page shows it:
+
+- **Orbi suggests splitting this ticket into N tickets** lists one line per child ticket, each with its acceptance line. **Split it like this** creates those tickets; each is built and merged on its own. This Issue becomes the parent and closes once every child ticket is done.
+- **Orbi drafted the acceptance criteria** lists conditions Orbi drafted from your description. **Start with these** adds them to this Issue, and Orbi starts.
+
+**Edit** opens the proposal inside the card. **Save changes** only edits Orbi's proposal comment on GitHub: it creates no tickets and starts nothing, so press the start button afterwards. The start button posts `/orbi split` or `/orbi amend` on the Issue under your own GitHub account, so you need write access to the repository; replying with that command on GitHub yourself does the same. The card then says **Submitted — Orbi is working on it**, usually for a minute or two. If the card still says Submitted after a few minutes, open the Issue and read Orbi's receipt for the command: when Orbi did not run it, the receipt gives the reason. Fix Orbi's proposal comment on GitHub accordingly, then comment the same command (`/orbi split` or `/orbi amend`) on the Issue again.
 
 ## The configured base branch no longer exists
 
 Open **Manage projects → Change base branch**, select an existing branch and **Save base branch**. For an Issue blocked by that missing branch, Orbi queues it again automatically, usually within 1–2 minutes. Do not disconnect and recreate the project or change labels just to apply this repair. See [changing the base branch](/connect-repository#changing-the-base-branch).
+
+## Checks on the base branch itself are failing
+
+When a check fails both on Orbi's reviewed pull request and on the base branch itself, the pull request cannot fix it, so Orbi pauses the delivery in `ai-blocked` instead of merging. The status page card says the change is written, reviewed and tested, and lists the base branch's failing checks by name.
+
+Click **Have Orbi file the fix tickets**. Orbi files one fix ticket per failing check and queues it, and the card says **Submitted — Orbi is filing the fix tickets.** Once the base branch is green, Orbi resumes the original task on its own, with no label change from you; it still merges only after review, CI and branch protection pass, and still waits for approval if the repository requires one. Fixing the base branch yourself works just as well. The button posts `/orbi fix-base` under your own GitHub account, so it needs write access to the repository. If the base branch is still failing after seven days, Orbi posts one reminder and stops watching; once it is green, replace `ai-blocked` with `ai-fix-needed` yourself.
 
 ## Telegram messages are missing
 
@@ -81,13 +96,13 @@ If the work is simply not wanted, close the Issue. If it was a free delivery, cl
 
 ## Provisioning failed
 
-The **Next** card says whether it needs you, is retrying, or is being recovered by the platform, and **View failure reasons and repair steps** takes you to **Usage and settings** → **Connected projects**, which shows the reason, the time, an **Error ID** and the next step. There are four classes, covered in full on the [provisioning](/provisioning#when-provisioning-fails) page:
+The main status card says whether it needs you, is retrying, or is being recovered by the platform, and **View failure reasons and repair steps** takes you to **Usage and settings** → **Connected projects**, which shows the reason, the time, an **Error ID** and the next step. There are four classes, covered in full on the [provisioning](/provisioning#when-provisioning-fails) page:
 
 | Reason | What to do |
 |---|---|
-| The GitHub App installation or authorization is no longer valid | **Reauthorize the GitHub App**, then come back to the status page |
-| The API key was rejected | Correct your key with **Update model configuration**; saving retries automatically |
-| Unable to connect to the AI model service (the API key or baseUrl may be wrong) | Check the base URL and key, use **Test connection**; saving retries automatically |
+| Orbi's GitHub App installation or authorization is no longer valid | **Reauthorize the GitHub App**, then come back to the status page |
+| The API key was rejected | Correct your key with **Set up AI model**; saving retries automatically |
+| Unable to reach the AI model service (the API key or baseUrl may be wrong) | Check the base URL and key, use **Test connection**; saving retries automatically |
 | Work environment preparation failed (on Orbi's side) | Nothing. It recovers automatically; check back later |
 
 Quote the **Error ID** if you contact support. The support email link next to it puts the Error ID in the subject for you.
@@ -96,7 +111,7 @@ Quote the **Error ID** if you contact support. The support email link next to it
 
 | What you see | Fix |
 |---|---|
-| The repository is not in the list | Open **Cannot find your repository?**, add the repository under Repository access in **GitHub App settings**, click Save, then come back and refresh |
+| The repository is not in the list | Open **Don't see your repository?**, add the repository under Repository access in **GitHub App settings**, click Save, then come back and refresh |
 | **(Issues disabled; enable them first)** after the repository name, or **Cannot connect repository** because Issues are disabled | Enable Issues under the repository's **Settings → Features → Issues**, then click **Back and retry** |
 | **Repository limit reached** | Disconnect a repository you no longer need first (**Disconnect a repository**); on Free and Solo you can also upgrade to Pro |
 | The repository list could not be loaded from GitHub | Refresh later; if it keeps failing, type the repository into the field below as `owner/repository` |
@@ -138,6 +153,6 @@ Open the account menu (your avatar, top right) and choose **🇨🇳 ZH** or **�
 
 ## Getting help
 
-Use **Get support on Telegram** in the avatar menu or footer, email **support@orbi.build** for account and billing matters, or use **Book 15 min with the founder ↗** on the help line. These are support channels; they are separate from [your bot notifications](/notifications).
+Use **Get support on Telegram** in the avatar menu or footer, email **support@orbi.build** for account and billing matters, or use **Book 15 min with the founder ↗** on the help line. The status page, the connect page and the write-a-request page also have a support chat window in the bottom-right corner. These are support channels; they are separate from [your bot notifications](/notifications).
 
 Include the account, repository, Issue or PR link, error ID if shown, and approximate time with its time zone. Do not include API keys, bot tokens, GitHub tokens or private code in a public chat. A documentation mismatch can also be reported in [the public docs repository](https://github.com/orbi-build/orbi-cloud-docs/issues).

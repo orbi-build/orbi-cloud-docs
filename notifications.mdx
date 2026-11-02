@@ -15,7 +15,6 @@ You supply a Telegram bot and choose one private chat or group. You do not need 
 | A task stops at `ai-blocked` | Which Issue needs a decision; read Orbi's comment before restarting it |
 | A task needs more detail (`ai-needs-detail`) | Which request needs clarification; [add the missing detail](/troubleshooting#orbi-needs-more-information) |
 | A reviewed PR is waiting for merge (`ai-awaiting-merge`) | Which PR is ready for your approval or merge |
-| A delivery checklist needs your confirmation | That Orbi is waiting for your review; inspect the checklist on the Issue |
 | A PR that Orbi opened is merged | Which change merged, including when a person merged it |
 
 Orbi sends these when it makes the transition; adding a label by hand does not replay a past notification. These are reminders about task results and decisions. Telegram is not a live activity stream, and replying to the bot does not steer a delivery. Put corrections on the [GitHub Issue](/delivery-lifecycle#steering-a-delivery-that-is-already-running).
@@ -45,7 +44,7 @@ Editing a field does not change the active destination. Click **Verify and save*
 
 ## Choose the message language
 
-On the same **Settings** page, open **Orbi message language**, choose **中文** or **English**, and click **Save**. It controls Orbi's own GitHub comments and Telegram messages for this account. The default is English when no choice has been saved.
+On the same **Settings** page, open **Orbi message language**, choose **Chinese** or **English**, and click **Save**. It controls Orbi's own GitHub comments and Telegram messages for this account. Until you save a choice, it follows the language the website was in when the account connected its first repository; accounts that connected before this default existed use English.
 
 The website language is separate: change it from the avatar menu. Switching the website to Chinese does not change the language of Orbi's delivery messages. Your Issue text, titles and code are not translated by this setting. A repository's explicit `message_language` policy can override the GitHub comment language in that repository. Telegram still uses the account language; see the engine's [comment-language reference](https://docs.orbi.build/workflow#comment-language).
 
@@ -53,10 +52,12 @@ The website language is separate: change it from the avatar menu. Switching the 
 
 | What you see | What to do |
 |---|---|
-| No chats found | Send `/start` to your own bot, or `/start@yourbot` in the group, then click **Get Chat ID** again |
+| No chat found yet | Send `/start` to your own bot, or `/start@yourbot` in the group, then click **Get Chat ID** again |
 | Another service has taken over this bot | Create a dedicated bot, or enter a known Chat ID manually |
-| Invalid bot token | Copy the complete token from BotFather and save again |
-| Telegram cannot find the chat | Check that the bot has received `/start`, is in the group and can post; preserve the group's negative ID |
+| The bot token is invalid | Copy the complete token from BotFather and save again |
+| Telegram cannot find this chat | Check that the bot has received `/start`, is in the group and can post; preserve the group's negative ID |
+| Telegram rejected this check | Make sure the bot token and the Chat ID belong to the same bot |
+| Could not reach Telegram | Check the network and try again |
 | Telegram is rate limiting, unavailable or did not respond | Retry later; the failed validation did not replace your saved settings |
 | Saved, but no test arrived | Allow 1–2 minutes, check the saved Chat ID and the bot's access to the chat, then request another test |
 

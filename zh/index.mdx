@@ -4,7 +4,7 @@ sidebarTitle: "概览"
 description: "Orbi Cloud 是什么，我能从它这里得到什么?"
 ---
 
-Orbi Cloud 是 Orbi 软件暗工厂（software dark factory）的托管版本：你定义目标和验收标准，Orbi 将 GitHub Issue 交付为经过实现、测试、独立评审、修复和合并的改动。基础设施由 Orbi 运维。
+Orbi Cloud 是 Orbi 软件暗工厂（software dark factory）的托管版本：你定义目标和验收标准，Orbi 把一张 GitHub Issue 从实现、测试、独立评审、修复一路做到合并。基础设施由 Orbi 运维。
 
 连接仓库后，Orbi 会读仓库，建议现在能做的事。新任务先「查看需求」，看过草稿再交给它；已有 Issue 可以点「让 Orbi 做这个」直接派发。你也可以自己「写需求」，或者在 GitHub 给 Issue 打上 `ai-ready`。Orbi 在隔离工作区完成交付，在评审和合并门禁通过后合并改动。Issue、PR 和发版证据都留在你的仓库里。
 
@@ -23,7 +23,7 @@ flowchart TD
 
   subgraph work["每份工作：你选任务，Orbi 交付"]
     direction LR
-    w1["5 你交付 Issue<br/>ai-ready"] -.-> w2["Orbi 写代码<br/>ai-in-progress"] --> w3["提交 PR<br/>ai-pr-opened"] --> w4{"独立评审"}
+    w1["5 你把 Issue 交给 Orbi<br/>ai-ready"] -.-> w2["Orbi 写代码<br/>ai-in-progress"] --> w3["提交 PR<br/>ai-pr-opened"] --> w4{"独立评审"}
     w4 -->|干净| w5["已合并<br/>ai-merged"]
     w4 -->|有问题| w6["修复<br/>ai-fix-needed"] --> w3
     w4 -->|无法安全修复| w7["停下等你<br/>ai-blocked"]
@@ -81,7 +81,7 @@ flowchart LR
 
 之后有两个付费档：**Solo** 和 **Pro**。两档的价格里都含模型用量：Solo 每月 4 亿（400,000,000）tokens、一个仓库；Pro 每月 12 亿（1,200,000,000）tokens、最多五个仓库。没有按 token 的超额计费：当月额度用完后，新的交付暂停，直到下个月，或者直到你配上自己的模型 key。
 
-当前价格、按年付费的选项，以及正在进行的创始会员优惠，见[价格页](https://orbi.build/cloud/?ref=cloud-docs-index)。订阅怎么操作见[付费](/zh/billing)，额度怎么计见[额度与限制](/zh/limits-and-quotas)。
+当前价格、按年付费的选项，以及正在进行的创始会员优惠，见[价格页](https://orbi.build/zh/cloud/?ref=cloud-docs-index)。订阅怎么操作见[付费](/zh/billing)，额度怎么计见[额度与限制](/zh/limits-and-quotas)。
 
 ## Orbi Cloud 不做的事
 

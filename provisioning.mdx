@@ -19,16 +19,16 @@ Each environment belongs to exactly one tenant and one repository. Environments 
 
 ## Watching it
 
-While provisioning runs, the status page headline says **Orbi is preparing the work environment**, and in the **Setup progress** list the **Prepare work environment** step shows **Orbi is working**. The card below lists four steps: **Set up your own workspace**, **Pull your code**, **Install Orbi** and **Start reading your repository**. Each one gets a ✓ and the seconds it took, and the line under the list says **Usually 10–20 seconds**. After 30 seconds it changes to **Taking longer than usual; still preparing…**. When all four are done, the **Prepare work environment** step turns to **✓ Done**.
+While provisioning runs, the status page headline says **Orbi is preparing the work environment**, and in the setup checklist the **Prepare work environment** step shows **Orbi is working**. The card below lists four steps: **Set up your own work environment**, **Pull your code**, **Install Orbi** and **Start reading your repository**. Each one gets a ✓ and the seconds it took, and the line under the list says **Usually 10–20 seconds**. After 30 seconds it changes to **Taking longer than usual; still preparing…**. When all four are done, the **Prepare work environment** step turns to **✓ Done**.
 
 The same state is listed per repository on the status page under **Usage and settings** → **Connected projects**, in the **Preparation status** column:
 
 | What you see | What it means |
 |---|---|
 | **Provisioning** | Running. Usually 10–20 seconds; the page updates itself when it is ready |
-| **Provisioned** | Done. You can [write your first request](/write-a-requirement) |
-| **Provisioning failed** | Stopped. The cell states the reason, the time, an error ID and the next step |
-| — | Provisioning never started, normally because no repository is connected yet |
+| **Ready** | Done. You can [write your first request](/write-a-requirement) |
+| **Preparation failed** | Stopped. The cell states the reason, the time, an error ID and the next step |
+| — | Preparation has not started for this connected repository, typically because no AI model service is available yet; see the next section |
 
 ### When the AI model service is unavailable
 
@@ -36,7 +36,7 @@ If Orbi's AI model service is temporarily unavailable and you have not set your 
 
 ## When provisioning fails
 
-A failure is never a dead end. The **Next** card on the status page says **Work environment preparation failed:** and tells you which of three situations you are in; **View failure reasons and repair steps** jumps to that repository's cell in the **Connected projects** table, with the reason and the next step.
+A failure is never a dead end. The main status card says **Work environment preparation failed:** and tells you which of three situations you are in; **View failure reasons and repair steps** jumps to that repository's cell in the **Connected projects** table, with the reason and the next step.
 
 | Status page headline | Whose move it is |
 |---|---|
@@ -58,7 +58,7 @@ The reason reads **Orbi's GitHub App installation or authorization is no longer 
 
 The reason reads **The API key was rejected**. Your own API key was rejected by the provider.
 
-**What to do:** open **Settings → AI model** from the account menu and correct the key. See [model configuration](/model-configuration). Saving retries provisioning automatically; you do not need to reconnect the repository.
+**What to do:** follow **Set up AI model** in the next step, or open **Settings → AI model** from the account menu, and correct the key. See [model configuration](/model-configuration). Saving retries provisioning automatically; you do not need to reconnect the repository.
 
 ### The AI model service could not be reached
 

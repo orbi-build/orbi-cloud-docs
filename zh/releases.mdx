@@ -13,7 +13,7 @@ description: "怎么发一个版本，Orbi 在打 tag 之前会检查什么？"
 
 ## 状态页上的版本
 
-所有套餐都能使用版本。单项目时在状态页展开「用量与设置」→「版本」；多个项目时先进入该项目详情。版本管理和发版入口可见，不会增加免费交付次数或解除套餐额度。发版仍由你发起。
+所有套餐都能使用版本。单项目时在状态页展开「用量与设置」→「版本」；多个项目时先进入该项目详情。版本管理和发版入口不会增加免费交付次数，也不会解除套餐额度。发版仍由你发起。
 
 免费次数用完后，仍可新建版本和 Release 任务，但新的 Release 任务不能开始。订阅后在该 Issue 上重新加 `ai-ready` 才会派发。发版本身没有 PR，不计入前 3 次成功合并的交付；开始时仍需要可用名额。
 
@@ -42,7 +42,7 @@ description: "怎么发一个版本，Orbi 在打 tag 之前会检查什么？"
 
 一个版本的工作都进去了之后，如果它还不是当前版本，先点「切换到这个版本」，再在它那一行点「创建 Release 任务」。
 
-Orbi 会开出 Release Issue。同一个 milestone 还有其他开放 Issue 时，发布票保持 `ai-ready` 排队，不会开始累计 30 分钟发布超时。范围就绪后，Orbi 执行发布，按需更新版本文件，打 tag，发布 GitHub Release 并关闭发布票。版本文件更新后，网站何时变化仍由你的发布或部署方式决定。
+Orbi 会开出 Release Issue。同一个 milestone 还有其他开放 Issue 时，发布票保持 `ai-ready` 排队，等它们关闭；排队本身没有时间上限。范围就绪后，Orbi 执行发布，按需更新版本文件，打 tag，发布 GitHub Release 并关闭发布票。版本文件更新后，网站何时变化仍由你的发布或部署方式决定。
 
 ### milestone 是必需的
 
@@ -58,7 +58,7 @@ Orbi 会开出 Release Issue。同一个 milestone 还有其他开放 Issue 时�
 | 「没能创建 Release 任务：还没有连接仓库。」 | 这个账户还没有连接仓库 | [连接一个](/zh/connect-repository) |
 | 「没能创建 Release 任务：暂时读不到项目根目录的版本文件，请稍后重试。」 | Orbi 找版本号文件时 GitHub 没有响应 | 稍后重试 |
 | 「没能创建 Release 任务：GitHub 暂时没有响应，请稍后重试。」 | GitHub 不可达 | 稍后重试 |
-| 「没能切换版本：这个项目没有连接到你的账户，什么都没改。」 | 切换版本时：仓库已断开，或者属于另一个账户 | [连接它](/zh/connect-repository) |
+| 「没能切换版本：这个项目没有连接到您的账户，什么都没改。」 | 切换版本时：仓库已断开，或者属于另一个账户 | [连接它](/zh/connect-repository) |
 | 「没能切换版本：写入项目失败，什么都没改。在 GitHub App 设置里检查 Contents 写权限。」 | 切换版本时：Orbi 写不进这个仓库 | 检查 App 的权限，必要时重装 |
 
 ### 版本文件
@@ -67,11 +67,13 @@ Orbi 会探测你的项目用什么声明版本号，按这个顺序找：
 
 `pyproject.toml`、`package.json`、`pom.xml`、`build.gradle`、`build.gradle.kts`、`gradle.properties`、`Cargo.toml`、`composer.json`、`pubspec.yaml`
 
-一个都没有时是**只打 tag**：不修改版本文件，只生成 tag 和 GitHub Release。读不出仓库目录是需要重试的错误；成功读取后确实没有支持的版本文件，则是正常的 tag-only 结果。
+一个都没有时，从状态页发起的发版**只打 tag**：不修改版本文件，只生成 tag 和 GitHub Release。读不出仓库目录是需要重试的错误；成功读取后确实没有支持的版本文件，则是正常的 tag-only 结果。状态页会记住对这个仓库的探测结果，以后才加的版本文件不会被重新探测到，这时请按下面的方法手写 Release Issue，写上 `- version_file:`。
 
 ## 自己手写 Release Issue
 
-按钮只是个便利入口。你也可以手动建这张 Release Issue：打上 `ai-ready` 和 `ai-release`，并写一段 `## Release`：
+按钮只是个便利入口。你也可以手动建这张 Release Issue：打上 `ai-ready` 和 `ai-release`，并把它放进标题就是版本号的 milestone，例如 `v1.2.3`。Orbi 会从这个 milestone 取版本号和范围，从仓库配置取基础分支，并按上面的顺序找版本文件；一个都找不到时，发版会停下，请你补上可选的 `## Release` 段，写 `- version_file: none`（只打 tag）或要用的文件。
+
+这一段可选，用来显式写明各字段：
 
 ```text
 ## Release
@@ -82,7 +84,7 @@ Orbi 会探测你的项目用什么声明版本号，按这个顺序找：
 - scope_from_milestone: v1.2.3
 ```
 
-这一段是严格解析的：字段缺失、重复或出现未知字段都会立即失败。除了 `scope_from_milestone`，你也可以用 `#N` 的形式把 scope 逐条列出来。
+写了这一段就会严格解析：`version` 和 `base_branch` 必填，字段重复或出现未知字段会立即失败，`version` 必须和 milestone 标题一致，`scope_from_milestone` 和 `scope` 必须恰好写一个。要逐条列出范围，写 `- scope:`，下面每项一行 `  - #N`。这一段里不写 `version_file` 时，按 `pyproject.toml` 处理。
 
 ## 打 tag 之前 Orbi 检查什么
 
@@ -106,7 +108,7 @@ pending 的 check 不算失败：门禁会等最终结论，默认最多等 30 �
 - 发布一个 **GitHub Release**，release notes 里带完整证据：版本号、tag、发版 commit、逐条 scope 证据、门禁证据和测试证据。
 - **关闭 milestone**。
 
-每一步都是幂等的，所以在门禁上失败的发版，修掉原因后可以重试，它会接着跑而不是从头来。
+每一步都是幂等的。发版失败后停在 `ai-blocked`，不会自动重试；修掉原因后把 `ai-blocked` 换成 `ai-ready`，它会接着跑，而不是从头来。
 
 ## 发版失败时
 
