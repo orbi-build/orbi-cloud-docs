@@ -78,7 +78,7 @@ Two limits are worth knowing:
 
 ## `ai-blocked` is a decision point, not a failure
 
-`ai-blocked` is a terminal state that means a human must decide what happens next. The comment Orbi leaves on the Issue states why automatic recovery was not possible. One pause resumes on its own: when the base branch's own checks are failing, Orbi continues once they turn green; see [troubleshooting](/troubleshooting#checks-on-the-base-branch-itself-are-failing).
+`ai-blocked` is a terminal state that means a human must decide what happens next. The comment Orbi leaves on the Issue states why automatic recovery was not possible. Some pauses resume on their own, with no label change from you: when the base branch's own checks are failing, Orbi continues once they turn green (see [troubleshooting](/troubleshooting#checks-on-the-base-branch-itself-are-failing)); when the missing permission to read checks is granted; and when you correct a base branch that does not exist in Cloud, the affected tickets are queued again.
 
 Deciding the next step can mean changing the code, rewriting the acceptance criteria or closing the Issue. To resume after repairing the cause, replace `ai-blocked` with **`ai-fix-needed` if its PR is still open**, or **`ai-ready` if it has no PR**. Removing the blocked label alone does not restart it.
 
