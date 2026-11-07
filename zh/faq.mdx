@@ -48,6 +48,9 @@ App 只能访问你选中的仓库，一开始可以只选一个小仓库；每�
 **多久开始？**
 一般 1 分钟内。在 GitHub 上或从状态页打上 `ai-ready` 时，会唤醒这个仓库的 runner。这个信号丢了的话，每 5 分钟一次的定时器也会认领它。
 
+**有依赖关系的几张 Issue，能一次排给 Orbi 吗？**
+能。把它们一起打上 `ai-ready`，再用 GitHub 的「被阻塞」（blocked by）关系写明先后：在 Issue 右侧的 **Relationships** 里设置，或者用 `gh issue edit 12 --add-blocked-by 11`。只要还有阻塞它的 Issue 没关，Orbi 就先跳过它；阻塞它的 Issue 关掉后，下一轮会接着做。几张都能开工时，等得最久的先做。写在正文里的「Depends on #11」Orbi 不读。见 [GitHub 的 Issue 依赖说明](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/creating-issue-dependencies)。
+
 **一次交付要多久？**
 完全取决于任务大小。小而具体的改动很快，大而模糊的会慢，并且会走更多修复轮次。
 
@@ -94,6 +97,14 @@ Orbi 暂停认领新的 Issue，它们的标签保留，在途交付照常跑完
 
 **额度掉得很快，为什么？**
 打开状态页的「用量与设置」，看「本月 AI 用量」那一行的「其中缓存」百分比。缓存读取和输入、输出一样计入额度，缓存占比不影响额度消耗的速度；额度用得快，说明任务本身用的 tokens 多。
+
+**Orbi 会用掉我的 GitHub Actions 时长吗？**
+会用一些。Orbi 把你仓库的 CI 当作合并前的检查，所以每往 Orbi 的 PR 推一次，你的工作流就跑一次，合进目标分支后还会再跑一次。PR 等合并期间目标分支往前走了，Orbi 会先把 PR 更新到最新，再等新提交的 CI 跑完，保证合进去的代码是在最新代码上测过的。仓库里合并频繁时，次数会多一些。这些运行由 GitHub 计入你的账户，见 [GitHub Actions 计费说明](https://docs.github.com/en/billing/concepts/product-billing/github-actions)。想少跑几次：
+
+- 给工作流加 `concurrency`，并设 `cancel-in-progress: true`，新的推送会取消被它替换掉的旧运行。见 [GitHub 的并发说明](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency)。
+- 用 `paths-ignore`，只改文档的提交不跑重的任务。
+- PR 工作流不要在 `labeled` 时触发，改标签不会改代码。
+- 很慢的端到端测试只在推到目标分支时跑，能省时长，但它发现的问题要等改动进了目标分支才看得到。
 
 ## 发版
 

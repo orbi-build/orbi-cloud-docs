@@ -48,6 +48,9 @@ Choose a suggestion or define your own task; each path ends with `ai-ready` on a
 **How long until it starts?**
 Usually within a minute. Adding `ai-ready`, on GitHub or from the status page, wakes the runner for that repository. If that signal is lost, the regular five-minute timer picks the Issue up.
 
+**Can I queue several Issues that depend on each other?**
+Yes. Add `ai-ready` to all of them at once and record the order with GitHub's **blocked by** relationship, either under **Relationships** in the Issue sidebar or with `gh issue edit 12 --add-blocked-by 11`. Orbi skips an Issue while any Issue blocking it is still open, and picks it up on a later run once the blocker closes. Among Issues that are ready, the one that has waited longest goes first. Orbi does not read "Depends on #11" written in the Issue body. See [GitHub's guide to issue dependencies](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/creating-issue-dependencies).
+
 **How long does a delivery take?**
 It depends entirely on the size of the task. Small, well-specified changes finish quickly; large or vague ones take longer and go through more repair rounds.
 
@@ -94,6 +97,14 @@ Orbi pauses claiming new Issues; their labels stay, and in-flight deliveries fin
 
 **My quota is draining fast. Why?**
 Open **Usage and settings** on the status page and look at the **Cached** percentage on the **Monthly AI usage** line. Cached tokens count toward the allowance the same as input and output, so the cached share does not change how fast it drains; a fast drain means the tasks themselves use a lot of tokens.
+
+**Will Orbi use up my GitHub Actions minutes?**
+Orbi uses your repository's CI as a merge check, so each push to an Orbi pull request runs your workflows, and the merge to your base branch runs them again. If the base branch moves while a pull request waits to merge, Orbi brings the pull request up to date and waits for CI on the new head, so what merges was tested against current code. In a busy repository that adds runs. GitHub bills those runs to your account; see [GitHub Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions). To keep the count down:
+
+- Add a `concurrency` group with `cancel-in-progress: true`, so a newer push cancels the run it replaces. See [GitHub's concurrency guide](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency).
+- Use `paths-ignore` so documentation-only changes skip the heavy jobs.
+- Do not trigger pull request workflows on `labeled`. Label changes do not change code.
+- If a slow end-to-end suite runs only on pushes to the base branch, it costs fewer minutes, but a failure only shows up after the change is on your base branch.
 
 ## Releases
 
