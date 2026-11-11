@@ -28,7 +28,7 @@ On Pro, up to five at once; Free and Solo connect one real project at a time. On
 There is no fixed list: Orbi has no language- or framework-specific rules, and relies on your repository's own tests and CI instead. Orbi works with your repository's code and test suite in an isolated environment. It runs the tests, reviews against your testing and coverage requirements, and reads your reported CI checks at the merge gate. What CI guarantees depends on what those tests cover. See [your first Issue](/first-issue#choosing-what-to-start-with) and [what your CI guarantees](/security#what-your-ci-guarantees).
 
 **What should my first Issue be?**
-Start with Orbi’s suggestions after it reads your repository. **Review draft** lets you check a new task before handing it off; **Let Orbi do this** dispatches an existing Issue immediately. You can also write a request or create an Issue on GitHub. Pick a small task with clear acceptance criteria. See [your first Issue](/first-issue) and [write a request](/write-a-requirement).
+Start with Orbi’s suggestions after it reads your repository. **Let Orbi do this** hands a suggestion to Orbi straight away; **Review the draft first** lets you check the draft before handing it off. You can also write a request or create an Issue on GitHub. Pick a small task with clear acceptance criteria. See [your first Issue](/first-issue) and [write a request](/write-a-requirement).
 
 **Is it safe to give it write access?**
 The App only reaches the repositories you select, you can pick a single small repository to start, and every change arrives as a pull request that is reviewed before it merges. See [install the GitHub App](/install-app#what-the-permissions-are-for) and [security](/security).
@@ -39,10 +39,10 @@ Yes. Install the App on the organization; that creates a separate tenant for the
 ## Running deliveries
 
 **How do I give Orbi work?**
-Choose a suggestion or define your own task; each path ends with `ai-ready` on an Issue. For a new suggestion, review the draft and confirm; for an existing Issue, the handoff button dispatches immediately. These entry points also remain available:
+Choose a suggestion or define your own task; each path ends with `ai-ready` on an Issue. **Let Orbi do this** on a suggestion dispatches it immediately; **Review the draft first** lets you check it before handing it off. These entry points also remain available:
 
-- On the status page, click **Write a request** and say what you want changed in a sentence or two. Orbi reads your code and writes a draft Issue; when it looks right, click **Hand off to Orbi**. See [write a request](/write-a-requirement).
-- On the status page, click **Let Orbi do this** (or **Try →**) next to an Issue you already have.
+- On the status page, click **Write a request** and say what you want changed in a sentence or two. Orbi reads your code and writes a draft Issue, and starts on it as soon as the draft is ready; only when Orbi has questions or its pre-work check finds something missing do you click **Hand off to Orbi** yourself. See [write a request](/write-a-requirement).
+- On the status page, click **Let Orbi do this** next to an Issue you already have.
 - On GitHub, create an Issue in your connected repository and add the `ai-ready` label yourself. See [file your first Issue](/first-issue).
 
 **How long until it starts?**
@@ -93,7 +93,7 @@ No. A delivery that ends blocked or is closed without merging refunds its slot, 
 It depends on task size, codebase size and prompt caching. The [pricing page](https://orbi.build/cloud/?ref=cloud-docs-faq) gives current measured ranges for each plan.
 
 **What happens when I hit the monthly cap?**
-Orbi pauses claiming new Issues; their labels stay, and in-flight deliveries finish. Delivery resumes automatically on the 1st of the month (UTC), or immediately when you save your own model key or upgrade. See [limits and quotas](/limits-and-quotas#when-the-monthly-quota-runs-out).
+Orbi pauses claiming new Issues; their labels stay, and in-flight deliveries finish. Delivery resumes automatically on the 1st of the month (UTC), or immediately when you save your own model key or upgrade (with an active Solo subscription, contact us to upgrade). See [limits and quotas](/limits-and-quotas#when-the-monthly-quota-runs-out).
 
 **My quota is draining fast. Why?**
 Open **Usage and settings** on the status page and look at the **Cached** percentage on the **Monthly AI usage** line. Cached tokens count toward the allowance the same as input and output, so the cached share does not change how fast it drains; a fast drain means the tasks themselves use a lot of tokens.
