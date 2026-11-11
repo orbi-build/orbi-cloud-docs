@@ -13,7 +13,7 @@ Almost every failure state in Orbi Cloud is self-describing. This page covers wh
 
 Look at the setup checklist on the status page for the step waiting on you. Videos are available for installing the App, connecting a repository and writing the first request. The [quickstart](/quickstart) covers the complete path in writing.
 
-Once the environment is ready, Orbi reads the repository for suggestions, usually in about 2 minutes. You can leave while it reads. For a new task, **Review draft** and confirm before handing it off; for an existing Issue, **Let Orbi do this** dispatches immediately. With no suggestions, use **Get suggestions**, or **Write a request** directly. See [your first Issue](/first-issue) and [write a request](/write-a-requirement).
+Once the environment is ready, Orbi reads the repository for suggestions, usually in about 2 minutes. You can leave while it reads. **Let Orbi do this** hands a suggestion to Orbi straight away; **Review the draft first** opens the draft so you can change it before handing it off. With no suggestions, use **Get suggestions**, or **Write a request** directly. See [your first Issue](/first-issue) and [write a request](/write-a-requirement).
 
 ## Nothing happens after I label an Issue
 
@@ -23,7 +23,7 @@ Work through this list, in order:
 2. **Is it in a connected repository?** Orbi only reads Issues in the repositories you connected. Check the project overview on the status page.
 3. **Is the work environment ready?** **Prepare work environment** in the setup checklist must show **Done**. Until then there is nothing to run the delivery.
 4. **Has five minutes passed?** Adding the label usually wakes Orbi within a minute; the five-minute timer is the fallback.
-5. **Did the label come back off, with a comment?** Your free deliveries are used up — see [limits and quotas](/limits-and-quotas#when-the-allowance-runs-out). Subscribe, then re-apply the label.
+5. **Did the label come back off, with a comment?** Your free deliveries are used up — see [limits and quotas](/limits-and-quotas#when-the-allowance-runs-out). Subscribe; once the payment goes through, the blocked Issue starts automatically, with no need to re-apply the label.
 6. **Does the page say Monthly AI usage is used up; new tasks are paused?** New Issues wait until the allowance resets, or until you add your own model key. The labels stay. See [limits and quotas](/limits-and-quotas#when-the-monthly-quota-runs-out).
 7. **Does the page say A task is not in the current version and will not start yet?** A current version (delivery scope) is set, and your Issue is not in that version's milestone. Move it into the version, or switch the current version. See [releases](/releases#the-delivery-scope).
 8. **Does the Issue already carry another `ai-*` label?** An Issue that is already `ai-in-progress` or `ai-merged` is not re-dispatched by adding `ai-ready` again.
@@ -113,7 +113,7 @@ Quote the **Error ID** if you contact support. The support email link next to it
 |---|---|
 | The repository is not in the list | Open **Don't see your repository?**, add the repository under Repository access in **GitHub App settings**, click Save, then come back and refresh |
 | **(Issues disabled; enable them first)** after the repository name, or **Cannot connect repository** because Issues are disabled | Enable Issues under the repository's **Settings → Features → Issues**, then click **Back and retry** |
-| **Repository limit reached** | Disconnect a repository you no longer need first (**Disconnect a repository**); on Free and Solo you can also upgrade to Pro |
+| **Repository limit reached** | Disconnect a repository you no longer need first (**Disconnect a repository**); a free account can also subscribe to Pro; with an active Solo subscription, contact us to upgrade |
 | The repository list could not be loaded from GitHub | Refresh later; if it keeps failing, type the repository into the field below as `owner/repository` |
 | Invalid repository format | Enter it as `owner/repository` |
 

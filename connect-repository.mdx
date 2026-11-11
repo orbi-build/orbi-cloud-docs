@@ -19,7 +19,7 @@ Before you have connected anything, the main status card on the status page says
 2. **Base branch**: the branch Orbi opens pull requests against. Selecting a repository loads its real branches and preselects its default branch, so usually you just confirm. Only existing branches can be selected. If the branch list cannot be read, refresh and retry; the connect button is unavailable until it can be verified.
 3. Click **Connect repository**. The button changes to **Connecting…** while it works; you do not need to click again.
 
-Connecting opens that project’s status page and starts [preparing the work environment](/provisioning). Once ready, Orbi reads the repository and suggests work. Open **Review draft** for a new task and confirm before handing it off. You can still [write your own request](/write-a-requirement) or create an Issue with `ai-ready` on GitHub.
+Connecting opens that project’s status page and starts [preparing the work environment](/provisioning). Once ready, Orbi reads the repository and suggests work. **Let Orbi do this** hands a suggestion to Orbi straight away; **Review the draft first** opens the draft so you can change it before handing it off. You can still [write your own request](/write-a-requirement) or create an Issue with `ai-ready` on GitHub.
 
 <Note>
 If the repository is empty (no commits at all), the page tells you when you select it. When you connect, Orbi adds a README file as the first commit on the base branch, because Orbi needs a commit to branch from.
@@ -81,7 +81,7 @@ There is one rule on every plan: **disconnect the repository you are leaving, th
 
 Disconnecting reclaims that repository's work environment. It does not change the repository on GitHub, and your history and usage are kept: the repository appears under **Disconnected projects** in **Usage and settings** on the status page. Connecting it again later prepares a fresh work environment, which usually takes 10–20 seconds, like any new repository.
 
-When you are already at your plan's limit, the connect page is titled **Repository limit reached**: it has no connect form, only your connected repositories, each with **Disconnect…**. The exception is a sample copy you just created: it does not count toward the limit, so the page shows **Connect the sample copy you just created** with a **Connect sample copy** button, and you do not need to disconnect anything first. If a connect request is refused for the same reason, the error page offers **Disconnect a repository**, plus an upgrade to Pro on a plan below Pro.
+When you are already at your plan's limit, the connect page is titled **Repository limit reached**: it has no connect form, only your connected repositories, each with **Disconnect…**. The exception is a sample copy you just created: it does not count toward the limit, so the page shows **Connect the sample copy you just created** with a **Connect sample copy** button, and you do not need to disconnect anything first. If a connect request is refused for the same reason, the error page offers **Disconnect a repository**, plus an upgrade to Pro on a plan below Pro: a free account subscribes to Pro directly, while an active Solo subscription shows **To upgrade to Pro, contact us directly:** with our email and Telegram group.
 
 ## What the errors mean
 
