@@ -63,7 +63,7 @@ To follow a task after it starts, use the status page. The headline names the cu
 Yes. Comment on the Issue or edit its body — the running session restarts with your correction. It accepts 3 such restarts, and only trusted repository roles can steer. See [steering a delivery](/delivery-lifecycle#steering-a-delivery-that-is-already-running).
 
 **Can I stop a delivery?**
-Close the Issue.
+Yes: close the Issue. Orbi does not pick up a closed Issue again. A coding session that is already running is not interrupted; when it finishes, Orbi pushes the work to its branch, opens no pull request, and comments on the Issue that the delivery stopped. If the pull request is already open, Orbi will not merge it automatically and comments on it: merge it to keep the work, or close it.
 
 **Will Orbi review its own code?**
 The review runs in a separate session that did not write the code, and it repairs what it finds before anything reaches the merge gate. It is not the same session marking its own work — though it is still Orbi, so your own CI is what makes the guarantee concrete.
