@@ -13,7 +13,7 @@ Orbi Cloud 不另外维护一份「真相面板」。你 Issue 上的标签、Or
 
 ```mermaid
 flowchart LR
-  ready["ai-ready"] -->|已认领| progress["ai-in-progress"]
+  ready["ai-ready"] -->|认领：摘掉 ai-ready| progress["ai-in-progress"]
   progress -->|PR 已提交并校验| opened["ai-pr-opened"]
   opened --> review{"独立<br/>评审"}
   review -->|干净结论 + 合并门禁| merged["ai-merged"]
@@ -28,7 +28,7 @@ flowchart LR
 
 | 标签 | 含义 | 状态页标记 |
 |---|---|---|
-| `ai-ready` | 你把这张 Issue 派给了 Orbi。下一个 tick 就可能被认领。 | 「排队中」 |
+| `ai-ready` | 你把这张 Issue 派给了 Orbi，还没开工。下一个 tick 就可能被认领；Orbi 认领时会摘掉 `ai-ready`，所以在 GitHub 上搜 `is:open label:ai-ready` 看到的就是你的队列。 | 「排队中」 |
 | `ai-in-progress` | 已认领并正在跑：工作区已建好，有一个会话在写代码。 | 「进行中」 |
 | `ai-pr-opened` | pull request 已提交并通过校验，等独立评审。 | 「Orbi 检查中」 |
 | `ai-fix-needed` | 评审发现了问题，或者 head 还不可合并。下一个 tick 会接着同一个 run、同一个分支、同一个 pull request 继续。 | 「按检查意见修改中」 |
