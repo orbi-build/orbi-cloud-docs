@@ -55,7 +55,9 @@ App 只能访问你选中的仓库，一开始可以只选一个小仓库；每�
 完全取决于任务大小。小而具体的改动很快，大而模糊的会慢，并且会走更多修复轮次。
 
 **交给 Orbi 后多久能合并？**
-按已合并的需求算，一般不到一小时。在 Orbi Cloud 客户的仓库上，这些需求有一半在交给 Orbi 后约 17 分钟内合并，19 次里只有 2 次超过 1 小时。样本是 2026-10-21 至 2026-11-20 的 19 次合并，从把 Issue 交给 Orbi 算到合并。改动大、CI 慢、评审打回修复时会更久。交给 Orbi 后一般 1 分钟内开工（见上面「多久开始？」）。Orbi 不承诺交付时间。见[交付生命周期](/zh/delivery-lifecycle)和[问题排查](/zh/troubleshooting)。
+小而清楚的改动最快；改动大、评审后返工、CI 慢，都会加时间。Orbi 要先问您问题时，状态页会显示「Orbi 需要您补充信息」，任务会等到您回答。
+
+开工以后在状态页看进度：标题写着当前阶段，比如「Orbi 正在写代码」「Orbi 正在检查改动」，「查看进度」能看到它在做什么。这张任务的用量上报后，「任务记录」还会显示已用时间。见[状态页](/zh/status-page)和[交付生命周期](/zh/delivery-lifecycle)。
 
 **跑到一半我改主意了怎么办？**
 在 Issue 上评论或编辑正文，正在跑的会话会带着你的修正重启。它接受 3 次这样的重启，且只有仓库的可信角色能转向。见[交付生命周期](/zh/delivery-lifecycle)。
@@ -118,6 +120,9 @@ scope 来自标题与版本号完全一致的 milestone，而这个 milestone �
 不必。在你设定交付范围之前，每张 `ai-ready` 的 Issue 都会被认领。想分批发布时，版本才派上用场。见[发版](/zh/releases)。
 
 ## 安全与权限
+
+**Orbi 用的是什么 AI 模型？**
+默认是 DeepSeek V4 Flash，由 Orbi 通过 DeepSeek 的接口提供，含在试用或套餐里。「设置」的「AI 模型」一段能看到，也能在那里换成你自己的服务商、模型和 key，见[模型配置](/zh/model-configuration)。走平台通道时代码和提示词会发给 DeepSeek，怎么处理（包括是否用于训练、保留多久）以 [DeepSeek 隐私政策](https://cdn.deepseek.com/policies/zh-CN/deepseek-privacy-policy.html)为准。
 
 **Orbi 能看到什么？**
 只有你 GitHub App 安装范围内的仓库，并且只在你连接的仓库里工作。见[安全](/zh/security)。
