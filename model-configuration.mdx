@@ -5,22 +5,19 @@ description: "Do I need to configure a model, and how do I use my own API key in
 ---
 
 
-You do not need to configure a model: the free deliveries and both paid plans include model usage. You can bring your own key if you would rather pay your provider directly, or if you want delivery to continue after a paid plan's monthly allowance runs out.
+You do not need to configure a model: deliveries use Orbi's platform model channel by default.
 
-By default, deliveries run on Orbi's platform model channel. That is why you can install, connect and complete a delivery without entering any key at all.
+Try it free for 14 days; see [Limits and quotas](/limits-and-quotas) for the rules.
 
-Configuring your own key (**BYOK**, bring your own key) adds your provider account as a model source for your account. Which source a delivery uses depends on your plan:
-
-- **Free plan:** once a key is saved, deliveries run on your key.
-- **Paid plan:** deliveries use the monthly allowance included in your plan first. When that allowance is used up, they switch to your key instead of pausing.
+Configuring your own key (**BYOK**, bring your own key) adds your provider account as a model source. The platform allowance is used first; when it runs out, deliveries switch to your key. Admission rules are in [limits and quotas](/limits-and-quotas).
 
 ## When you should configure a key
 
 | Situation | What to do |
 |---|---|
 | You just want it to work | Nothing. The platform channel is used automatically |
-| You want a specific model, or your compliance rules require your own provider account | Configure BYOK. On a paid plan, your key takes over only after the monthly allowance is used up |
-| You have hit the monthly token quota | Configure BYOK. Delivery resumes as soon as you save, and your own key is never paused by the quota |
+| You want to choose the model used after the platform allowance runs out | Configure BYOK. Your key takes over after the platform allowance is used up |
+| You have hit the monthly token quota | Configure BYOK. Saving resumes delivery paused by the platform token cap; that cap does not apply to your key |
 
 ## Configure it
 
@@ -93,9 +90,9 @@ The **AI model** section has no delete button. To go back to the platform channe
 | | Platform channel (default) | Your own key |
 |---|---|---|
 | Who pays for tokens | Included in your plan | You pay your provider |
-| When it is used | Free plan: when no key is saved. Paid plan: until the monthly allowance is used up | Free plan: every delivery. Paid plan: after the monthly allowance is used up |
-| Monthly token allowance | Paid plans: your plan's allowance (Solo 400,000,000, Pro 1,200,000,000) | Not applied: your usage is measured but never paused |
+| When it is used | While the platform allowance is available | After the platform allowance is used up |
+| Monthly token allowance | See [limits and quotas](/limits-and-quotas) | Not applied to your key; task admission still follows [limits and quotas](/limits-and-quotas) |
 | Model choice | Operated by Orbi | Yours |
-| Usage shown on the status page | **Monthly AI usage**, against the allowance on a paid plan | **Monthly AI usage (your API key)**, on its own line with no limit, once your key has been used |
+| Usage shown on the status page | **Monthly AI usage**, against the current allowance | **Monthly AI usage (your API key)**, on its own line with no limit, once your key has been used |
 
 See [limits and quotas](/limits-and-quotas) for how the quota is counted.

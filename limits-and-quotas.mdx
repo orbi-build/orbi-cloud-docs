@@ -1,45 +1,47 @@
 ---
 title: "Limits and quotas"
 sidebarTitle: "Limits and quotas"
-description: "What are the free allowance, the monthly token allowance and the repository limit, and what happens when I reach them?"
+description: "How do the free trial, monthly token allowance and repository limit work, and what happens when I reach them?"
 ---
 
 
-Three limits apply: a free allowance of 3 merged deliveries before you subscribe, a monthly token allowance that depends on your paid plan, and a limit on how many repositories can be connected at once.
+Three limits apply: the free trial period, the monthly platform token allowance, and how many repositories can be connected at once.
 
 None of them ever interrupts a delivery that is already running.
 
 ## At a glance
 
-| | Free | Solo | Pro |
+| | Free trial | Solo | Pro |
 |---|---|---|---|
-| Deliveries | First 3 merged deliveries | Unlimited within the token allowance | Unlimited within the token allowance |
-| Model tokens per month | No allowance shown; the free deliveries are the limit | 400,000,000 (400M) | 1,200,000,000 (1.2B) |
-| Repositories connected at once | 1 | 1 | 5 |
+| Deliveries | Unlimited during the trial, within the token allowance | Unlimited within the token allowance | Unlimited within the token allowance |
+| Platform model tokens per month | 60,000,000 (60M) | 400,000,000 (400M) | 1,200,000,000 (1.2B) |
+| Real projects connected at once | 1 | 1 | 5 |
 
 Prices and the yearly option are on the [pricing page](https://orbi.build/cloud/?ref=cloud-docs-limits); [billing](/billing) covers subscribing.
 
-## The free allowance
+## The free trial
 
-Your first 3 merged deliveries are free. No card, no subscription.
+Your free trial starts when you complete GitHub App installation and create your Orbi account, and lasts 14 days. No card is required.
 
-A slot is taken when you label an Issue `ai-ready`, and it is refunded if that delivery does not end in a merge: an Issue that ends `ai-blocked`, that Orbi sends back as needing more detail (`ai-needs-detail`) before starting, or that you close without merging, gives its slot back. That is why the allowance is described as three *merged* deliveries rather than three attempts. The count does not reset monthly.
+The example repository gives you one additional 14-day trial, starting when you first start an example task. You can start it even after the signup trial has ended, provided you have not used this additional trial before. Your trial expires at the later of signup plus 14 days or the first example task's start time plus 14 days. That same expiry applies to both example and ordinary repositories.
 
-Counting is per Issue and idempotent: re-labelling the same Issue does not consume another slot. Re-delivering the same Issue after a refund takes a slot again.
+Deliveries are unlimited during the trial. Platform model usage is capped at 60,000,000 tokens per calendar month (UTC), and the platform allowance is used first. Platform usage and usage on your own key are recorded separately.
 
-The status page shows the remaining free allowance in its usage summary. Setup has five steps and finishes when you hand over the first request; it does not end with a subscription step.
+### When trial usage reaches the cap
 
-A verified official example copy is separate: its deliveries do not consume your three free deliveries, and one connected copy does not use a repository slot. This exemption applies to the official template copy, not to an arbitrary repository name.
+If you have configured your own API key, deliveries switch to it and continue. Otherwise, Orbi pauses claiming new tasks, and the status page says **Your trial usage is used up; new tasks are paused** with a subscription link. Saving your own API key or subscribing resumes delivery. Work already in progress finishes normally.
 
-### When the allowance runs out
+Usage is counted by calendar month. Crossing into a new month resets the allowance without changing the trial's expiry.
 
-The next Issue you label `ai-ready` has that label removed and gets a comment saying the free deliveries are used up, with a link to subscribe. The main status card is titled **Your free deliveries are used up; subscribe to continue** and has a **Subscribe, founding member 50% off** button. The first time this happens you also get an email.
+### When the trial ends
 
-To resume, subscribe. Once the payment goes through, the blocked Issues that are still open start automatically; you do not need to re-apply `ai-ready`. Deliveries already in flight when the allowance ran out finish normally.
+Except for the first example task described above, new Issues labelled `ai-ready` after the trial ends have that label removed and receive a comment saying **Your free trial has ended.** with a subscription link. Once you subscribe, blocked Issues that are still open start again automatically; you do not need to re-apply the label. Deliveries already in progress are not interrupted.
+
+Subscribed users do not see trial information.
 
 ## The monthly token allowance
 
-A paid subscription includes model usage: 400,000,000 tokens a month on Solo, 1,200,000,000 on Pro, counted per calendar month in UTC. The status page shows the reset as the 1st at 8:00 Beijing time, which is the same moment as 00:00 UTC. There is no per-token overage billing. Free accounts see no monthly allowance; their limit is the free deliveries.
+A paid subscription includes model usage: 400,000,000 tokens a month on Solo, 1,200,000,000 on Pro, counted per calendar month in UTC. The status page shows the reset as the 1st at 8:00 Beijing time, which is the same moment as 00:00 UTC. There is no per-token overage billing.
 
 Usage counts input tokens, output tokens and cache-read tokens, all at the same weight. Re-delivering the same Issue accumulates: each delivery is a separate run.
 
@@ -49,13 +51,13 @@ Model usage includes deliveries, drafting requests and generating suggestions. F
 
 ### Watching your usage
 
-Open **Usage and settings** on the status page. On a paid plan the **Monthly AI usage** line shows tokens used against your allowance, the **Used** percentage, the **Cached** share and when it resets, with a bar that turns amber at 80% and red at 100%. On the free plan the line shows only the tokens used, with no cap, percentage or bar.
+Open **Usage and settings** on the status page. **Monthly AI usage** shows platform tokens used and the cached share. During an active trial or subscription, it also shows the current cap, the **Used** percentage and reset time, with a bar that turns amber at 80% and red at 100%.
 
 **Cached** is the share of this month's tokens that were cache reads. Cache-read tokens count against the allowance just like input and output tokens. If some tasks did not report their usage, the line says how many were left out of the total.
 
 ### When the monthly quota runs out
 
-Orbi pauses claiming new Issues. Your `ai-ready` labels stay where they are, and deliveries already running finish normally.
+When a paid plan's monthly allowance is used up and you have no API key configured, Orbi pauses claiming new Issues. Your `ai-ready` labels stay where they are, and deliveries already running finish normally.
 
 The main status card says **Monthly AI usage is used up: Orbi has paused new tasks; in-progress ones will finish normally.** and offers the ways out:
 
@@ -65,7 +67,9 @@ The main status card says **Monthly AI usage is used up: Orbi has paused new tas
 
 ## The repository limit
 
-Free and Solo connect one repository at a time; Pro connects up to five. The rule is the same on every plan: at the limit, connecting another repository is refused with **Repository limit reached**, so disconnect one first with **Disconnect a repository**, then connect the new one. Disconnecting does not change the repository on GitHub. A free account can also subscribe to Pro directly; with an active Solo subscription, contact us to upgrade. See [connect a repository](/connect-repository#changing-the-connected-repository).
+Every plan can also connect one verified official example copy without using a real-project slot.
+
+Free and Solo connect one real project at a time; Pro connects up to five. The rule is the same on every plan: at the limit, connecting another repository is refused with **Repository limit reached**, so disconnect one first with **Disconnect a repository**, then connect the new one. Disconnecting does not change the repository on GitHub. A free account can also subscribe to Pro directly; with an active Solo subscription, contact us to upgrade. See [connect a repository](/connect-repository#changing-the-connected-repository).
 
 ## What is never interrupted
 
@@ -77,7 +81,8 @@ Platform upgrades and deployments have the same property: they never restart a d
 
 | Limit | Value | At the limit | To resume |
 |---|---|---|---|
-| Free allowance | 3 merged deliveries | `ai-ready` removed, comment with subscribe link | Subscribe; blocked Issues start automatically |
-| Monthly tokens | Solo 400,000,000 · Pro 1,200,000,000, per calendar month (UTC) | New Issues wait; labels stay | Automatic on the 1st (00:00 UTC, 8:00 Beijing time), or immediately with your own key or by upgrading (Solo subscribers contact us) |
-| Repositories | Free and Solo 1 · Pro 5 | Connecting another is refused | Disconnect one first, or move to Pro (Solo subscribers contact us) |
+| Free trial period | 14 days from signup; one additional 14-day example trial, using the later expiry | `ai-ready` removed from new Issues, comment with subscription link | Subscribe; blocked Issues start automatically. An unused example trial can still be started as described above |
+| Trial platform usage | 60,000,000 tokens per calendar month (UTC) | Switch to your own key if configured; otherwise new tasks pause | Save your own key or subscribe; a monthly reset only helps while the trial is still active |
+| Paid monthly tokens | Solo 400,000,000 · Pro 1,200,000,000, per calendar month (UTC) | Without your own key, new Issues wait; labels stay | Automatic on the 1st (00:00 UTC, 8:00 Beijing time), or immediately with your own key or by upgrading (Solo subscribers contact us) |
+| Real project slots | Free and Solo 1 · Pro 5 | Connecting another is refused | Disconnect one first, or move to Pro (Solo subscribers contact us) |
 | Pickup wait | Usually under a minute, about 5 minutes at most | — | — |
