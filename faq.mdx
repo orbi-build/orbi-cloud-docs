@@ -55,7 +55,9 @@ Yes. Add `ai-ready` to all of them at once and record the order with GitHub's **
 It depends entirely on the size of the task. Small, well-specified changes finish quickly; large or vague ones take longer and go through more repair rounds.
 
 **How long until a request is merged?**
-Usually under an hour, counting the requests that did get merged. On Orbi Cloud customer repositories, half of those were merged within about 17 minutes of the handoff, and all but two of 19 within an hour. The sample is the 19 merged deliveries between 2026-10-21 and 2026-11-20, timed from handing the Issue to Orbi to the merge. Larger changes, slow CI, or a review that sends the work back for repairs take longer. Work usually starts within a minute of the handoff (see "How long until it starts?" above). Orbi does not guarantee a delivery time. See [the delivery lifecycle](/delivery-lifecycle) and [troubleshooting](/troubleshooting).
+A small, clear change is quickest. Large changes, rework after review and slow CI all add time. If Orbi needs an answer from you first, the status page says **Orbi needs more detail from you**, and the task waits until you reply.
+
+To follow a task after it starts, use the status page. The headline names the current stage, such as "Orbi is coding" or "Orbi is checking the change", and **View progress** shows what Orbi is doing. Once usage for the task has been reported, **Task history** also shows how long it has taken. See [the status page](/status-page) and [the delivery lifecycle](/delivery-lifecycle).
 
 **Can I change my mind while it is working?**
 Yes. Comment on the Issue or edit its body — the running session restarts with your correction. It accepts 3 such restarts, and only trusted repository roles can steer. See [steering a delivery](/delivery-lifecycle#steering-a-delivery-that-is-already-running).
@@ -118,6 +120,9 @@ The scope comes from a milestone titled exactly like the version, and it was mis
 No. Until you set a delivery scope, every `ai-ready` Issue is picked up. Versions matter once you want to ship in batches. See [releases](/releases#the-delivery-scope).
 
 ## Security and access
+
+**Which AI model does Orbi use?**
+By default, DeepSeek V4 Flash, which Orbi provides through DeepSeek's API and includes in your trial or plan. Settings shows it under **AI model**, and you can switch to your own provider, model and key there; see [model configuration](/model-configuration). On the platform channel your code and prompts go to DeepSeek, and [DeepSeek's privacy policy](https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html) covers how they are handled, including training and retention.
 
 **What can Orbi see?**
 Only the repositories in your GitHub App installation, and it works only in the repositories you connect. See [security](/security).
