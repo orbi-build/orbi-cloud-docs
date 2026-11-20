@@ -5,30 +5,29 @@ description: "Which plan do I need, how do I subscribe, manage my payment method
 ---
 
 
-You can try Orbi Cloud without paying anything, then subscribe to Solo or Pro through Stripe from the account menu or the pricing page.
+Subscribe to Solo or Pro through Stripe from the account menu or the pricing page.
 
 Orbi Cloud does not hold your card details. Payment, invoices and cancellation are handled by Stripe's own hosted pages.
 
 ## The plans
 
-| | Free | Solo | Pro |
-|---|---|---|---|
-| What you get | Your first 3 merged deliveries | Deliveries within the monthly allowance | Deliveries within the monthly allowance |
-| Model usage included | Included in the 3 free deliveries | 400,000,000 tokens (400M) a month | 1,200,000,000 tokens (1.2B) a month |
-| Repositories connected at once | 1 | 1 | Up to 5 |
-| Card required | No | Yes | Yes |
+| Plan | What you get |
+|---|---|
+| Free | Try it free for 14 days; see [Limits and quotas](/limits-and-quotas) for the rules. |
+| Solo | Deliveries within the monthly allowance: 400,000,000 tokens (400M) a month; 1 connected repository; card required |
+| Pro | Deliveries within the monthly allowance: 1,200,000,000 tokens (1.2B) a month; up to 5 connected repositories; card required |
 
-Both paid plans can be billed monthly or yearly, and neither has per-token overage billing. When the month's allowance runs out, new deliveries pause instead. Current prices and the yearly discount are on the **[pricing page](https://orbi.build/cloud/?ref=cloud-docs-billing)**, which is the reference for what you will be charged.
+Both paid plans can be billed monthly or yearly, and neither has per-token overage billing. When the month's allowance runs out and you have no API key configured, new deliveries pause instead. Current prices and the yearly discount are on the **[pricing page](https://orbi.build/cloud/?ref=cloud-docs-billing)**, which is the reference for what you will be charged.
 
 Founding members get 50% off for life with the promotion code `FOUNDING50`, limited to 6 places. The pricing page shows how many places are left. The offer does not change the Solo or Pro allowances.
 
-Failed deliveries never consume the free allowance, and you can use your own model key on any plan. See [limits and quotas](/limits-and-quotas) for exactly how each allowance is counted.
+You can use your own model key on any plan. See [limits and quotas](/limits-and-quotas) for how model usage is counted.
 
 **Which plan?** Solo fits one repository and a steady trickle of Issues. Pick Pro when you want several repositories connected at once, or when Solo's monthly allowance runs out before the month does.
 
 Self-hosting the open-source [Orbi](https://orbi.build/?ref=cloud-docs-billing) engine is free, and stays free.
 
-One verified official example copy can be connected in addition to the real-project limit on every plan. Its deliveries do not use the three free deliveries; see [trying the example](/quickstart#try-the-official-example).
+One verified official example copy can be connected in addition to the real-project limit on every plan. See [trying the example](/quickstart#try-the-official-example).
 
 ## Subscribe
 
@@ -36,7 +35,7 @@ There are three ways in:
 
 - **From the pricing page.** Choose Solo or Pro, monthly or yearly, on [orbi.build/cloud](https://orbi.build/cloud/?ref=cloud-docs-billing). If you are not signed in yet, you sign in with GitHub first and then go straight to Stripe Checkout; if you have not installed the GitHub App yet, you install it first and are then taken straight to checkout. If you close checkout without paying, the account menu keeps your choice, for example **You picked Solo (yearly) on the pricing page**, with a **Continue subscription** link.
 - **From the account menu.** Click your avatar, then **Subscribe with Stripe**. This subscribes you to Solo, billed monthly, at the founding member price; use the pricing page when you want Pro or yearly billing.
-- **From the status page.** Once your free deliveries are used up, the main status card shows a **Subscribe, founding member 50% off** button. It opens the same checkout as the account menu.
+- **From the status page.** Use the **Subscribe, founding member 50% off** button on the main status card when it is shown. It opens the same checkout as the account menu.
 
 All three complete payment on Stripe Checkout, where you can also enter a promotion code such as `FOUNDING50`. The subscribe buttons inside Orbi Cloud already carry the founding code, so you do not need to type it. Stripe then returns you to Orbi Cloud.
 
@@ -45,10 +44,6 @@ A checkout page expires if it is not paid within 1 hour. After that you get an e
 The pricing page also lists a one-time payment with Alipay or WeChat Pay for each plan, monthly or yearly. It does not renew automatically.
 
 Your subscription activates as soon as Stripe confirms the payment. The account menu shows **Subscription active**, and your plan's name appears next to your login. You do not need to reconnect your repository or reconfigure anything.
-
-<Note>
-You do not have to subscribe before trying Orbi Cloud. Sign-in, App installation, connecting a repository, preparing the work environment and your first three merged deliveries are all free.
-</Note>
 
 ## Managing your subscription
 
@@ -62,12 +57,12 @@ The chip next to your login in the account menu shows your plan:
 
 | What it says | What it means |
 |---|---|
-| **Not subscribed** | On the free allowance |
+| **Not subscribed** | No active paid subscription |
 | **Solo** or **Pro** | An active paid subscription on that plan |
 | **Founding Pilot** or **Design Partner** | An active subscription from an early-access programme |
 | **Past due (payment failed)** | Stripe could not charge your payment method |
 
-If your payment failed, the account menu also says **Subscription payment failed; you are on the free plan for now.** Stripe may try to charge again. Fix the payment method in the same customer portal: **Manage subscription** stays available in that state so you can repair it. While the payment is failing, new Issues are subject to the free allowance rules.
+If your payment failed, the account menu also says **Subscription payment failed; you are on the free plan for now.** Stripe may try to charge again. Fix the payment method in the same customer portal: **Manage subscription** stays available in that state so you can repair it. While the payment is failing, see [limits and quotas](/limits-and-quotas) for new-Issue admission rules.
 
 ## Cancelling
 

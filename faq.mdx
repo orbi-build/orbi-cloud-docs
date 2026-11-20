@@ -10,10 +10,10 @@ Short answers to the questions that come up most, with links to the full explana
 ## Getting started
 
 **Do I need to pay before trying it?**
-No. Sign-in, App installation, connecting a repository, provisioning and your first **3 merged deliveries** are all free, with no card. See [billing](/billing).
+Try it free for 14 days; see [Limits and quotas](/limits-and-quotas) for the rules.
 
 **Do I need to configure a model or an API key?**
-No. The free deliveries and both paid plans include model usage, and deliveries use the platform channel by default. Configuring your own key is optional — see [model configuration](/model-configuration).
+No. Deliveries use the platform model channel by default. Configuring your own key is optional — see [model configuration](/model-configuration).
 
 **Do I have to install anything?**
 No. Everything happens in your browser and in GitHub. You never get a shell on the runner and nothing runs on your machine.
@@ -61,7 +61,7 @@ With the environment ready, quota available and no earlier work or version scope
 Yes. Comment on the Issue or edit its body — the running session restarts with your correction. It accepts 3 such restarts, and only trusted repository roles can steer. See [steering a delivery](/delivery-lifecycle#steering-a-delivery-that-is-already-running).
 
 **Can I stop a delivery?**
-Close the Issue. If it was an unsubscribed delivery that never merged, closing it refunds the free-allowance slot.
+Close the Issue.
 
 **Will Orbi review its own code?**
 The review runs in a separate session that did not write the code, and it repairs what it finds before anything reaches the merge gate. It is not the same session marking its own work — though it is still Orbi, so your own CI is what makes the guarantee concrete.
@@ -78,22 +78,19 @@ A deliberate stop meaning a person has to decide the next step, not a crash. Fix
 **Can I get a Telegram reminder instead of keeping the page open?**
 Yes. Open **Settings → Notifications** and configure your bot and Chat ID. One setup covers this account’s repositories. **Orbi message language** controls the messages separately from the website language. See [notifications](/notifications).
 
-**Does trying the official example use my free deliveries?**
-No. One verified official example copy is exempt from both the repository-slot limit and the free-delivery count. See [trying the example](/quickstart#try-the-official-example).
+**Does the official example use a repository slot?**
+No. One verified official example copy does not use a repository slot. See [trying the example](/quickstart#try-the-official-example).
 
 ## Limits and cost
 
 **What does it cost?**
-3 merged deliveries free, then Solo (400M tokens a month, one repository) or Pro (1.2B tokens a month, up to five repositories), billed monthly or yearly. No per-token overage — deliveries pause at the cap instead. Current prices are on the [pricing page](https://orbi.build/cloud/?ref=cloud-docs-faq); see [billing](/billing).
-
-**Do failed deliveries use up my free allowance?**
-No. A delivery that ends blocked or is closed without merging refunds its slot, and so does a request Orbi sends back as needing more detail (`ai-needs-detail`) before starting.
+Solo includes 400M tokens a month and one repository; Pro includes 1.2B tokens a month and up to five repositories. Both can be billed monthly or yearly. There is no per-token overage billing; without your own API key, new deliveries pause at the cap. Current prices are on the [pricing page](https://orbi.build/cloud/?ref=cloud-docs-faq); see [billing](/billing).
 
 **How many deliveries does the allowance cover?**
 It depends on task size, codebase size and prompt caching. The [pricing page](https://orbi.build/cloud/?ref=cloud-docs-faq) gives current measured ranges for each plan.
 
-**What happens when I hit the monthly cap?**
-Orbi pauses claiming new Issues; their labels stay, and in-flight deliveries finish. Delivery resumes automatically on the 1st of the month (UTC), or immediately when you save your own model key or upgrade (with an active Solo subscription, contact us to upgrade). See [limits and quotas](/limits-and-quotas#when-the-monthly-quota-runs-out).
+**What happens when a paid plan hits the monthly cap?**
+Without your own API key configured, Orbi pauses claiming new Issues; their labels stay, and in-flight deliveries finish. Delivery resumes automatically on the 1st of the month (UTC), or immediately when you save your own model key or upgrade (with an active Solo subscription, contact us to upgrade). See [limits and quotas](/limits-and-quotas#when-the-monthly-quota-runs-out).
 
 **My quota is draining fast. Why?**
 Open **Usage and settings** on the status page and look at the **Cached** percentage on the **Monthly AI usage** line. Cached tokens count toward the allowance the same as input and output, so the cached share does not change how fast it drains; a fast drain means the tasks themselves use a lot of tokens.
