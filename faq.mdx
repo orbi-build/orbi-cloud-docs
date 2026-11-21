@@ -9,95 +9,122 @@ Short answers to the questions that come up most, with links to the full explana
 
 ## Getting started
 
-**Do I need to pay before trying it?**
+### Do I need to pay before trying it?
+
 Try it free for 14 days; see [Limits and quotas](/limits-and-quotas) for the rules.
 
-**Do I need to configure a model or an API key?**
+### Do I need to configure a model or an API key?
+
 No. Deliveries use the platform model channel by default. Configuring your own key is optional — see [model configuration](/model-configuration).
 
-**Do I have to install anything?**
+### Do I have to install anything?
+
 No. Everything happens in your browser and in GitHub. You never get a shell on the runner and nothing runs on your machine.
 
-**Can I use it on a private repository?**
+### Can I use it on a private repository?
+
 Yes. The GitHub App works on private repositories you authorize.
 
-**Can I connect more than one repository?**
+### Can I connect more than one repository?
+
 On Pro, up to five at once; Free and Solo connect one real project at a time. On every plan, once you are at the limit you disconnect a repository first, then connect the new one. See [connect a repository](/connect-repository#changing-the-connected-repository).
 
-**Which languages and frameworks does Orbi support?**
+### Which languages and frameworks does Orbi support?
+
 There is no fixed list: Orbi has no language- or framework-specific rules, and relies on your repository's own tests and CI instead. Orbi works with your repository's code and test suite in an isolated environment. It runs the tests, reviews against your testing and coverage requirements, and reads your reported CI checks at the merge gate. What CI guarantees depends on what those tests cover. See [your first Issue](/first-issue#choosing-what-to-start-with) and [what your CI guarantees](/security#what-your-ci-guarantees).
 
-**What should my first Issue be?**
+### What should my first Issue be?
+
 Start with Orbi’s suggestions after it reads your repository. **Let Orbi do this** hands a suggestion to Orbi straight away; **Review the draft first** lets you check the draft before handing it off. You can also write a request or create an Issue on GitHub. Pick a small task with clear acceptance criteria. See [your first Issue](/first-issue) and [write a request](/write-a-requirement).
 
-**Is it safe to give it write access?**
+### Is it safe to give it write access?
+
 The App only reaches the repositories you select, you can pick a single small repository to start, and every change arrives as a pull request that is reviewed before it merges. See [install the GitHub App](/install-app#what-the-permissions-are-for) and [security](/security).
 
-**Does it work on an organization's repository?**
+### Does it work on an organization's repository?
+
 Yes. Install the App on the organization; that creates a separate tenant for the organization with its own subscription and usage.
 
 ## Running deliveries
 
-**How do I give Orbi work?**
+### How do I give Orbi work?
+
 Choose a suggestion or define your own task; each path ends with `ai-ready` on an Issue. **Let Orbi do this** on a suggestion dispatches it immediately; **Review the draft first** lets you check it before handing it off. These entry points also remain available:
 
 - On the status page, click **Write a request** and say what you want changed in a sentence or two. Orbi reads your code and writes a draft Issue, and starts on it as soon as the draft is ready; only when Orbi has questions or its pre-work check finds something missing do you click **Hand off to Orbi** yourself. See [write a request](/write-a-requirement).
 - On the status page, click **Let Orbi do this** next to an Issue you already have.
 - On GitHub, create an Issue in your connected repository and add the `ai-ready` label yourself. See [file your first Issue](/first-issue).
 
-**How long until it starts?**
+### How long until it starts?
+
 Usually within a minute. Adding `ai-ready`, on GitHub or from the status page, wakes the runner for that repository. If that signal is lost, the regular five-minute timer picks the Issue up.
 
-**Can I queue several Issues that depend on each other?**
+### Can I queue several Issues that depend on each other?
+
 Yes. Add `ai-ready` to all of them at once and record the order with GitHub's **blocked by** relationship, either under **Relationships** in the Issue sidebar or with `gh issue edit 12 --add-blocked-by 11`. Orbi skips an Issue while any Issue blocking it is still open, and picks it up on a later run once the blocker closes. Among Issues that are ready, the one that has waited longest goes first. Orbi does not read "Depends on #11" written in the Issue body. See [GitHub's guide to issue dependencies](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/creating-issue-dependencies).
 
-**How long does a delivery take?**
+### How long does a delivery take?
+
 It depends entirely on the size of the task. Small, well-specified changes finish quickly; large or vague ones take longer and go through more repair rounds.
 
-**How long until a request is merged?**
+### How long until a request is merged?
+
 About 17 minutes is the median time from handing a request to Orbi to merging it. This is a snapshot taken on 2026-11-20 and not kept up to date: Orbi Cloud customer repositories had 19 merged requests in the previous 30 days, and all but two merged within an hour. A small, clear change is quickest. Large changes, rework after review and slow CI all add time. If Orbi needs an answer from you first, the status page says **Orbi needs more detail from you**, and the task waits until you reply.
 
 To follow a task after it starts, use the status page. The headline names the current stage, such as "Orbi is coding" or "Orbi is checking the change", and **View progress** shows what Orbi is doing. Once usage for the task has been reported, **Task history** also shows how long it has taken. See [the status page](/status-page) and [the delivery lifecycle](/delivery-lifecycle).
 
-**Can I change my mind while it is working?**
+### Can I change my mind while it is working?
+
 Yes. Comment on the Issue or edit its body — the running session restarts with your correction. It accepts 3 such restarts, and only trusted repository roles can steer. See [steering a delivery](/delivery-lifecycle#steering-a-delivery-that-is-already-running).
 
-**Can I stop a delivery?**
-Yes: close the Issue. Orbi does not pick up a closed Issue again. A coding session that is already running is not interrupted; when it finishes, Orbi pushes the work to its branch, opens no pull request, and comments on the Issue that the delivery stopped. If the pull request is already open, Orbi stops reviewing and merging it and comments on it: merge it to keep the work, or close it. A review that was already running when you closed the Issue can still finish and merge.
+### Can I stop a delivery?
 
-**Will Orbi review its own code?**
+Yes: close the Issue. Orbi does not pick up a closed Issue again. A coding session that is already running is not interrupted; when it finishes, Orbi pushes the code it already wrote to its branch, opens no pull request, and comments on the Issue that the delivery stopped. If the pull request is already open, Orbi stops reviewing and merging it and comments on it: merge it to keep the work, or close it. A review that was already running when you closed the Issue can still finish and merge.
+
+### Will Orbi review its own code?
+
 The review runs in a separate session that did not write the code, and it repairs what it finds before anything reaches the merge gate. It is not the same session marking its own work — though it is still Orbi, so your own CI is what makes the guarantee concrete.
 
-**Does it merge without my approval?**
+### Does it merge without my approval?
+
 Yes, when the review verdict is clean and the merge gate passes — that is the point of an unattended loop. If you want a human approval on every delivery, set your branch protection to require one; see [security](/security#branch-protection).
 
-**My base branch is already failing CI. Can Orbi still merge?**
+### My base branch is already failing CI. Can Orbi still merge?
+
 When a check fails on both the reviewed PR and its base branch, Orbi pauses the delivery. Its comment says the PR is ready but waiting on the base checks, and lists each failing check with its run link and first error lines. With write permission, reply `/orbi fix-base` on the original delivery Issue to create or reuse an open repair Issue for each failing check, labelled `ai-ready` + `p0` (highest priority). On the status page, **Have Orbi file the fix tickets** posts that command for you. Once all base checks recorded for this pause turn green, the original PR can resume for another review and merge if the merge gate passes. See [troubleshooting](/troubleshooting#checks-on-the-base-branch-itself-are-failing) and [the engine's recovery workflow](https://docs.orbi.build/workflow).
 
-**What is `ai-blocked`?**
+### What is `ai-blocked`?
+
 A deliberate stop meaning a person has to decide the next step, not a crash. Fix the cause, then replace `ai-blocked` with `ai-fix-needed` if the PR is still open, or `ai-ready` if there is no PR. See [troubleshooting](/troubleshooting#ai-blocked).
 
-**Can I get a Telegram reminder instead of keeping the page open?**
+### Can I get a Telegram reminder instead of keeping the page open?
+
 Yes. Open **Settings → Notifications** and configure your bot and Chat ID. One setup covers this account’s repositories. **Orbi message language** controls the messages separately from the website language. See [notifications](/notifications).
 
-**Does the official example use a repository slot?**
+### Does the official example use a repository slot?
+
 No. One verified official example copy does not use a repository slot. See [trying the example](/quickstart#try-the-official-example).
 
 ## Limits and cost
 
-**What does it cost?**
+### What does it cost?
+
 Solo includes 400M tokens a month and one repository; Pro includes 1.2B tokens a month and up to five repositories. Both can be billed monthly or yearly. There is no per-token overage billing; without your own API key, new deliveries pause at the cap. Current prices are on the [pricing page](https://orbi.build/cloud/?ref=cloud-docs-faq); see [billing](/billing).
 
-**How many deliveries does the allowance cover?**
+### How many deliveries does the allowance cover?
+
 It depends on task size, codebase size and prompt caching. The [pricing page](https://orbi.build/cloud/?ref=cloud-docs-faq) gives current measured ranges for each plan.
 
-**What happens when a paid plan hits the monthly cap?**
+### What happens when a paid plan hits the monthly cap?
+
 Without your own API key configured, Orbi pauses claiming new Issues; their labels stay, and in-flight deliveries finish. Delivery resumes automatically on the 1st of the month (UTC), or immediately when you save your own model key or upgrade (with an active Solo subscription, contact us to upgrade). See [limits and quotas](/limits-and-quotas#when-the-monthly-quota-runs-out).
 
-**My quota is draining fast. Why?**
+### My quota is draining fast. Why?
+
 Open **Usage and settings** on the status page and look at the **Cached** percentage on the **Monthly AI usage** line. Cached tokens count toward the allowance the same as input and output, so the cached share does not change how fast it drains; a fast drain means the tasks themselves use a lot of tokens.
 
-**Will Orbi use up my GitHub Actions minutes?**
+### Will Orbi use up my GitHub Actions minutes?
+
 Orbi uses your repository's CI as a merge check, so each push to an Orbi pull request runs your workflows, and the merge to your base branch runs them again. If the base branch moves while a pull request waits to merge, Orbi brings the pull request up to date and waits for CI on the new head, so what merges was tested against current code. In a busy repository that adds runs. GitHub bills those runs to your account; see [GitHub Actions billing](https://docs.github.com/en/billing/concepts/product-billing/github-actions). To keep the count down:
 
 - Add a `concurrency` group with `cancel-in-progress: true`, so a newer push cancels the run it replaces. See [GitHub's concurrency guide](https://docs.github.com/en/actions/how-tos/write-workflows/choose-when-workflows-run/control-workflow-concurrency).
@@ -107,45 +134,58 @@ Orbi uses your repository's CI as a merge check, so each push to an Orbi pull re
 
 ## Releases
 
-**Does Orbi release automatically?**
+### Does Orbi release automatically?
+
 You choose the version and release policy. Use **Create release task** in **Versions**, or create an `ai-ready` + `ai-release` Issue. An enabled milestone workflow can also create the release task after a confirmed version decision. See [releases](/releases).
 
-**Does it pick the version number?**
+### Does it pick the version number?
+
 No. You name it — the next version is a product decision Orbi will not make for you.
 
-**Why did my release stop at scope derivation?**
+### Why did my release stop at scope derivation?
+
 The scope comes from a milestone titled exactly like the version, and it was missing. Use **Create the version and continue** on the status page, or create versions with **Create and switch**, which makes the milestone for you.
 
-**Do I have to use versions?**
+### Do I have to use versions?
+
 No. Until you set a delivery scope, every `ai-ready` Issue is picked up. Versions matter once you want to ship in batches. See [releases](/releases#the-delivery-scope).
 
 ## Security and access
 
-**Which AI model does Orbi use?**
+### Which AI model does Orbi use?
+
 By default, DeepSeek V4 Flash, which Orbi provides through DeepSeek's API and includes in your trial or plan. Settings shows it under **AI model**, and you can switch to your own provider, model and key there; see [model configuration](/model-configuration). On the platform channel your code and prompts go to DeepSeek, and [DeepSeek's privacy policy](https://cdn.deepseek.com/policies/en-US/deepseek-privacy-policy.html) covers how they are handled, including training and retention.
 
-**What can Orbi see?**
+### What can Orbi see?
+
 Only the repositories in your GitHub App installation, and it works only in the repositories you connect. See [security](/security).
 
-**Where does my API key live?**
+### Where does my API key live?
+
 Encrypted at rest with AES-256-GCM, shown back to you masked only, never logged.
 
-**How do I revoke access?**
+### How do I revoke access?
+
 Uninstall the GitHub App from GitHub. Access ends immediately. Cancelling a subscription is separate.
 
-**Can a platform upgrade interrupt my delivery?**
+### Can a platform upgrade interrupt my delivery?
+
 No. Deployments cannot restart a delivery that is already executing.
 
 ## Product
 
-**Is this the same as self-hosted Orbi?**
+### Is this the same as self-hosted Orbi?
+
 Same delivery engine; the difference is who operates the runner. The engine is open source and self-hosting it is free — [orbi.build](https://orbi.build/?ref=cloud-docs-faq).
 
-**Can I show someone what Orbi delivered?**
+### Can I show someone what Orbi delivered?
+
 Yes. Every merged delivery gets a **Delivery proof** page with **Copy link** and **Share on X**. See [sharing a delivery](/delivery-lifecycle#sharing-a-delivery).
 
-**Is this documentation current?**
+### Is this documentation current?
+
 It describes what currently ships, not a roadmap. If a page disagrees with what you see, tell us.
 
-**Where do I get help?**
+### Where do I get help?
+
 Use **Get support on Telegram** in the avatar menu or footer. For private account or billing questions, email support@orbi.build; the help line also offers **Book 15 min with the founder ↗**. See [getting help](/troubleshooting#getting-help).
