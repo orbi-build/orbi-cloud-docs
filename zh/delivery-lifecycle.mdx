@@ -20,6 +20,8 @@ flowchart LR
   review -->|有问题要修| fix["ai-fix-needed"]
   fix --> opened
   review -->|轮次用尽，或无法安全修复| blocked["ai-blocked"]
+  progress -.->|你关掉 Issue| closed["已关闭（未合并）"]
+  opened -.->|你关掉 Issue| closed
 ```
 
 ## 每个标签的含义

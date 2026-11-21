@@ -20,6 +20,8 @@ flowchart LR
   review -->|finding to repair| fix["ai-fix-needed"]
   fix --> opened
   review -->|rounds exhausted, or unsafe to fix| blocked["ai-blocked"]
+  progress -.->|you close the Issue| closed["Closed, not merged"]
+  opened -.->|you close the Issue| closed
 ```
 
 ## What each label means
