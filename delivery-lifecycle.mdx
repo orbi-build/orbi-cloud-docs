@@ -13,13 +13,15 @@ Orbi Cloud keeps no separate dashboard of truth. The labels on your Issue, the c
 
 ```mermaid
 flowchart LR
-  ready["ai-ready"] -->|claimed| progress["ai-in-progress"]
+  ready["ai-ready"] -->|claimed: ai-ready removed| progress["ai-in-progress"]
   progress -->|PR opened and verified| opened["ai-pr-opened"]
   opened --> review{"independent<br/>review"}
   review -->|clean verdict + merge gate| merged["ai-merged"]
   review -->|finding to repair| fix["ai-fix-needed"]
   fix --> opened
   review -->|rounds exhausted, or unsafe to fix| blocked["ai-blocked"]
+  progress -.->|you close the Issue| closed["Closed, not merged"]
+  opened -.->|you close the Issue| closed
 ```
 
 ## What each label means
@@ -28,7 +30,7 @@ The right-hand column is the chip the status page shows for that label in **Task
 
 | Label | Meaning | Status page chip |
 |---|---|---|
-| `ai-ready` | You dispatched this Issue to Orbi. It may be claimed on the next tick. | **Queued** |
+| `ai-ready` | You dispatched this Issue to Orbi and work has not started. It may be claimed on the next tick; Orbi removes `ai-ready` when it claims the Issue, so `is:open label:ai-ready` on GitHub lists your queue. | **Queued** |
 | `ai-in-progress` | Claimed and running: a workspace exists and a session is writing code. | **In progress** |
 | `ai-pr-opened` | The pull request is open and verified, awaiting the independent review. | **PR under review** |
 | `ai-fix-needed` | The review found something, or the head is not mergeable yet. The next tick resumes the same run, branch and pull request. | **Fix needed** |
