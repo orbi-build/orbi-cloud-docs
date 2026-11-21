@@ -34,7 +34,7 @@ Installing on an organization creates a separate Orbi tenant for that organizati
 
 ## What the permissions are for
 
-GitHub shows you the full permission list before you approve. On Orbi's install page, **All permissions** summarizes it: in the GitHub repositories you select, read/write access to code, Issues, PRs, GitHub Actions workflows and Actions variables; read access to repository settings, check results and Actions run history; no ability to change repository settings; and read access to your GitHub email address. Here is what each one is used for:
+GitHub shows you the full permission list before you approve. On Orbi's install page, **All permissions** summarizes it: in the GitHub repositories you select, read/write access to code, Issues, PRs, GitHub Actions workflows; read access to repository settings, check results and Actions run history; no ability to change repository settings; and read access to your GitHub email address. Here is what each one is used for:
 
 | Permission | Access | Why Orbi needs it |
 |---|---|---|
@@ -44,7 +44,6 @@ GitHub shows you the full permission list before you approve. On Orbi's install 
 | Checks | Read-only | To read the CI result on a commit before merging and releasing |
 | Actions | Read-only | To read the check results on Orbi's pull requests in private repositories, so it merges only after your CI passes. Without it Orbi cannot see the checks and waits on the merge indefinitely |
 | Workflows | Read and write | So a task that changes a file under `.github/workflows/` is not silently rejected by GitHub |
-| Variables | Read and write | To sync the repository variable the triage workflow reads |
 | Administration | Read-only | To read repository settings such as branch protection rules, so Orbi can tell you before handing off, and on the status page, when a rule requires an approval before merge. It cannot change repository settings |
 | Commit statuses | Read-only | To read the status results on Orbi's pull requests before merging. Without it Orbi stops the delivery and asks you to approve the permission |
 | Metadata | Read-only | To read basic repository information, such as the repository list and default branch |

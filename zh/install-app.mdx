@@ -34,7 +34,7 @@ Orbi 是通过安装 Orbi GitHub App 拿到仓库权限的，覆盖哪些仓库�
 
 ## 这些权限各是干什么的
 
-批准之前 GitHub 会把完整的权限清单摊给你看。Orbi 的安装页上「全部权限」的说明是：在你选的 GitHub 仓库里，可读写代码、Issue、PR、GitHub Actions 工作流和 Actions 变量；可读仓库设置、检查结果和 Actions 运行记录；不能修改仓库设置；另外可读您的 GitHub 邮箱。每一项的用途如下：
+批准之前 GitHub 会把完整的权限清单摊给你看。Orbi 的安装页上「全部权限」的说明是：在你选的 GitHub 仓库里，可读写代码、Issue、PR、GitHub Actions 工作流；可读仓库设置、检查结果和 Actions 运行记录；不能修改仓库设置；另外可读您的 GitHub 邮箱。每一项的用途如下：
 
 | 权限 | 访问级别 | Orbi 为什么需要它 |
 |---|---|---|
@@ -44,7 +44,6 @@ Orbi 是通过安装 Orbi GitHub App 拿到仓库权限的，覆盖哪些仓库�
 | Checks | 只读 | 在合并和发版之前读某个 commit 的 CI 结果 |
 | Actions | 只读 | 在私有仓库里读取拉取请求的检查结果，确认你的 CI 通过后才合并；没有这项权限，Orbi 读不到检查结果，会一直停在等待合并 |
 | Workflows | 读写 | 让改动了 `.github/workflows/` 下面文件的任务不被 GitHub 默默拒掉 |
-| Variables | 读写 | 同步分诊 workflow 要读的那个仓库变量 |
 | Administration | 只读 | 读仓库设置，例如分支保护规则；规则要求合并前有人批准时，Orbi 会在交出需求前和状态页上告诉你。它改不了仓库设置 |
 | Commit statuses | 只读 | 合并前读取 Orbi 的 PR 上的状态检查结果。没有这项权限，Orbi 会停下交付，请你批准这项权限 |
 | Metadata | 只读 | 读仓库的基本信息，例如仓库列表和默认分支 |

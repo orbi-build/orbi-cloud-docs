@@ -61,7 +61,7 @@ App 只能访问你选中的仓库，一开始可以只选一个小仓库；每�
 
 ### 有依赖关系的几张 Issue，能一次排给 Orbi 吗？
 
-能。把它们一起打上 `ai-ready`，再用 GitHub 的「被阻塞」（blocked by）关系写明先后：在 Issue 右侧的 **Relationships** 里设置，或者用 `gh issue edit 12 --add-blocked-by 11`。只要还有阻塞它的 Issue 没关，Orbi 就先跳过它；阻塞它的 Issue 关掉后，下一轮会接着做。几张都能开工时，等得最久的先做。写在正文里的「Depends on #11」Orbi 不读。见 [GitHub 的 Issue 依赖说明](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/creating-issue-dependencies)。
+能。把它们一起打上 `ai-ready`，再用 GitHub 的「被阻塞」（blocked by）关系写明先后：在 Issue 右侧的 **Relationships** 里设置，或者用 `gh issue edit 12 --add-blocked-by 11`。只要还有阻塞它的 Issue 没关，Orbi 就先跳过它；阻塞它的 Issue 关掉后，下一轮会接着做。几张都能开工时，先做 `p0`，再做 `bug`，最后是其余的；同一类里等得最久的先做。写在正文里的「Depends on #11」Orbi 不读。见 [GitHub 的 Issue 依赖说明](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/creating-issue-dependencies)。
 
 ### 一次交付要多久？
 
@@ -91,7 +91,7 @@ App 只能访问你选中的仓库，一开始可以只选一个小仓库；每�
 
 ### 主干本来就红着，Orbi 还能合并吗？
 
-同一检查在已评审的 PR 和主干（PR 的目标分支）上都失败时，Orbi 会暂停交付。评论会说明 PR 已做好、正等目标分支的检查恢复，并逐项列出失败检查、运行链接和开头几行报错。有仓库写权限的人在原交付 Issue 上回复 `/orbi fix-base`，会为每个失败检查新建或复用开放的修复票，标上 `ai-ready` + `p0`（最高优先级）。在状态页上点「让 Orbi 开修复票」，会替你发这条命令。本次暂停时记录的目标分支检查全部变绿后，原 PR 可恢复交付，重新评审，通过合并门禁后再合并。见[问题排查](/zh/troubleshooting)里「基础分支自己的检查没通过」一节，以及[引擎的恢复流程](https://docs.orbi.build/workflow)。
+同一检查在已评审的 PR 和主干（PR 的目标分支）上都失败时，Orbi 会暂停交付。评论会说明 PR 已做好、正等目标分支的检查恢复，并逐项列出失败检查、运行链接和开头几行报错。有仓库写权限的人在原交付 Issue 上回复 `/orbi fix-base`，会为目标分支新建或复用一张开放的修复票，票里列出所有失败的检查，标上 `ai-ready` + `p0`（最高优先级）。在状态页上点「让 Orbi 开修复票」，会替你发这条命令。本次暂停时记录的目标分支检查全部变绿后，原 PR 可恢复交付，重新评审，通过合并门禁后再合并。见[问题排查](/zh/troubleshooting)里「基础分支自己的检查没通过」一节，以及[引擎的恢复流程](https://docs.orbi.build/workflow)。
 
 ### `ai-blocked` 是什么意思？
 
@@ -180,7 +180,7 @@ scope 来自标题与版本号完全一致的 milestone，而这个 milestone �
 
 ### 能把 Orbi 交付的成果给别人看吗？
 
-可以。每次合并的交付都有一个「交付存证」页面，带「复制链接」和「分享到 X」。见[分享一次交付](/zh/delivery-lifecycle)。
+可以。每次合并的交付都有一个「交付存证」页面；公开仓库的页面还带「复制链接」和「分享到 X」。见[分享一次交付](/zh/delivery-lifecycle)。
 
 ### 这份文档是最新的吗？
 
