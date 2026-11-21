@@ -85,6 +85,21 @@ Disconnecting reclaims that repository's work environment. It does not change th
 
 When you are already at your plan's limit, the connect page is titled **Repository limit reached**: it has no connect form, only your connected repositories, each with **Disconnect…**. The exception is a sample copy you just created: it does not count toward the limit, so the page shows **Connect the sample copy you just created** with a **Connect sample copy** button, and you do not need to disconnect anything first. If a connect request is refused for the same reason, the error page offers **Disconnect a repository**, plus an upgrade to Pro on a plan below Pro: a free account subscribes to Pro directly, while an active Solo subscription shows **To upgrade to Pro, contact us directly:** with our email and Telegram group.
 
+## When Orbi disconnects a repository itself
+
+Every hour, Orbi checks that its GitHub App can still reach each connected repository. A repository that was deleted, transferred to another account, or removed from the App's **Repository access** is handled as disconnected, the same way as **Disconnect…**: its work environment is reclaimed, and its history and usage stay under **Disconnected projects**. When GitHub reports the removal from **Repository access** directly, this happens right away instead of at the next check.
+
+The top of the status page and of the connect page then say **Orbi can no longer access owner/repository, so it has been disconnected. It may have been deleted, transferred to another account, or removed from Orbi's GitHub App authorization.** On the status page, **Fix it on the connect page** takes you there.
+
+A renamed repository is not disconnected. If GitHub cannot be reached during a check, nothing changes, and the next hourly check tries again.
+
+To connect it again:
+
+- If it was removed from **Repository access**, open **Don't see your repository?** on the connect page, add the repository back in **GitHub App settings**, click **Save**, refresh, and connect it.
+- If it was deleted, it cannot be connected again; connect another repository.
+
+Connecting prepares a fresh work environment, like any new repository. The message disappears once a repository connects.
+
 ## What the errors mean
 
 | What the page says | What happened | What to do |

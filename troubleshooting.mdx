@@ -39,6 +39,7 @@ If work environment preparation failed, read the main card and **Usage and setti
 **Read the comment Orbi left on the Issue.** It states why it could not proceed. When Orbi recorded a reason, the card on the status page sums it up in one sentence and its **See Orbi's note** button opens that comment; otherwise the button is **View on GitHub (Issue #N)**. The common causes:
 
 - The repair loop ran its rounds without reaching a clean review verdict.
+- The run stopped without a commit. The comment quotes what the session wrote before it stopped (what blocked it, and its question if it has one) and says what to change. Its headline says **the run produced no commit and this Issue needs a change**; only a stop that needs your decision says **waiting on a human decision**. Write the answer or the missing detail into the Issue body, then requeue it.
 - An external precondition is missing — something the delivery cannot safely judge or fix on its own.
 - A release's milestone does not exist. The status page offers **Create the version and continue** for this one.
 - The Issue asks for something the environment cannot do (see below).
@@ -120,6 +121,10 @@ Quote the **Error ID** if you contact support. The support email link next to it
 | Invalid repository format | Enter it as `owner/repository` |
 
 Full detail is on [connect a repository](/connect-repository#what-the-errors-mean).
+
+## Orbi disconnected my repository
+
+The status page says **Orbi can no longer access owner/repository, so it has been disconnected.** Orbi checks every hour and disconnects a repository that was deleted, transferred to another account, or removed from the App's **Repository access**. Renaming does not trigger it, and a failed check changes nothing. Click **Fix it on the connect page**: add the repository back under **Repository access** in **GitHub App settings** and connect it again, or connect another repository if it was deleted. See [when Orbi disconnects a repository itself](/connect-repository#when-orbi-disconnects-a-repository-itself).
 
 ## GitHub asks me to approve new permissions
 
