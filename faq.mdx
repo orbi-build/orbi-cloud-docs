@@ -61,7 +61,7 @@ Usually within a minute. Adding `ai-ready`, on GitHub or from the status page, w
 
 ### Can I queue several Issues that depend on each other?
 
-Yes. Add `ai-ready` to all of them at once and record the order with GitHub's **blocked by** relationship, either under **Relationships** in the Issue sidebar or with `gh issue edit 12 --add-blocked-by 11`. Orbi skips an Issue while any Issue blocking it is still open, and picks it up on a later run once the blocker closes. Among Issues that are ready, the one that has waited longest goes first. Orbi does not read "Depends on #11" written in the Issue body. See [GitHub's guide to issue dependencies](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/creating-issue-dependencies).
+Yes. Add `ai-ready` to all of them at once and record the order with GitHub's **blocked by** relationship, either under **Relationships** in the Issue sidebar or with `gh issue edit 12 --add-blocked-by 11`. Orbi skips an Issue while any Issue blocking it is still open, and picks it up on a later run once the blocker closes. Among Issues that are ready, `p0` goes first, then `bug`, then the rest; within each group, the one that has waited longest goes first. Orbi does not read "Depends on #11" written in the Issue body. See [GitHub's guide to issue dependencies](https://docs.github.com/en/issues/tracking-your-work-with-issues/using-issues/creating-issue-dependencies).
 
 ### How long does a delivery take?
 
@@ -91,7 +91,7 @@ Yes, when the review verdict is clean and the merge gate passes — that is the 
 
 ### My base branch is already failing CI. Can Orbi still merge?
 
-When a check fails on both the reviewed PR and its base branch, Orbi pauses the delivery. Its comment says the PR is ready but waiting on the base checks, and lists each failing check with its run link and first error lines. With write permission, reply `/orbi fix-base` on the original delivery Issue to create or reuse an open repair Issue for each failing check, labelled `ai-ready` + `p0` (highest priority). On the status page, **Have Orbi file the fix tickets** posts that command for you. Once all base checks recorded for this pause turn green, the original PR can resume for another review and merge if the merge gate passes. See [troubleshooting](/troubleshooting#checks-on-the-base-branch-itself-are-failing) and [the engine's recovery workflow](https://docs.orbi.build/workflow).
+When a check fails on both the reviewed PR and its base branch, Orbi pauses the delivery. Its comment says the PR is ready but waiting on the base checks, and lists each failing check with its run link and first error lines. With write permission, reply `/orbi fix-base` on the original delivery Issue to create or reuse one open repair Issue for the base branch that lists every failing check, labelled `ai-ready` + `p0` (highest priority). On the status page, **Have Orbi file the fix tickets** posts that command for you. Once all base checks recorded for this pause turn green, the original PR can resume for another review and merge if the merge gate passes. See [troubleshooting](/troubleshooting#checks-on-the-base-branch-itself-are-failing) and [the engine's recovery workflow](https://docs.orbi.build/workflow).
 
 ### What is `ai-blocked`?
 
@@ -180,7 +180,7 @@ Same delivery engine; the difference is who operates the runner. The engine is o
 
 ### Can I show someone what Orbi delivered?
 
-Yes. Every merged delivery gets a **Delivery proof** page with **Copy link** and **Share on X**. See [sharing a delivery](/delivery-lifecycle#sharing-a-delivery).
+Yes. Every merged delivery gets a **Delivery proof** page. For a public repository it also has **Copy link** and **Share on X**. See [sharing a delivery](/delivery-lifecycle#sharing-a-delivery).
 
 ### Is this documentation current?
 
