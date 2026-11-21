@@ -54,14 +54,14 @@ To change the base branch, open **Manage projects → Change base branch**, choo
 
 ## Task history
 
-For a single project, **Task history** is a list showing the Issue, status and update time. It starts with the three most recently updated tasks; **Show all (N)** expands the rest and **Hide** folds them again. Times use your browser's local time zone.
+For a single project, **Task history** is a list showing the Issue, status and update time. It starts with the three most recently updated tasks; **Show all (N)** expands the rest and **Hide** folds them again. Times use your browser's local time zone. The filter above the list shows **All**, **In progress**, **Queued**, **Needs your attention** or **Done**. **Needs your attention** holds blocked tasks (even with a PR open), tasks needing detail or your confirmation, and PRs awaiting your approval; a blocked task whose question you have already answered sits under **In progress** while Orbi picks it up.
 
 In the selected-project details of a multi-project account, history still uses three tabs:
 
 | Tab | What is in it |
 |---|---|
-| **In progress** | Open tasks without a PR: queued, coding, needing detail, or blocked before a PR |
-| **Under review** | Open tasks with a PR: checking, fixing, waiting for approval, or blocked after a PR |
+| **In progress** | Open tasks queued or coding without a PR, plus tasks that are blocked or need detail or your confirmation, even with a PR open |
+| **Under review** | Open tasks with a PR: checking, **Fix needed**, or waiting for approval |
 | **Done** | Merged or closed tasks |
 
 A queued task says what it is waiting for, including unresolved Issue dependencies. **View progress** selects that task's progress. When usage has been reported, the task also shows elapsed time, AI calls and tokens split into input, output and cache; an interrupted run can show its resume count. Usage that has not been reported is not counted as zero.
