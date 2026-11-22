@@ -40,7 +40,7 @@ The right-hand column is the chip the status page shows for that label in **Task
 | `ai-fix-needed` | The review found something, or the head is not mergeable yet. The next tick resumes the same run, branch and pull request. | **Fix needed** |
 | `ai-merged` | Success. The change passed review and the merge gate, and the merge was confirmed on your base branch. | **Merged** |
 | `ai-blocked` | Stopped on purpose. Automatic recovery is not safe, and a person has to decide the next step. | **Blocked** |
-| `ai-awaiting-merge` | The reviewed pull request is delivered and waiting for a maintainer to approve and merge it — usually because branch protection requires an approval. | **Awaiting approval** |
+| `ai-awaiting-merge` | The reviewed pull request is delivered and waiting for a maintainer's approval, usually because branch protection requires one. Approve it on GitHub; Orbi then merges it itself on a later tick. Don't merge it by hand. | **Awaiting approval** |
 | `ai-needs-detail` | Orbi could not proceed without more information from you. The comment on the Issue says what is missing. Edit the Issue body to answer it and add `ai-ready` again, or click **Add the details** on the status page and answer on the write-a-request page. When Orbi's comment already proposes a split or acceptance criteria, the status page shows that proposal with a start button instead; see [troubleshooting](/troubleshooting#when-orbi-has-already-proposed-a-fix). | **Needs detail** |
 
 An Issue closed without a merge shows **Closed, not merged**.
