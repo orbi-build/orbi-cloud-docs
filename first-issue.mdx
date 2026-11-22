@@ -41,7 +41,7 @@ Try it free for 14 days; see [Limits and quotas](/limits-and-quotas) for the rul
 
 Use **Why this ›** to expand the reason. On the first-task card, **See N more suggestions** expands the list and **Show others** at its end reads the repository again; in a project's suggestion section the button is **Get new suggestions** (with several projects it names the project); with no suggestions available, use **Get suggestions**. Reading usually takes about 2 minutes, and you can leave the page.
 
-The other entry points remain available: **Write a request**, other existing Issues listed on the page, and GitHub’s new-Issue form. The button next to each existing Issue, **Let Orbi do this**, dispatches it immediately. **Create an Issue on GitHub** preselects `ai-ready`, so submitting enters the queue directly. Issues already carrying any `ai-*` label are excluded from the available list.
+The other entry points remain available: **Write a request**, other existing Issues listed on the page, and GitHub’s new-Issue form. The button next to each existing Issue, **Let Orbi do this**, dispatches it immediately. **Create an Issue on GitHub** preselects `ai-ready` (or the repository's own queue label when `.github/orbi.toml` sets `dispatch_label`; see [what each label means](/delivery-lifecycle#what-each-label-means)), so submitting enters the queue directly. Issues already carrying any `ai-*` label are excluded from the available list.
 
 After a delivery, an idle project may also offer the small README run-note task; it is created and dispatched only when you click **Try →**.
 
